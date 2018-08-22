@@ -1,6 +1,7 @@
 package com.ligx.es;
 
 import com.alibaba.fastjson.JSON;
+import com.ligx.id.IdGenerator;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.bulk.BulkItemResponse;
@@ -113,7 +114,7 @@ public class EsClient {
     public static <T> long addDoc(String index, String type, T doc) {
         TransportClient client = getClient();
 
-        long id = 0L; // TODO 需要用一个id生成器生成id
+        long id = IdGenerator.get();
         IndexResponse response = client.prepareIndex(index, type, "" + id)
                 .setSource(JSON.toJSONString(doc))
                 .get();
@@ -211,7 +212,7 @@ public class EsClient {
 
         BulkRequestBuilder bulkRequest = client.prepareBulk();
         for (T doc : docList) {
-            bulkRequest.add(client.prepareIndex(index, type, "" + 0L)  // TODO 需要用一个id生成器生成id
+            bulkRequest.add(client.prepareIndex(index, type, "" + IdGenerator.get())
                     .setSource(JSON.toJSONString(doc)));
         }
 
