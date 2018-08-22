@@ -111,20 +111,27 @@ public class IdGenerator {
     }
 
 
+
     /**
-     * 反解出id中的各个部分值
+     * 反解id中的时间部分值
      *
      * @param id
      * @return
      */
-    public static String parseId(long id) {
-        long sequenceNum = (id << (64 - SEQUENCE_BIT)) >> (64 - SEQUENCE_BIT);
-        long nodeNum = (id << (64 - NODE_BIT - SEQUENCE_BIT)) >> (64 - NODE_BIT);
+    public static String parseTime(long id) {
         long timeStamp = id >> (64 - TIME_STAMP_BIT);
-
         String time = new DateTime(timeStamp).toString("yyyy-MM-dd HH:mm:ss:SSS");
+        return time;
+    }
 
-        return String.format("time:%s, nodeNum:%s, sequence:%s", time, nodeNum, sequenceNum);
-
+    /**
+     * 反解id中的序列号
+     *
+     * @param id
+     * @return
+     */
+    public static long parseSequenceNum(long id) {
+        long sequenceNum = (id << (64 - SEQUENCE_BIT)) >> (64 - SEQUENCE_BIT);
+        return sequenceNum;
     }
 }

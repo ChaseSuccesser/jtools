@@ -16,7 +16,7 @@ public class IdGeneratorTest {
         Set<Long> set = new HashSet<>();
         for (int i = 0; i < 10; i++) {
             long id = IdGenerator.get();
-            System.out.println(id + "--->" + IdGenerator.parseId(id));
+            System.out.println(id + "--->" + IdGenerator.parseTime(id) + "   " + IdGenerator.parseSequenceNum(id));
             set.add(id);
         }
         System.out.println(set.size());
