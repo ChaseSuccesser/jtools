@@ -212,8 +212,9 @@ public class MongoUtil {
     }
 
 //    private static FindIterable<Document> sort(FindIterable<Document> it, Map<String, Integer> sortFieldType) {
-//        it.sort(Sorts.ascending())
+//        it.sort()
 //    }
+
 
     public static <T> Optional<List<T>> findMany(Bson filter, List<String> includeFields, Class<T> clazz, String collectionName) {
         FindIterable<Document> findIterable = filter(collectionName, filter);
@@ -290,7 +291,7 @@ public class MongoUtil {
      * 创建索引
      *
      * @param map
-     * @param unique
+     * @param unique 是否是唯一索引
      * @param collectionName
      */
     public static void createIndex(Map<String, Integer> map, boolean unique, String collectionName) {
