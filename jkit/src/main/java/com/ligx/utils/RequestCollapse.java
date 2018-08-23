@@ -32,7 +32,6 @@ public class RequestCollapse<R> {
             }, (r, executor) -> {
     });
     // required params
-    private String repeatKey;
     private Callable<R> callable; // 封装实际业务逻辑
     private int futureTimeout; // futureTimeout of future(ms)
 
@@ -52,23 +51,27 @@ public class RequestCollapse<R> {
     }
 
 
-    public R response() {
+    /**
+     * @param key 能用来唯一标识请求的key
+     * @return
+     */
+    public R response(String key) {
         try {
             startScheduler();
 
-            if (map.containsKey(repeatKey)) {
+            if (map.containsKey(key)) {
                 logger.info("repeat request....");
             }
-            Future<R> future = map.computeIfAbsent(repeatKey, s -> pool.submit(callable));
+            Future<R> future = map.computeIfAbsent(key, s -> pool.submit(callable));
 
             if (future == null) {
                 // 兜底
-                logger.warn("RequestCollapser#response. future is null! key={}", repeatKey);
+                logger.warn("RequestCollapser#response. future is null! key={}", key);
                 future = pool.submit(callable);
             }
             return future.get(futureTimeout, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
-            logger.error("RequestCollapser#response. key={}", repeatKey, e);
+            logger.error("RequestCollapser#response. key={}", key, e);
             return null;
         }
     }
@@ -81,11 +84,6 @@ public class RequestCollapse<R> {
 
     public RequestCollapse<R> withPool(ThreadPoolExecutor pool) {
         this.pool = pool;
-        return this;
-    }
-
-    public RequestCollapse<R> withRepeatKey(String repeatKey) {
-        this.repeatKey = repeatKey;
         return this;
     }
 

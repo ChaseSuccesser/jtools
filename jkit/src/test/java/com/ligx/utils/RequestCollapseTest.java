@@ -173,9 +173,9 @@ public class RequestCollapseTest {
      * @return
      */
     private String serviceWithCollapse(String request) {
-        requestCollapse.withRepeatKey(request).withCallable(() -> downStreamService(request)).withFutureTimeout(7500);
+        requestCollapse.withCallable(() -> downStreamService(request)).withFutureTimeout(7500);
 
-        return requestCollapse.response();
+        return requestCollapse.response(request);
     }
 
 
