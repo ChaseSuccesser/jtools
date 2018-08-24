@@ -102,6 +102,20 @@ public class MongoUtil {
     }
 
     /**
+     * 创建集合
+     *
+     * @param collectionName
+     */
+    public static void createCollection(String collectionName) {
+        // TODO
+        MongoConf mongoConf = null;
+        if (database == null) {
+            init(mongoConf);
+        }
+        database.createCollection(collectionName);
+    }
+
+    /**
      * 创建固定集合
      *
      * @param collectionName
