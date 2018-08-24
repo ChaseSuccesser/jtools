@@ -2,10 +2,9 @@ package com.ligx.mongo;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Splitter;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
+import com.mongodb.*;
 import com.mongodb.client.*;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.model.*;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
@@ -67,7 +66,9 @@ public class MongoUtil {
                         }
                     }
                     MongoClientSettings.Builder b = MongoClientSettings.builder()
-                            .applyToClusterSettings(builder -> builder.hosts(serverAddressList));
+                            .applyToClusterSettings(builder -> builder.hosts(serverAddressList))
+                            .writeConcern(WriteConcern.MAJORITY)
+                            .readPreference(ReadPreference.primaryPreferred()); // read preference
 
                     if (StringUtils.isNotBlank(mongoConf.getUsername())) {
                         MongoCredential credential = MongoCredential.createCredential(
