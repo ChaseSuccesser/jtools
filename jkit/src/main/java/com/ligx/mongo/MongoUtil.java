@@ -18,8 +18,6 @@ import org.bson.conversions.Bson;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.mongodb.client.model.Projections.*;
-
 /**
  * Author: ligongxing.
  * Date: 2018/08/02.
@@ -49,7 +47,7 @@ public class MongoUtil {
      * MongoClient实例是immutable.
      * If a collection does not exist, MongoDB creates the collection when you first store data for that collection
      */
-    private static MongoCollection<Document> collection;
+    //private static MongoCollection<Document> collection;
 
     private MongoUtil() {
     }
@@ -168,6 +166,19 @@ public class MongoUtil {
         collection(collectionName).insertMany(documentList);
     }
 
+
+    // ------------------------------ delete -------------------------------
+    public static long deleteOne(Bson filter, String collectionName) {
+        DeleteResult deleteResult = collection(collectionName).deleteOne(filter);
+        return deleteResult.getDeletedCount();
+    }
+
+    public static long deleteMany(Bson filter, String collectionName) {
+        DeleteResult deleteResult = collection(collectionName).deleteMany(filter);
+        return deleteResult.getDeletedCount();
+    }
+
+
     // ------------------------------ update -------------------------------
     // 不使用修改器
     public static long updateMany(Bson filter, Bson update, String collectionName) {
@@ -194,34 +205,34 @@ public class MongoUtil {
         return updateResult.getModifiedCount();
     }
 
-    // ------------------------------ delete -------------------------------
-    public static long deleteOne(Bson filter, String collectionName) {
-        DeleteResult deleteResult = collection(collectionName).deleteOne(filter);
-        return deleteResult.getDeletedCount();
-    }
-
-    public static long deleteMany(Bson filter, String collectionName) {
-        DeleteResult deleteResult = collection(collectionName).deleteMany(filter);
-        return deleteResult.getDeletedCount();
-    }
-
     // ------------------------------ query -------------------------------
-    private static FindIterable<Document> filter(String collectionName, Bson filter) {
-        FindIterable<Document> findIterable = collection(collectionName).find(filter);
+    private static FindIterable<Document> buildFindIterable(Query query) {
+        FindIterable<Document> findIterable = collection(query.getCollectionName()).find(query.getWhereCondition());
+        if (CollectionUtils.isNotEmpty(query.getIncludeFields())) {
+            findIterable.projection(Projections.fields(Projections.include(query.getIncludeFields()), Projections.excludeId()));
+        }
+        if (CollectionUtils.isNotEmpty(query.getOrderFields())) {
+            List<String> orderFields = query.getOrderFields();
+            List<SortType> sortTypes = query.getSortTypes();
+            List<Bson> sortBsonList = new ArrayList<>();
+            for (int i = 0; i < orderFields.size(); i++) {
+                String orderField = orderFields.get(i);
+                SortType sortType = sortTypes.get(i);
+                sortBsonList.add(sortType == SortType.ASC ? Sorts.ascending(orderField) : Sorts.descending(orderField));
+            }
+            findIterable.sort(Sorts.orderBy(sortBsonList));
+        }
+        if (query.getSkip() > 0) {
+            findIterable.skip(query.getSkip());
+        }
+        if (query.getLimit() > 0) {
+            findIterable.limit(query.getLimit());
+        }
         return findIterable;
     }
 
-//    private static FindIterable<Document> sort(FindIterable<Document> it, Map<String, Integer> sortFieldType) {
-//        it.sort()
-//    }
-
-
-    public static <T> Optional<List<T>> findMany(Bson filter, List<String> includeFields, Class<T> clazz, String collectionName) {
-        FindIterable<Document> findIterable = filter(collectionName, filter);
-        if (CollectionUtils.isNotEmpty(includeFields)) {
-            // todo projections
-            findIterable.projection(Projections.fields(Projections.include(includeFields), Projections.excludeId()));
-        }
+    public static <T> Optional<List<T>> findMany(Query query, Class<T> clazz) {
+        FindIterable<Document> findIterable = buildFindIterable(query);
         MongoCursor<Document> cursor = findIterable.iterator();
         List<T> list = new ArrayList<>();
         while (cursor.hasNext()) {
@@ -230,11 +241,8 @@ public class MongoUtil {
         return Optional.of(list);
     }
 
-    public static Optional<List<String>> findMany(Bson filter, List<String> includeFields, String collectionName) {
-        FindIterable<Document> findIterable = filter(collectionName, filter);
-        if (CollectionUtils.isNotEmpty(includeFields)) {
-            findIterable.projection(Projections.fields(Projections.include(includeFields), Projections.excludeId()));
-        }
+    public static Optional<List<String>> findMany(Query query) {
+        FindIterable<Document> findIterable = buildFindIterable(query);
         MongoCursor<Document> cursor = findIterable.iterator();
         List<String> list = new ArrayList<>();
         while (cursor.hasNext()) {
@@ -243,41 +251,25 @@ public class MongoUtil {
         return Optional.of(list);
     }
 
-    public static <T> Optional<T> findOne(Bson filter, List<String> includeFields, Class<T> clazz, String collectionName) {
-        FindIterable<Document> findIterable = filter(collectionName, filter);
-        if (CollectionUtils.isNotEmpty(includeFields)) {
-            findIterable.projection(Projections.fields(Projections.include(includeFields), Projections.excludeId()));
-        }
+    public static <T> T findOne(Query query, Class<T> clazz) {
+        FindIterable<Document> findIterable = buildFindIterable(query);
         Document document = findIterable.first();
         if (document != null) {
-            return Optional.ofNullable(JSON.parseObject(document.toJson(), clazz));
+            return JSON.parseObject(document.toJson(), clazz);
         }
-        return Optional.empty();
+        return null;
     }
 
-    public static Optional<String> findOne(Bson filter, List<String> includeFields, String collectionName) {
-        FindIterable<Document> findIterable = filter(collectionName, filter);
-        if (CollectionUtils.isNotEmpty(includeFields)) {
-            findIterable.projection(Projections.fields(Projections.include(includeFields), Projections.excludeId()));
-        }
+    public static String findOne(Query query) {
+        FindIterable<Document> findIterable = buildFindIterable(query);
         Document document = findIterable.first();
-        return Optional.ofNullable(document.toJson());  // todo
+        if (document == null) {
+            return "";
+        }
+        return document.toJson();
     }
 
-    public static Optional<List<Document>> queryByPage(Bson filter, List<String> fields, int pageNum, int pageSize, String collectionName) {
-        FindIterable<Document> findIterable = collection(collectionName).find(filter);
-        if (CollectionUtils.isNotEmpty(fields)) {
-            findIterable.projection(Projections.fields(Projections.include(fields), Projections.excludeId()));
-        }
-        MongoCursor<Document> cursor = findIterable.skip((pageNum - 1) * pageSize).limit(pageSize).iterator();
-        List<Document> list = new ArrayList<>();
-        while (cursor.hasNext()) {
-            list.add(cursor.next());
-        }
-        return Optional.of(list);
-    }
-
-    public static long countOfCollection(Bson filter, String collectionName) {
+    public static long countOfDocument(Bson filter, String collectionName) {
         if (filter == null) {
             return collection(collectionName).countDocuments();
         } else {
