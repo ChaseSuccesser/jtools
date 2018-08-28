@@ -42,7 +42,7 @@ public class EsClusterHealth {
         try {
             String url = String.format("http://%s:%s/_cluster/health?pretty&level=indices", ip, port);
             return HttpAgent.create().doGet(url);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }
@@ -68,7 +68,7 @@ public class EsClusterHealth {
             }
             String url = urlSb.toString().substring(0, urlSb.length() - 1) + "?pretty";
             return HttpAgent.create().doGet(url);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }

@@ -24,7 +24,7 @@ public class EsIndexStat {
         try {
             String url = String.format("http://%s:%s/%s/_stats?pretty", ip, port, index);
             return HttpAgent.create().doGet(url);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }

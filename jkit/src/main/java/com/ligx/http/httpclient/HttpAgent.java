@@ -63,28 +63,29 @@ public class HttpAgent {
         return agent;
     }
 
+    /////////////////////////////// get //////////////////////////////
     /**
      * 提交get请求
      *
-     * @param urlPath
+     * @param url
      * @return
      */
-    public String doGet(String urlPath) throws IOException {
+    public String doGet(String url) throws Exception {
         HttpClient client = buildClient();
-        return client.execute(new HttpGet(urlPath), new BasicResponseHandler());
+        return client.execute(new HttpGet(url), new BasicResponseHandler());
     }
 
 
     /**
-     * 提交get请求，默认UTF-8编码, 接受Map参数
+     * 提交get请求，接受Map参数
      *
-     * @param urlPath
+     * @param url
      * @param params
      * @return
      */
-    public String doGet(String urlPath, Map<String, String> params) throws Exception {
+    public String doGet(String url, Map<String, String> params) throws Exception {
         HttpClient client = buildClient();
-        return doGet(client, urlPath, params, "UTF-8", null);
+        return doGet(client, url, params, null);
     }
 
     /**
@@ -97,39 +98,50 @@ public class HttpAgent {
      */
     public String doGetWithHeader(String url, Map<String, String> headers) throws Exception {
         HttpClient client = buildClient();
-        return doGet(client, url, null, "UTF-8", headers);
+        return doGet(client, url, null, headers);
     }
 
-    private String doGet(HttpClient client, String urlPath, Map<String, String> params, String encoding,
-                         Map<String, String> headers) throws Exception {
-        try {
-            HttpGet request = new HttpGet(urlPath);
+    /**
+     * 提交get请求，接受Map参数，带有请求头
+     *
+     * @param url
+     * @param params
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    public String doGetWithHeader(String url, Map<String, String> params, Map<String, String> headers) throws Exception {
+        HttpClient client = buildClient();
+        return doGet(client, url, params, headers);
+    }
 
-            List<NameValuePair> parameters = new ArrayList<>();
-            if(MapUtils.isNotEmpty(params)){
-                for (Map.Entry<String, String> param : params.entrySet()) {
-                    parameters.add(new BasicNameValuePair(param.getKey(), param.getValue()));
-                }
+    private String doGet(HttpClient client, String urlPath, Map<String, String> params, Map<String, String> headers) throws Exception {
+        HttpGet request = new HttpGet(urlPath);
+
+        // 设置请求头
+        if (MapUtils.isNotEmpty(headers)) {
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                request.setHeader(entry.getKey(), entry.getValue());
             }
-
-            // 设置请求头
-            if (MapUtils.isNotEmpty(headers)) {
-                for (Map.Entry<String, String> entry : headers.entrySet()) {
-                    request.setHeader(entry.getKey(), entry.getValue());
-                }
-            }
-
-            URI uri = new URIBuilder(request.getURI()).addParameters(parameters).build();
-            request.setURI(uri);
-
-            String response = client.execute(request, new EncodingResponseHandler(encoding));
-            return response;
-        } catch (URISyntaxException | IOException e) {
-            throw e;
         }
+
+        // 设置请求参数
+        List<NameValuePair> parameters = new ArrayList<>();
+        if(MapUtils.isNotEmpty(params)){
+            for (Map.Entry<String, String> param : params.entrySet()) {
+                parameters.add(new BasicNameValuePair(param.getKey(), param.getValue()));
+            }
+        }
+
+        URI uri = new URIBuilder(request.getURI()).addParameters(parameters).build();
+        request.setURI(uri);
+
+        String response = client.execute(request, new EncodingResponseHandler("UTF_8"));
+        return response;
     }
 
 
+    /////////////////////////////// post //////////////////////////////
     /**
      * 提交post请求
      *
@@ -186,26 +198,22 @@ public class HttpAgent {
      * 提交post请求，直接把内容写在body里
      *
      * @param client
-     * @param urlPath
+     * @param url
      * @param content
      * @param encoding
      * @param headers
      * @return
      */
-    private String doPost(HttpClient client, String urlPath, String content, String encoding, Map<String, String> headers) throws IOException {
-        HttpPost post = new HttpPost(urlPath);
-        try {
-            if (headers != null) {
-                for (Map.Entry<String, String> kv : headers.entrySet()) {
-                    post.setHeader(kv.getKey(), kv.getValue());
-                }
+    private String doPost(HttpClient client, String url, String content, String encoding, Map<String, String> headers) throws IOException {
+        HttpPost post = new HttpPost(url);
+        if (headers != null) {
+            for (Map.Entry<String, String> kv : headers.entrySet()) {
+                post.setHeader(kv.getKey(), kv.getValue());
             }
-            post.setEntity(new ByteArrayEntity(content.getBytes(encoding)));
-            String response = client.execute(post, new EncodingResponseHandler(encoding));
-            return response;
-        } catch (IOException e) {
-            throw e;
         }
+        post.setEntity(new ByteArrayEntity(content.getBytes(encoding)));
+        String response = client.execute(post, new EncodingResponseHandler(encoding));
+        return response;
     }
 
     /**
@@ -219,18 +227,14 @@ public class HttpAgent {
     public byte[] doPost(String urlPath, byte[] contentBytes, Map<String, String> headers) throws IOException {
         HttpClient client = buildClient();
         HttpPost post = new HttpPost(urlPath);
-        try {
-            if (headers != null) {
-                for (Map.Entry<String, String> kv : headers.entrySet()) {
-                    post.setHeader(kv.getKey(), kv.getValue());
-                }
+        if (headers != null) {
+            for (Map.Entry<String, String> kv : headers.entrySet()) {
+                post.setHeader(kv.getKey(), kv.getValue());
             }
-            post.setEntity(new ByteArrayEntity(contentBytes));
-            byte[] response = client.execute(post, new ByteArrayResponseHandler());
-            return response;
-        } catch (IOException e) {
-            throw e;
         }
+        post.setEntity(new ByteArrayEntity(contentBytes));
+        byte[] response = client.execute(post, new ByteArrayResponseHandler());
+        return response;
     }
 
     /**
@@ -266,22 +270,18 @@ public class HttpAgent {
      * @return
      */
     public String doPost(HttpClient client, String urlPath, Map<String, String> params, String encoding) throws Exception {
-        try {
-            List<NameValuePair> parameters = new ArrayList<>(params.size());
-            for (Map.Entry<String, String> param : params.entrySet()) {
-                parameters.add(new BasicNameValuePair(param.getKey(), param.getValue()));
-            }
-            HttpEntity entity = new UrlEncodedFormEntity(parameters, Charset.forName(encoding));
-
-            RequestBuilder builder = RequestBuilder.post().setUri(new URI(urlPath));
-            builder.setEntity(entity);
-            HttpUriRequest request = builder.build();
-
-            String response = client.execute(request, new EncodingResponseHandler(encoding));
-            return response;
-        } catch (URISyntaxException | IOException e) {
-            throw e;
+        List<NameValuePair> parameters = new ArrayList<>(params.size());
+        for (Map.Entry<String, String> param : params.entrySet()) {
+            parameters.add(new BasicNameValuePair(param.getKey(), param.getValue()));
         }
+        HttpEntity entity = new UrlEncodedFormEntity(parameters, Charset.forName(encoding));
+
+        RequestBuilder builder = RequestBuilder.post().setUri(new URI(urlPath));
+        builder.setEntity(entity);
+        HttpUriRequest request = builder.build();
+
+        String response = client.execute(request, new EncodingResponseHandler(encoding));
+        return response;
     }
 
 

@@ -23,7 +23,7 @@ public class EsNodeStat {
         try {
             String url = String.format("http://%s:%s/_nodes/stats/indices,os,jvm,transport,http,fs?pretty", ip, port);
             return HttpAgent.create().doGet(url);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }
@@ -41,7 +41,7 @@ public class EsNodeStat {
         try {
             String url = String.format("http://%s:%s/_nodes/%s/stats/indices,os,jvm,transport,http,fs?pretty", ip, port, node);
             return HttpAgent.create().doGet(url);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }
@@ -62,7 +62,7 @@ public class EsNodeStat {
         try {
             String url = String.format("http://%s:%s/_nodes/%s/os,jvm,network,http,plugins,settings?pretty", ip, port, node);
             return HttpAgent.create().doGet(url);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }

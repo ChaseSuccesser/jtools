@@ -23,7 +23,7 @@ public class HttpUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpUtils.class);
 
-    public static Optional<JSONObject> get(String url, Map<String, Object> params, int timeout, TimeUnit timeUnit) {
+    public static Optional<String> get(String url, Map<String, Object> params, int timeout, TimeUnit timeUnit) {
         if (StringUtils.isBlank(url)) {
             return Optional.empty();
         }
@@ -33,7 +33,7 @@ public class HttpUtils {
             List<String> paramList = params.entrySet().stream()
                     .map(entry -> entry.getKey() + "=" + entry.getValue())
                     .collect(Collectors.toList());
-             paramPath = Joiner.on("&").skipNulls().join(paramList);
+            paramPath = Joiner.on("&").skipNulls().join(paramList);
         }
         if (StringUtils.isNotBlank(paramPath)) {
             url = url + "?" + paramPath;
@@ -45,7 +45,7 @@ public class HttpUtils {
         return doRequest(url, request, timeout, timeUnit);
     }
 
-    public static Optional<JSONObject> postWithJson(String url, Map<String, Object> params, int timeout, TimeUnit timeUnit) {
+    public static Optional<String> postWithJson(String url, Map<String, Object> params, int timeout, TimeUnit timeUnit) {
         if (StringUtils.isBlank(url) || MapUtils.isEmpty(params)) {
             LOGGER.warn("HttpUtils#postWithJson, invalid args! url={}, params={}", url, JSON.toJSONString(params));
             return Optional.empty();
@@ -62,7 +62,7 @@ public class HttpUtils {
         return doRequest(url, request, timeout, timeUnit);
     }
 
-    public static Optional<JSONObject> postWithJson(String url, String json, int timeout, TimeUnit timeUnit) {
+    public static Optional<String> postWithJson(String url, String json, int timeout, TimeUnit timeUnit) {
         if (StringUtils.isBlank(url) || StringUtils.isBlank(json)) {
             LOGGER.warn("HttpUtils#postWithJson, invalid args! url={}, json={}", url, json);
             return Optional.empty();
@@ -78,7 +78,7 @@ public class HttpUtils {
         return doRequest(url, request, timeout, timeUnit);
     }
 
-    public static Optional<JSONObject> postWithForm(String url, Map<String, Object> params, int timeout, TimeUnit timeUnit) {
+    public static Optional<String> postWithForm(String url, Map<String, Object> params, int timeout, TimeUnit timeUnit) {
         if (StringUtils.isBlank(url) || MapUtils.isEmpty(params)) {
             LOGGER.warn("HttpUtils#postWithForm, invalid args! url={}, params={}", url, JSON.toJSONString(params));
             return Optional.empty();
@@ -98,10 +98,11 @@ public class HttpUtils {
         return doRequest(url, request, timeout, timeUnit);
     }
 
-    private static Optional<JSONObject> doRequest(String url, Request request, int timeout, TimeUnit timeUnit) {
+    private static Optional<String> doRequest(String url, Request request, int timeout, TimeUnit timeUnit) {
         OkHttpClient client = new OkHttpClient();
         client.setReadTimeout(timeout, timeUnit);
 
+        long startTime = System.currentTimeMillis();
         Response response = null;
         try {
             response = client.newCall(request).execute();
@@ -110,10 +111,9 @@ public class HttpUtils {
                 return Optional.empty();
             }
             String responseStr = response.body().string();
-            JSONObject responseJsonObj = JSON.parseObject(responseStr);
-            return Optional.ofNullable(responseJsonObj);
+            return Optional.of(responseStr);
         } catch (Exception e) {
-            LOGGER.error("HttpUtils#doRequest, url={}", url, e);
+            LOGGER.error("HttpUtils#doRequest, url={}, costTime={}", url, System.currentTimeMillis() - startTime, e);
             return Optional.empty();
         } finally {
             if (response != null) {
