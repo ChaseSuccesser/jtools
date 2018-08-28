@@ -40,7 +40,7 @@ public class MongoUtil {
      * MongoDatabase实例是immutable.
      * If a database does not exist, MongoDB creates the database when you first store data for that database.
      */
-    private static MongoDatabase database;
+    private static volatile MongoDatabase database;
 
     /**
      * MongoClient实例是immutable.
@@ -67,7 +67,7 @@ public class MongoUtil {
                     }
                     MongoClientSettings.Builder b = MongoClientSettings.builder()
                             .applyToClusterSettings(builder -> builder.hosts(serverAddressList))
-                            .writeConcern(WriteConcern.MAJORITY)
+                            .writeConcern(WriteConcern.MAJORITY)   // write concern
                             .readPreference(ReadPreference.primaryPreferred()); // read preference
 
                     if (StringUtils.isNotBlank(mongoConf.getUsername())) {
