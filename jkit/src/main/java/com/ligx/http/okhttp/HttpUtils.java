@@ -107,7 +107,8 @@ public class HttpUtils {
         try {
             response = client.newCall(request).execute();
             if (response == null || !response.isSuccessful()) {
-                LOGGER.warn("HttpUtils#doRequest, invalid Response! url={}", url);
+                LOGGER.warn("HttpUtils#doRequest, invalid Response! Response={}, url={}, costTime={}",
+                        response, url, System.currentTimeMillis() - startTime);
                 return Optional.empty();
             }
             String responseStr = response.body().string();
