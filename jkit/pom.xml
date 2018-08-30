@@ -105,6 +105,11 @@
             <artifactId>transport</artifactId>
             <version>5.2.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>5.4.0</version>
+        </dependency>
         <!--HBase-->
         <dependency>
             <groupId>org.apache.hbase</groupId>
@@ -165,6 +170,12 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
             <version>3.8.0</version>
+        </dependency>
+
+        <!--sprint boot-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
     </dependencies>
 
