@@ -106,11 +106,15 @@ public class HttpUtils {
         Response response = null;
         try {
             response = client.newCall(request).execute();
+
             if (response == null || !response.isSuccessful()) {
                 LOGGER.warn("HttpUtils#doRequest, invalid Response! Response={}, url={}, costTime={}",
                         response, url, System.currentTimeMillis() - startTime);
                 return Optional.empty();
+            } else {
+                LOGGER.info("HttpUtils#doRequest, url={}, costTime={}", response, url, System.currentTimeMillis() - startTime);
             }
+
             String responseStr = response.body().string();
             return Optional.of(responseStr);
         } catch (Exception e) {
