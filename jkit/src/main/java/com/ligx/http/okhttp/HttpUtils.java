@@ -112,7 +112,8 @@ public class HttpUtils {
                         response, url, System.currentTimeMillis() - startTime);
                 return Optional.empty();
             } else {
-                LOGGER.info("HttpUtils#doRequest, url={}, costTime={}", response, url, System.currentTimeMillis() - startTime);
+                LOGGER.info("HttpUtils#doRequest, Response={}, url={}, costTime={}",
+                        response, url, System.currentTimeMillis() - startTime);
             }
 
             String responseStr = response.body().string();
