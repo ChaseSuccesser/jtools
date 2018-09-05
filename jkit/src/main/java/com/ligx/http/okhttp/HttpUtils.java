@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Joiner;
 import com.squareup.okhttp.*;
+import okio.Buffer;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -108,8 +109,8 @@ public class HttpUtils {
             response = client.newCall(request).execute();
 
             if (response == null || !response.isSuccessful()) {
-                LOGGER.warn("HttpUtils#doRequest, invalid Response! Response={}, url={}, costTime={}",
-                        response, url, System.currentTimeMillis() - startTime);
+                LOGGER.warn("HttpUtils#doRequest, invalid Response! Request={}, Response={}, url={}, costTime={}",
+                        requestBodyToString(request), response, url, System.currentTimeMillis() - startTime);
                 return Optional.empty();
             } else {
                 LOGGER.info("HttpUtils#doRequest, Response={}, url={}, costTime={}",
@@ -119,7 +120,8 @@ public class HttpUtils {
             String responseStr = response.body().string();
             return Optional.of(responseStr);
         } catch (Exception e) {
-            LOGGER.error("HttpUtils#doRequest, url={}, costTime={}", url, System.currentTimeMillis() - startTime, e);
+            LOGGER.error("HttpUtils#doRequest, Request={}, url={}, costTime={}",
+                    requestBodyToString(request), url, System.currentTimeMillis() - startTime, e);
             return Optional.empty();
         } finally {
             if (response != null) {
@@ -130,5 +132,29 @@ public class HttpUtils {
                 }
             }
         }
+    }
+
+
+    private static String requestBodyToString(Request request) {
+        if (request == null) {
+            return "";
+        }
+        Request copy = request.newBuilder().build();
+        String method = copy.method();
+
+        String requestContent = "";
+        if (!"GET".equals(method)) {
+            RequestBody requestBody = copy.body();
+            if (requestBody != null) {
+                try (Buffer buffer = new Buffer()) {
+                    requestBody.writeTo(buffer);
+                    requestContent = buffer.readUtf8();
+                } catch (Exception e) {
+                    LOGGER.error("HttpUtils#requestBodyToString, error, ", e);
+                }
+            }
+        }
+
+        return requestContent;
     }
 }
