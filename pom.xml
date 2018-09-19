@@ -12,6 +12,7 @@
     <modules>
         <module>jkit</module>
         <module>jtools-demo</module>
+        <module>jtools-perf</module>
     </modules>
 
     <parent>
