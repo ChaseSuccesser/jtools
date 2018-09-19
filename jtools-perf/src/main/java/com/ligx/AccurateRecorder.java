@@ -1,5 +1,8 @@
 package com.ligx;
 
+import org.apache.commons.collections.MapUtils;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
@@ -41,5 +44,52 @@ public class AccurateRecorder {
         }
 
         timingMap.merge(costTime, 1, (oldVal, newVal) -> oldVal + newVal);
+    }
+
+    public void fillSortedCostTimes(int[] arr) {
+        int index = 0;
+        for (int i = 0; i < timingArr.length(); i++) {
+            int count = timingArr.get(i);
+            if (count > 0) {
+                arr[index++] = i;
+                arr[index++] = count;
+            }
+        }
+        if (MapUtils.isNotEmpty(timingMap)) {
+            List<Integer> costTimeList = new ArrayList<>(timingMap.keySet());
+            Collections.sort(costTimeList);
+            for (int i = 0; i < costTimeList.size(); i++) {
+                int costTime = costTimeList.get(i);
+                int count = timingMap.get(costTime);
+                if (count > 0) {
+                    arr[index++] = costTime;
+                    arr[index++] = count;
+                }
+            }
+        }
+    }
+
+    public int getEffectiveCount() {
+        int result = 0;
+        for (int i = 0; i < timingArr.length(); i++) {
+            int count = timingArr.get(i);
+            if (count > 0) {
+                result++;
+            }
+        }
+        for (Map.Entry<Integer, Integer> entry : timingMap.entrySet()) {
+            int count = entry.getValue();
+            if (count > 0) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    public void resetRecord() {
+        for (int i = 0; i < timingArr.length(); i++) {
+            timingArr.set(i, 0);
+        }
+        timingMap.clear();
     }
 }

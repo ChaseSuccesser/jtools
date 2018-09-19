@@ -1,20 +1,24 @@
 package com.ligx;
 
-import static org.junit.Assert.assertTrue;
-
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-{
-    /**
-     * Rigorous Test :-)
-     */
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class AppTest {
+
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    public void test() {
+        List<Integer> list = new ArrayList<Integer>() {{
+            add(3);
+            add(1);
+            add(2);
+        }};
+
+        Collections.sort(list);
+
+        System.out.println(JSON.toJSON(list));
     }
 }
