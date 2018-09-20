@@ -1,10 +1,12 @@
-package com.ligx;
+package com.ligx.recorder;
 
 import org.apache.commons.collections.MapUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 
 /**
@@ -91,5 +93,24 @@ public class AccurateRecorder {
             timingArr.set(i, 0);
         }
         timingMap.clear();
+    }
+
+
+    // ================= getter/setter =============
+
+    public int getMethodTagId() {
+        return methodTagId;
+    }
+
+    public void setMethodTagId(int methodTagId) {
+        this.methodTagId = methodTagId;
+    }
+
+    public boolean isHasRecord() {
+        return hasRecord;
+    }
+
+    public void setHasRecord(boolean hasRecord) {
+        this.hasRecord = hasRecord;
     }
 }

@@ -1,5 +1,7 @@
 package com.ligx;
 
+import com.ligx.recorder.AccurateRecorder;
+
 /**
  * Author: ligongxing.
  * Date: 2018年09月20日.
@@ -21,7 +23,7 @@ public class PerfStatsCalculator {
     }
 
 
-    public static MethodMetrics calPerfStats(int[] sortedCostTimes, int effectiveCount, MethodTag methodTag, long startMillTime, long endMillTime) {
+    private static MethodMetrics calPerfStats(int[] sortedCostTimes, int effectiveCount, MethodTag methodTag, long startMillTime, long endMillTime) {
         if (sortedCostTimes == null || sortedCostTimes.length == 0) {
             return MethodMetrics.getInstance(methodTag, startMillTime, endMillTime);
         }

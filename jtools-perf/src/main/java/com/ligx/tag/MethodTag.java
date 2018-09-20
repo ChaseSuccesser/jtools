@@ -1,4 +1,4 @@
-package com.ligx;
+package com.ligx.tag;
 
 /**
  * Author: ligongxing.
@@ -10,7 +10,9 @@ public class MethodTag {
 
     private String methodName;
 
-    public MethodTag() {
+
+    public String getSimpleDesc() {
+        return className + "." + methodName;
     }
 
     public MethodTag(String className, String methodName) {
@@ -32,5 +34,13 @@ public class MethodTag {
 
     public void setMethodName(String methodName) {
         this.methodName = methodName;
+    }
+
+    @Override
+    public String toString() {
+        return "MethodTag{" +
+                "className='" + className + '\'' +
+                ", methodName='" + methodName + '\'' +
+                '}';
     }
 }

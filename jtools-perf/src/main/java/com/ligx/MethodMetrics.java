@@ -6,6 +6,8 @@ package com.ligx;
  */
 public class MethodMetrics {
 
+    private MethodTag methodTag;
+
     private static final int TP_50_IDX = 0;
     private static final int TP_90_IDX = 1;
     private static final int TP_95_IDX = 2;
@@ -20,8 +22,6 @@ public class MethodMetrics {
 
     //注意：tpArr和TOP_PERCENTILE_ARR的大小请保持一致！！！！
     private final int[] tpArr = {-1, -1, -1, -1, -1, -1, -1, -1};
-
-    private MethodTag methodTag;
 
     private int maxTime = -1; //ms
 
