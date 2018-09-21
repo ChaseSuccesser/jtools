@@ -1,7 +1,7 @@
 package com.ligx.processor;
 
-import com.ligx.MethodMetrics;
 import com.ligx.formatter.MethodMetricsFormatter;
+import com.ligx.metrics.MethodMetrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

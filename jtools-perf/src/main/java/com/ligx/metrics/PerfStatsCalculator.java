@@ -1,6 +1,7 @@
-package com.ligx;
+package com.ligx.metrics;
 
 import com.ligx.recorder.AccurateRecorder;
+import com.ligx.tag.MethodTag;
 
 /**
  * Author: ligongxing.
@@ -35,11 +36,12 @@ public class PerfStatsCalculator {
         int maxCostTime = sortedCostTimes[effectiveCount * 2 - 2];
 
         MethodMetrics methodMetrics = MethodMetrics.getInstance(methodTag, startMillTime, endMillTime);
-        methodMetrics.setTotalCount(totalCount);
-        methodMetrics.setAvgTime(avgCostTime);
-        methodMetrics.setMaxTime(maxCostTime);
-        methodMetrics.setMinTime(minCostTime);
+        methodMetrics.setTotalCount(totalCount); // 总调用次数
+        methodMetrics.setAvgTime(avgCostTime);   // 平均耗时
+        methodMetrics.setMaxTime(maxCostTime);   // 最大耗时
+        methodMetrics.setMinTime(minCostTime);   // 最小耗时
 
+        // 计算各种TP指标
         int[] topPerIndexArr = getTopPercentileIndexArr(totalCount);
         int[] tpArr = methodMetrics.getTpArr();
         int countStats = 0;

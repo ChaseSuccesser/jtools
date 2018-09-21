@@ -1,6 +1,6 @@
 package com.ligx.formatter;
 
-import com.ligx.MethodMetrics;
+import com.ligx.metrics.MethodMetrics;
 import com.ligx.util.TimeUtil;
 import org.apache.commons.collections.CollectionUtils;
 

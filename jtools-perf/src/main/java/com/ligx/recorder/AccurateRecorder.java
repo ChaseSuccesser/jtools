@@ -23,14 +23,15 @@ public class AccurateRecorder {
 
     private ConcurrentHashMap<Integer, Integer> timingMap;
 
-    private AccurateRecorder(int methodTagId, int mostTimeThreshold) {
+    private AccurateRecorder(int methodTagId) {
+        int mostTimeThreshold = 10000;  // todo mostTimeThreshold弄成动态配置属性
         this.methodTagId = methodTagId;
         this.timingArr = new AtomicIntegerArray(mostTimeThreshold + 1);
         this.timingMap = new ConcurrentHashMap<>();
     }
 
-    public static AccurateRecorder getInstance(int methodTagId, int mostTimeThreshold) {
-        return new AccurateRecorder(methodTagId, mostTimeThreshold);
+    public static AccurateRecorder getInstance(int methodTagId) {
+        return new AccurateRecorder(methodTagId);
     }
 
     public void recordTime(long startMillTime, long endMillTime) {
@@ -93,6 +94,8 @@ public class AccurateRecorder {
             timingArr.set(i, 0);
         }
         timingMap.clear();
+
+        hasRecord = false;
     }
 
 

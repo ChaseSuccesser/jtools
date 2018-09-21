@@ -1,4 +1,6 @@
-package com.ligx;
+package com.ligx.metrics;
+
+import com.ligx.tag.MethodTag;
 
 /**
  * Author: ligongxing.

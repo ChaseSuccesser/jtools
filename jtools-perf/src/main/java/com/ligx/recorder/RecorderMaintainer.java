@@ -1,7 +1,11 @@
 package com.ligx.recorder;
 
-import com.ligx.Constants;
+import com.ligx.base.Constants;
+import com.ligx.metrics.MethodMetrics;
+import com.ligx.metrics.PerfStatsCalculator;
 import com.ligx.processor.LoggerMethodMetricProcessor;
+import com.ligx.tag.MethodTag;
+import com.ligx.tag.MethodTagMaintainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +28,15 @@ public class RecorderMaintainer {
     private volatile Recorders currRecorders;
 
     private LoggerMethodMetricProcessor methodMetricProcessor;
+
+
+    private static final RecorderMaintainer instantce = new RecorderMaintainer();
+
+    private RecorderMaintainer(){}
+
+    public static RecorderMaintainer getInstantce() {
+        return instantce;
+    }
 
 
     public boolean init(LoggerMethodMetricProcessor methodMetricProcessor, int backupRecordersCount) {
@@ -56,10 +69,10 @@ public class RecorderMaintainer {
         return true;
     }
 
-    public void addRecorder(int methodTagId, AccurateRecorder recorder) {
+    public void addRecorder(int methodTagId) {
         for (int i = 0; i < recordersList.size(); i++) {
             Recorders recorders = recordersList.get(i);
-            recorders.setRecorder(methodTagId, recorder);
+            recorders.setRecorder(methodTagId, AccurateRecorder.getInstance(methodTagId));
         }
     }
 
@@ -70,20 +83,29 @@ public class RecorderMaintainer {
     public void run(long lastTimeSliceStartTime, long millTimeSlice) {
         try {
             Recorders tmpCurrRecorders = currRecorders;
-            tmpCurrRecorders.setStartTime(lastTimeSliceStartTime);
-            tmpCurrRecorders.setEndTime(lastTimeSliceStartTime + millTimeSlice);
 
             currIndex = getNextIdx(currIndex);
             LOGGER.info("RecorderMaintainer#run, round robin Recorders, currIndex={}", currIndex);
 
             Recorders nextRecorders = recordersList.get(currIndex);
-            nextRecorders.setStartTime(lastTimeSliceStartTime + millTimeSlice);
-            nextRecorders.setEndTime(lastTimeSliceStartTime + millTimeSlice * 2);
             nextRecorders.resetRecorder();
             currRecorders = nextRecorders;
 
             methodMetricProcessor.beforeProcess(lastTimeSliceStartTime);
-
+            int methodTagCount = MethodTagMaintainer.getInstance().getMethodTagCount();
+            for (int i = 0; i < methodTagCount; i++) {
+                AccurateRecorder recorder = tmpCurrRecorders.getRecorder(i);
+                if (recorder == null || !recorder.isHasRecord()) {
+                    continue;
+                }
+                MethodTag methodTag = MethodTagMaintainer.getInstance().getMethodTag(recorder.getMethodTagId());
+                if (methodTag == null) {
+                    continue;
+                }
+                MethodMetrics methodMetrics = PerfStatsCalculator.calPerfStats(recorder, methodTag, lastTimeSliceStartTime, lastTimeSliceStartTime + millTimeSlice);
+                methodMetricProcessor.process(lastTimeSliceStartTime, methodMetrics);
+            }
+            methodMetricProcessor.afterProcess(lastTimeSliceStartTime, lastTimeSliceStartTime, lastTimeSliceStartTime + millTimeSlice);
         } catch (Exception e) {
             LOGGER.error("RecorderMaintainer#run, lastTimeSliceStartTime={}", lastTimeSliceStartTime, e);
         }

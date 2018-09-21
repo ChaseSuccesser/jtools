@@ -10,10 +10,6 @@ public class Recorders {
 
     private AtomicReferenceArray<AccurateRecorder> recorderArr;
 
-    private volatile long startTime;
-
-    private volatile long endTime;
-
 
     public Recorders(AtomicReferenceArray<AccurateRecorder> recorderArr) {
         this.recorderArr = recorderArr;
@@ -39,23 +35,5 @@ public class Recorders {
                 recorder.resetRecord();
             }
         }
-    }
-
-
-    // ================= getter/setter =============
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
-
-    public long getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
     }
 }
