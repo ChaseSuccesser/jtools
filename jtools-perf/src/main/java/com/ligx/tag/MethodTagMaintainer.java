@@ -4,6 +4,8 @@ import com.ligx.base.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
@@ -17,6 +19,8 @@ public class MethodTagMaintainer {
 
     // 用来生成MethodTagId
     private AtomicInteger index = new AtomicInteger(0);
+
+    private Map<String, Integer> map = new ConcurrentHashMap<>();
 
     private AtomicReferenceArray<MethodTag> methodTagArr = new AtomicReferenceArray<>(Constants.MAX_METHOD_TAG_ID);
 
@@ -32,14 +36,17 @@ public class MethodTagMaintainer {
 
 
     public int addMethodTag(MethodTag methodTag) {
-        int methodTagId = index.getAndIncrement();
-        if (methodTagId > Constants.MAX_METHOD_TAG_ID) {
-            LOGGER.warn("MethodTagMaintainer#addMethodTag, MethodTag={}, methodTagId={} > {}",
-                    methodTag, methodTagId, Constants.MAX_METHOD_TAG_ID);
-            return -1;
+        if (map.get(methodTag.getSimpleDesc()) == null) {
+            synchronized (MethodTagMaintainer.class) {
+                if (map.get(methodTag.getSimpleDesc()) == null) {
+                    int methodTagId = index.getAndIncrement();
+                    map.putIfAbsent(methodTag.getSimpleDesc(), methodTagId);
+                    methodTagArr.set(methodTagId, methodTag);
+                    LOGGER.info("MethodTagMaintainer#addMethodTag, methodTag={}, methodTagId={}", methodTag, methodTagId);
+                }
+            }
         }
-        methodTagArr.set(methodTagId, methodTag);
-        return methodTagId;
+        return map.get(methodTag.getSimpleDesc());
     }
 
     public MethodTag getMethodTag(int methodTagId) {
