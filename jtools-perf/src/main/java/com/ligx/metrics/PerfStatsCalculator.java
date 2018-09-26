@@ -66,20 +66,19 @@ public class PerfStatsCalculator {
         int[] tpArr = methodMetrics.getTpArr();
         int countStats = 0;
         int perIndex = 0;
+        int lastCostTime = 0;
         for (int i = 0; i < sortedCostTimes.length; i += 2) {
-            int costTime = sortedCostTimes[i];
-            int count = sortedCostTimes[i + 1];
-//            // sortedRecords中只有第0位的响应时间可以为0
-//            if (i > 0 && costTime <= 0) {
-//                break;
-//            }
             if (perIndex == MethodMetrics.getPercentiles().length) {
                 break;
             }
+            int costTime = sortedCostTimes[i];
+            if (costTime > 0) {
+                lastCostTime = costTime;
+            }
+            int count = sortedCostTimes[i + 1];
             countStats += count;
-            System.out.println("perIndex: " + perIndex);  // todo delete
             if (countStats >= topPerIndexArr[perIndex]) {
-                tpArr[perIndex] = costTime;
+                tpArr[perIndex] = costTime > 0 ? costTime : lastCostTime;
                 perIndex++;
             }
         }
@@ -95,6 +94,10 @@ public class PerfStatsCalculator {
         for (int i = 0; i < sortedCostTimes.length; i+=2) {
             int costTime = sortedCostTimes[i];
             int count = sortedCostTimes[i + 1];
+            //sortedRecords中只有第0位的响应时间可以为0
+            if (i > 0 && costTime <= 0) {
+                break;
+            }
             result[0] += costTime * count;
             result[1] += count;
         }
@@ -107,12 +110,6 @@ public class PerfStatsCalculator {
         for (int i = 0; i < percentiles.length; i++) {
             result[i] = getIndex(totalCount, percentiles[i]);
         }
-        // todo delete
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < result.length; i++) {
-            sb.append(result[i]).append(",");
-        }
-        System.out.println(sb.toString());
         return result;
     }
 

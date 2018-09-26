@@ -25,4 +25,16 @@ public class ProfilingTestService {
         }
         return "hello world";
     }
+
+
+    @Profiling
+    public String profilingTestV2() {
+        int sleepTime = RandomUtils.nextInt(10, 1000);
+        try {
+            Thread.sleep(sleepTime);
+        } catch (Exception e) {
+            LOGGER.error("ProfilingTestService#profilingTestV2,", e);
+        }
+        return "hello world 2";
+    }
 }

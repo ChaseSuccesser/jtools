@@ -18,7 +18,11 @@ public class ProfilingTestController {
 
     @RequestMapping(value = "/profilingTest", method = RequestMethod.GET)
     public String profilingTest() {
-        String response = profilingTestService.profilingTest();
-        return response;
+        return profilingTestService.profilingTest();
+    }
+
+    @RequestMapping(value = "/profilingTestV2", method = RequestMethod.GET)
+    public String profilingTestV2() {
+        return profilingTestService.profilingTestV2();
     }
 }

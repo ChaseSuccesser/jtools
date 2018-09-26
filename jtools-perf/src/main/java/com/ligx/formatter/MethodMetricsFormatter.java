@@ -63,8 +63,8 @@ public class MethodMetricsFormatter {
                     m.getTP999(),
                     m.getTP9999(),
                     m.getTP99999(),
-                    m.getTP100()
-            ));
+                    m.getTP100()))
+                    .append("\n");
         }
         return sb.toString();
     }
