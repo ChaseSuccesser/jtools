@@ -3,8 +3,11 @@ package com.ligx.metrics;
 import com.ligx.recorder.AccurateRecorder;
 import com.ligx.tag.MethodTag;
 import com.ligx.util.ChunkPool;
+import com.ligx.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Date;
 
 /**
  * Author: ligongxing.
@@ -29,8 +32,11 @@ public class PerfStatsCalculator {
             recorder.fillSortedCostTimes(sortedCostTimes);
             return calPerfStats(sortedCostTimes, effectiveCount, methodTag, startMillTime, endMillTime);
         } catch (Exception e) {
-            LOGGER.error("PerfStatsCalculator#calPerfStats, recorder={}, MethodTag={}, startMillTime={}, endMillTime={}",
-                    recorder, methodTag, startMillTime, endMillTime, e);
+            LOGGER.error("PerfStatsCalculator#calPerfStats, recorder={}, MethodTag={}, startTime={}, endTime={}",
+                    recorder, methodTag,
+                    TimeUtil.format(new Date(startMillTime), TimeUtil.YMDHMS_FORMAT),
+                    TimeUtil.format(new Date(endMillTime), TimeUtil.YMDHMS_FORMAT),
+                    e);
         } finally {
             ChunkPool.getInstance().returnChunk(sortedCostTimes);
         }
@@ -63,8 +69,16 @@ public class PerfStatsCalculator {
         for (int i = 0; i < sortedCostTimes.length; i += 2) {
             int costTime = sortedCostTimes[i];
             int count = sortedCostTimes[i + 1];
+//            // sortedRecords中只有第0位的响应时间可以为0
+//            if (i > 0 && costTime <= 0) {
+//                break;
+//            }
+            if (perIndex == MethodMetrics.getPercentiles().length) {
+                break;
+            }
             countStats += count;
-            if (countStats > topPerIndexArr[perIndex]) {
+            System.out.println("perIndex: " + perIndex);  // todo delete
+            if (countStats >= topPerIndexArr[perIndex]) {
                 tpArr[perIndex] = costTime;
                 perIndex++;
             }
@@ -93,6 +107,12 @@ public class PerfStatsCalculator {
         for (int i = 0; i < percentiles.length; i++) {
             result[i] = getIndex(totalCount, percentiles[i]);
         }
+        // todo delete
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < result.length; i++) {
+            sb.append(result[i]).append(",");
+        }
+        System.out.println(sb.toString());
         return result;
     }
 
