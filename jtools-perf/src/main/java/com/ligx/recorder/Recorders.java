@@ -21,7 +21,13 @@ public class Recorders {
     }
 
     public void setRecorderIfAbsent(int index, AccurateRecorder recorder) {
-        recorderArr.accumulateAndGet(index, recorder, (oldVal, newVal) -> oldVal);
+        recorderArr.accumulateAndGet(index, recorder, (oldVal, newVal) -> {
+            if (oldVal == null) {
+                return newVal;
+            } else {
+                return oldVal;
+            }
+        });
     }
 
 

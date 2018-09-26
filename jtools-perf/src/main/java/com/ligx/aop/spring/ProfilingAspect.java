@@ -55,7 +55,7 @@ public class ProfilingAspect {
         if (recorder != null) {
             recorder.recordTime(startTime, endTime);
         } else {
-            LOGGER.warn("ProfilingAspect#recordCostTime, methodTagId={}", methodTagId);
+            LOGGER.warn("ProfilingAspect#recordCostTime, AccurateRecorder is null! methodTagId={}", methodTagId);
         }
     }
 }
