@@ -69,7 +69,7 @@ public class MethodMetrics {
         return tpArr[TP_100_IDX];
     }
 
-    public int getRPS() {
+    public int getQPS() {
         long seconds = (stopMillTime - startMillTime) / 1000;
         seconds = seconds <= 0L ? 1 : seconds;
         return (int) (totalCount / seconds);
@@ -79,7 +79,7 @@ public class MethodMetrics {
     public String toString() {
         return "MethodMetrics{" +
                 "methodTag=" + methodTag +
-                ", RPS=" + getRPS() +
+                ", RPS=" + getQPS() +
                 ", TP50=" + getTP50() +
                 ", TP90=" + getTP90() +
                 ", TP95=" + getTP95() +

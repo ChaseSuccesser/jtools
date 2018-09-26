@@ -15,17 +15,15 @@ public class Recorders {
         this.recorderArr = recorderArr;
     }
 
+
     public AccurateRecorder getRecorder(int index) {
         return recorderArr.get(index);
     }
 
-    public void setRecorder(int index, AccurateRecorder recorder) {
-        recorderArr.set(index, recorder);
+    public void setRecorderIfAbsent(int index, AccurateRecorder recorder) {
+        recorderArr.accumulateAndGet(index, recorder, (oldVal, newVal) -> oldVal);
     }
 
-    public int size() {
-        return recorderArr.length();
-    }
 
     public void resetRecorder() {
         int count = recorderArr.length();

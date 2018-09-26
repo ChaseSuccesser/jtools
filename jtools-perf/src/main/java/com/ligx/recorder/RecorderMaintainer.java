@@ -75,7 +75,7 @@ public class RecorderMaintainer {
     public void addRecorder(int methodTagId) {
         for (int i = 0; i < recordersList.size(); i++) {
             Recorders recorders = recordersList.get(i);
-            recorders.setRecorder(methodTagId, AccurateRecorder.getInstance(methodTagId));
+            recorders.setRecorderIfAbsent(methodTagId, AccurateRecorder.getInstance(methodTagId));
         }
     }
 
@@ -88,7 +88,6 @@ public class RecorderMaintainer {
             Recorders tmpCurrRecorders = currRecorders;
 
             currIndex = getNextIdx(currIndex);
-            LOGGER.info("RecorderMaintainer#run, round robin Recorders, currIndex={}", currIndex);
 
             Recorders nextRecorders = recordersList.get(currIndex);
             nextRecorders.resetRecorder();
@@ -110,7 +109,7 @@ public class RecorderMaintainer {
             }
             methodMetricProcessor.afterProcess(timeSliceStartMillTime, timeSliceStartMillTime, timeSliceStartMillTime + millTimeSlice);
         } catch (Exception e) {
-            LOGGER.error("RecorderMaintainer#run, timeSliceStartMillTime={}", timeSliceStartMillTime, e);
+            LOGGER.error("RecorderMaintainer#run, timeSliceStartMillTime={}, currIndex={}", timeSliceStartMillTime, currIndex, e);
         }
     }
 

@@ -26,8 +26,22 @@ public class MethodMetricsFormatter {
                 .append(TimeUtil.format(new Date(endMillTime), TimeUtil.YMDHMS_FORMAT))
                 .append("]\n");
 
-        String titleFormat = "%" + maxApiLength + "s%9s%9s%9s%9s%9s%10s%9s%9s%9s%9s%9s%9s%9s%9s";
-        sb.append(String.format(titleFormat, "Method[" + methodMetricsList.size() + "]", "RPS", "Avg(ms)", "Min(ms)", "Max(ms)", "Count", "TP50", "TP90", "TP95", "TP99", "TP999", "TP9999", "TP99999", "TP100"))
+        String titleFormat = "%" + maxApiLength + "s%9s%9s%9s%9s%9s%10s%9s%9s%9s%9s%9s%9s%9s";
+        sb.append(String.format(titleFormat,
+                "Method[" + methodMetricsList.size() + "]",
+                "QPS",
+                "Avg(ms)",
+                "Min(ms)",
+                "Max(ms)",
+                "Count",
+                "TP50",
+                "TP90",
+                "TP95",
+                "TP99",
+                "TP999",
+                "TP9999",
+                "TP99999",
+                "TP100"))
                 .append("\n");
 
         String dataFormat = "%" + maxApiLength + "s%9d%9.2f%9d%9d%10d%9d%9d%9d%9d%9d%9d%9d%9d";
@@ -37,7 +51,7 @@ public class MethodMetricsFormatter {
             }
             sb.append(String.format(dataFormat,
                     m.getMethodTag().getSimpleDesc(),
-                    m.getRPS(),
+                    m.getQPS(),
                     m.getAvgTime(),
                     m.getMinTime(),
                     m.getMaxTime(),

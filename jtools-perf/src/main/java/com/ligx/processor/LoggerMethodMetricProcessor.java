@@ -2,6 +2,7 @@ package com.ligx.processor;
 
 import com.ligx.formatter.MethodMetricsFormatter;
 import com.ligx.metrics.MethodMetrics;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,8 @@ public class LoggerMethodMetricProcessor {
 
     public void afterProcess(long processId, long startMillTime, long endMillTime) {
         List<MethodMetrics> methodMetricsList = metricsMap.get(processId);
-        LOGGER.info(formatter.format(methodMetricsList, startMillTime, endMillTime));
+        if (CollectionUtils.isNotEmpty(methodMetricsList)) {
+            LOGGER.info(formatter.format(methodMetricsList, startMillTime, endMillTime));
+        }
     }
 }

@@ -105,15 +105,30 @@ public class AccurateRecorder {
         return methodTagId;
     }
 
-    public void setMethodTagId(int methodTagId) {
-        this.methodTagId = methodTagId;
-    }
-
     public boolean isHasRecord() {
         return hasRecord;
     }
 
-    public void setHasRecord(boolean hasRecord) {
-        this.hasRecord = hasRecord;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("AccurateRecorder{")
+                .append("methodTagId=").append(methodTagId)
+                .append(", hasRecord=").append(hasRecord)
+                .append("\n");
+        for (int i = 0, length = timingArr.length(); i < length; i++) {
+            if (timingArr.get(i) > 0) {
+                sb.append("costTime=").append(i).append(",").append("count=").append(timingArr.get(i)).append("\n");
+            }
+        }
+        for (Map.Entry<Integer, Integer> entry : timingMap.entrySet()) {
+            Integer costTime = entry.getKey();
+            Integer count = entry.getValue();
+            if (count != null && count > 0) {
+                sb.append("costTime=").append(costTime).append(",").append("count=").append(count).append("\n");
+            }
+        }
+        sb.append("}");
+        return sb.toString();
     }
 }
