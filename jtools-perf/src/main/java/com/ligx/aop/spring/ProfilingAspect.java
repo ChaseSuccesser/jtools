@@ -33,7 +33,7 @@ public class ProfilingAspect {
         String methodName = ((MethodSignature) pjp.getSignature()).getMethod().getName();
 
         int methodTagId = MethodTagMaintainer.getInstance().addMethodTag(new MethodTag(className, methodName));
-        RecorderMaintainer.getInstantce().addRecorder(methodTagId);
+        RecorderMaintainer.getInstance().addRecorder(methodTagId);
 
         long startTime = System.currentTimeMillis();
         Object result = null;
@@ -51,7 +51,7 @@ public class ProfilingAspect {
 
 
     private void recordCostTime(int methodTagId, long startTime, long endTime) {
-        AccurateRecorder recorder = RecorderMaintainer.getInstantce().getRecorder(methodTagId);
+        AccurateRecorder recorder = RecorderMaintainer.getInstance().getRecorder(methodTagId);
         if (recorder != null) {
             recorder.recordTime(startTime, endTime);
         } else {

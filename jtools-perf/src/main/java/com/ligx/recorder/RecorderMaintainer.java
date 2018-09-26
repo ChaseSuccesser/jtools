@@ -30,15 +30,16 @@ public class RecorderMaintainer {
     private LoggerMethodMetricProcessor methodMetricProcessor;
 
 
-    private static final RecorderMaintainer instantce = new RecorderMaintainer();
+    private static final RecorderMaintainer instance = new RecorderMaintainer();
 
     private RecorderMaintainer(){}
 
-    public static RecorderMaintainer getInstantce() {
-        return instantce;
+    public static RecorderMaintainer getInstance() {
+        return instance;
     }
 
 
+    ///////////////////////////// 初始化 ////////////////////////////////
     public boolean init(LoggerMethodMetricProcessor methodMetricProcessor, int backupRecordersCount) {
         this.methodMetricProcessor = methodMetricProcessor;
         backupRecordersCount = getFitBackupRecordersCount(backupRecordersCount);
@@ -68,6 +69,8 @@ public class RecorderMaintainer {
         currRecorders = recordersList.get(currIndex % recordersList.size());
         return true;
     }
+    ///////////////////////////////////////////////////////////////////
+
 
     public void addRecorder(int methodTagId) {
         for (int i = 0; i < recordersList.size(); i++) {
@@ -80,7 +83,7 @@ public class RecorderMaintainer {
         return currRecorders.getRecorder(methodTagId);
     }
 
-    public void run(long lastTimeSliceStartTime, long millTimeSlice) {
+    public void run(long timeSliceStartMillTime, long millTimeSlice) {
         try {
             Recorders tmpCurrRecorders = currRecorders;
 
@@ -91,7 +94,7 @@ public class RecorderMaintainer {
             nextRecorders.resetRecorder();
             currRecorders = nextRecorders;
 
-            methodMetricProcessor.beforeProcess(lastTimeSliceStartTime);
+            methodMetricProcessor.beforeProcess(timeSliceStartMillTime);
             int methodTagCount = MethodTagMaintainer.getInstance().getMethodTagCount();
             for (int i = 0; i < methodTagCount; i++) {
                 AccurateRecorder recorder = tmpCurrRecorders.getRecorder(i);
@@ -102,12 +105,12 @@ public class RecorderMaintainer {
                 if (methodTag == null) {
                     continue;
                 }
-                MethodMetrics methodMetrics = PerfStatsCalculator.calPerfStats(recorder, methodTag, lastTimeSliceStartTime, lastTimeSliceStartTime + millTimeSlice);
-                methodMetricProcessor.process(lastTimeSliceStartTime, methodMetrics);
+                MethodMetrics methodMetrics = PerfStatsCalculator.calPerfStats(recorder, methodTag, timeSliceStartMillTime, timeSliceStartMillTime + millTimeSlice);
+                methodMetricProcessor.process(timeSliceStartMillTime, methodMetrics);
             }
-            methodMetricProcessor.afterProcess(lastTimeSliceStartTime, lastTimeSliceStartTime, lastTimeSliceStartTime + millTimeSlice);
+            methodMetricProcessor.afterProcess(timeSliceStartMillTime, timeSliceStartMillTime, timeSliceStartMillTime + millTimeSlice);
         } catch (Exception e) {
-            LOGGER.error("RecorderMaintainer#run, lastTimeSliceStartTime={}", lastTimeSliceStartTime, e);
+            LOGGER.error("RecorderMaintainer#run, timeSliceStartMillTime={}", timeSliceStartMillTime, e);
         }
     }
 

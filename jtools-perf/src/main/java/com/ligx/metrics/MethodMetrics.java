@@ -24,17 +24,11 @@ public class MethodMetrics {
 
     //注意：tpArr和TOP_PERCENTILE_ARR的大小请保持一致！！！！
     private final int[] tpArr = {-1, -1, -1, -1, -1, -1, -1, -1};
-
     private int maxTime = -1; //ms
-
     private int minTime = -1; //ms
-
     private double avgTime = -1.0F; //ms
-
     private int totalCount = -1;//ms
-
     private long startMillTime = -1L;
-
     private long stopMillTime = -1L;
 
 

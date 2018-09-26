@@ -2,12 +2,17 @@ package com.ligx.metrics;
 
 import com.ligx.recorder.AccurateRecorder;
 import com.ligx.tag.MethodTag;
+import com.ligx.util.ChunkPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Author: ligongxing.
  * Date: 2018年09月20日.
  */
 public class PerfStatsCalculator {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PerfStatsCalculator.class);
 
     private static final ThreadLocal<int[]> threadLocal = new ThreadLocal<int[]>(){
         @Override
@@ -17,10 +22,19 @@ public class PerfStatsCalculator {
     };
 
     public static MethodMetrics calPerfStats(AccurateRecorder recorder, MethodTag methodTag, long startMillTime, long endMillTime) {
-        int effectiveCount = recorder.getEffectiveCount();
-        int[] sortedCostTimes = new int[effectiveCount * 2]; // todo 重用数组，避免gc
-        recorder.fillSortedCostTimes(sortedCostTimes);
-        return calPerfStats(sortedCostTimes, effectiveCount, methodTag, startMillTime, endMillTime);
+        int[] sortedCostTimes = null;
+        try {
+            int effectiveCount = recorder.getEffectiveCount();
+            sortedCostTimes = ChunkPool.getInstance().getChunk(effectiveCount * 2);
+            recorder.fillSortedCostTimes(sortedCostTimes);
+            return calPerfStats(sortedCostTimes, effectiveCount, methodTag, startMillTime, endMillTime);
+        } catch (Exception e) {
+            LOGGER.error("PerfStatsCalculator#calPerfStats, recorder={}, MethodTag={}, startMillTime={}, endMillTime={}",
+                    recorder, methodTag, startMillTime, endMillTime, e);
+        } finally {
+            ChunkPool.getInstance().returnChunk(sortedCostTimes);
+        }
+        return MethodMetrics.getInstance(methodTag, startMillTime, endMillTime);
     }
 
 
