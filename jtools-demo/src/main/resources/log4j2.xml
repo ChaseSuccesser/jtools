@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="INFO">
-	<appenders>
-		<Console name="consolePrint" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{DEFAULT} [%t] %-5p %c{1.} %m%n" />
-		</Console>
+    <appenders>
+        <Console name="consolePrint" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{DEFAULT} [%t] %-5p %c{1.} %m%n"/>
+        </Console>
 
-	</appenders>
-	<loggers>
-		<AsyncRoot level="INFO">
-			<appender-ref ref="consolePrint" />
-		</AsyncRoot>
-	</loggers>
+        <RollingRandomAccessFile name="metricsAppender"
+                                 fileName="D:/log/jtools-demo/metrics.log" filePattern="D:/log/jtools-demo/history/metrics-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy max="30" />
+        </RollingRandomAccessFile>
+    </appenders>
+
+
+    <loggers>
+        <AsyncRoot level="INFO">
+            <appender-ref ref="consolePrint"/>
+        </AsyncRoot>
+
+        <AsyncLogger level="INFO" name="metrics_logger" additivity="false">
+            <appender-ref ref="metricsAppender"/>
+        </AsyncLogger>
+    </loggers>
 </configuration>

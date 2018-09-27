@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class InfluxDBMethodMetricsProcessor implements MethodMetricsProcessor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(InfluxDBMethodMetricsProcessor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger("metrics_logger");
 
     private static final int MAX_LENGTH = 512;
 
