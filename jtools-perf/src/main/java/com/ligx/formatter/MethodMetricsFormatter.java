@@ -44,7 +44,7 @@ public class MethodMetricsFormatter {
                 "TP100"))
                 .append("\n");
 
-        String dataFormat = "%" + maxApiLength + "s%9d%9.2f%9d%9d%10d%9d%9d%9d%9d%9d%9d%9d%9d";
+        String dataFormat = "%" + maxApiLength + "s%9d%9d%9d%9d%10d%9d%9d%9d%9d%9d%9d%9d%9d";
         for (MethodMetrics m : methodMetricsList) {
             if (m.getTotalCount() <= 0) {
                 continue;
