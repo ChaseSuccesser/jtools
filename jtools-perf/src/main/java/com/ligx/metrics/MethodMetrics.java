@@ -26,7 +26,7 @@ public class MethodMetrics {
     private final int[] tpArr = {-1, -1, -1, -1, -1, -1, -1, -1};
     private int maxTime = -1; //ms
     private int minTime = -1; //ms
-    private double avgTime = -1.0F; //ms
+    private int avgTime = -1; //ms
     private int totalCount = -1;//ms
     private long startMillTime = -1L;
     private long stopMillTime = -1L;
@@ -124,11 +124,11 @@ public class MethodMetrics {
         this.minTime = minTime;
     }
 
-    public double getAvgTime() {
+    public int getAvgTime() {
         return avgTime;
     }
 
-    public void setAvgTime(double avgTime) {
+    public void setAvgTime(int avgTime) {
         this.avgTime = avgTime;
     }
 

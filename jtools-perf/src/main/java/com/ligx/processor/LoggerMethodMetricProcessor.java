@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Author: ligongxing.
  * Date: 2018/09/20.
  */
-public class LoggerMethodMetricProcessor {
+public class LoggerMethodMetricProcessor implements MethodMetricsProcessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggerMethodMetricProcessor.class);
 
@@ -23,15 +23,18 @@ public class LoggerMethodMetricProcessor {
 
     private MethodMetricsFormatter formatter = new MethodMetricsFormatter();
 
+    @Override
     public void beforeProcess(long processId) {
         metricsMap.put(processId, new ArrayList<>());
     }
 
-    public void process(long processId, MethodMetrics methodMetrics) {
+    @Override
+    public void process(long processId, MethodMetrics methodMetrics, long startMillTime, long endMillTime) {
         List<MethodMetrics> methodMetricsList = metricsMap.get(processId);
         methodMetricsList.add(methodMetrics);
     }
 
+    @Override
     public void afterProcess(long processId, long startMillTime, long endMillTime) {
         List<MethodMetrics> methodMetricsList = metricsMap.get(processId);
         if (CollectionUtils.isNotEmpty(methodMetricsList)) {

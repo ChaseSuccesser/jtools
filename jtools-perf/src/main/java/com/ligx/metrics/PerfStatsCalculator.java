@@ -51,7 +51,7 @@ public class PerfStatsCalculator {
         long[] pair = getTotalCostTimeAndTotalCount(sortedCostTimes);
         long totalCostTime = pair[0];
         int totalCount = (int) pair[1];
-        double avgCostTime = ((double) totalCostTime) / totalCount;
+        int avgCostTime = (int) (totalCostTime / totalCount);
         int minCostTime = sortedCostTimes[0];
         int maxCostTime = sortedCostTimes[effectiveCount * 2 - 2];
 

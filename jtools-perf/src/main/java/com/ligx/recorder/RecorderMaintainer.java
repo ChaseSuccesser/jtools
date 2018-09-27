@@ -1,9 +1,12 @@
 package com.ligx.recorder;
 
 import com.ligx.base.Constants;
+import com.ligx.base.PropertiesValue;
 import com.ligx.metrics.MethodMetrics;
 import com.ligx.metrics.PerfStatsCalculator;
+import com.ligx.processor.InfluxDBMethodMetricsProcessor;
 import com.ligx.processor.LoggerMethodMetricProcessor;
+import com.ligx.processor.MethodMetricsProcessor;
 import com.ligx.tag.MethodTag;
 import com.ligx.tag.MethodTagMaintainer;
 import com.ligx.util.ProfilingConf;
@@ -28,7 +31,7 @@ public class RecorderMaintainer {
 
     private volatile Recorders currRecorders;
 
-    private LoggerMethodMetricProcessor methodMetricProcessor;
+    private MethodMetricsProcessor methodMetricProcessor;
 
 
     private static final RecorderMaintainer instance = new RecorderMaintainer();
@@ -41,8 +44,17 @@ public class RecorderMaintainer {
 
 
     ///////////////////////////// 初始化 ////////////////////////////////
-    public boolean init(LoggerMethodMetricProcessor methodMetricProcessor) {
-        this.methodMetricProcessor = methodMetricProcessor;
+    public boolean init() {
+        switch (ProfilingConf.getInstance().getMethodMetricsProcessor()) {
+            case PropertiesValue.LOGGER_METHOD_METRICS_PROCESSOR:
+                this.methodMetricProcessor = new LoggerMethodMetricProcessor();
+                break;
+            case PropertiesValue.INFLUXDB_METHOD_METRICS_PROCESSOR:
+                this.methodMetricProcessor = new InfluxDBMethodMetricsProcessor();
+                break;
+            default:
+                this.methodMetricProcessor = new LoggerMethodMetricProcessor();
+        }
         int backupRecordersCount = getFitBackupRecordersCount(ProfilingConf.getInstance().getBackupRecordersCount());
 
         if (!initRecorders(backupRecordersCount)) {
@@ -106,7 +118,7 @@ public class RecorderMaintainer {
                     continue;
                 }
                 MethodMetrics methodMetrics = PerfStatsCalculator.calPerfStats(recorder, methodTag, timeSliceStartMillTime, timeSliceStartMillTime + millTimeSlice);
-                methodMetricProcessor.process(timeSliceStartMillTime, methodMetrics);
+                methodMetricProcessor.process(timeSliceStartMillTime, methodMetrics, timeSliceStartMillTime, timeSliceStartMillTime + millTimeSlice);
             }
             methodMetricProcessor.afterProcess(timeSliceStartMillTime, timeSliceStartMillTime, timeSliceStartMillTime + millTimeSlice);
         } catch (Exception e) {

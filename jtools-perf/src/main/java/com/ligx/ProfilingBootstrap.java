@@ -2,7 +2,6 @@ package com.ligx;
 
 import com.ligx.base.Constants;
 import com.ligx.base.PropertiesKey;
-import com.ligx.processor.LoggerMethodMetricProcessor;
 import com.ligx.recorder.RecorderMaintainer;
 import com.ligx.util.ProfilingConf;
 import com.ligx.util.ProfilingProperties;
@@ -34,7 +33,7 @@ public class ProfilingBootstrap {
             LOGGER.error("ProfilingBootstrap#init, ProfilingConf init FAILURE!!!");
             return;
         }
-        if (!RecorderMaintainer.getInstance().init(new LoggerMethodMetricProcessor())) {
+        if (!RecorderMaintainer.getInstance().init()) {
             LOGGER.error("ProfilingBootstrap#init, RecorderMaintainer init FAILURE!!!");
             return;
         }
@@ -59,9 +58,11 @@ public class ProfilingBootstrap {
     private boolean initProfilingConfig() {
         try {
             ProfilingConf profilingConf = ProfilingConf.getInstance();
+            profilingConf.setAppName(ProfilingProperties.getStr(PropertiesKey.APP_NAME, ProfilingConf.DEFAULT_APP_NAME));
             profilingConf.setMostTimeThreshold(ProfilingProperties.getInt(PropertiesKey.MOST_TIME_THRESHOLD, ProfilingConf.DEFAULT_MOST_TIME_THRESHOLD));
             profilingConf.setBackupRecordersCount(ProfilingProperties.getInt(PropertiesKey.BACKUP_RECORDERS_COUNT, ProfilingConf.DEFAULT_BACKUP_RECORDERS_COUNT));
             profilingConf.setMillTimeSlice(ProfilingProperties.getLong(PropertiesKey.MILL_TIME_SLICE, ProfilingConf.DEFAULT_MILL_TIME_SLICE));
+            profilingConf.setMethodMetricsProcessor(ProfilingProperties.getStr(PropertiesKey.METHOD_METRICS_PROCESSOR, ProfilingConf.DEFAULT_METHOD_METRICS_PROCESSOR));
             return true;
         } catch (Exception e) {
             LOGGER.error("ProfilingBootstrap#initProfilingConfig,", e);
