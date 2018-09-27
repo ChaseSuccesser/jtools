@@ -1,5 +1,6 @@
 package com.ligx.recorder;
 
+import com.ligx.util.ProfilingConf;
 import org.apache.commons.collections.MapUtils;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class AccurateRecorder {
     private ConcurrentHashMap<Integer, Integer> timingMap;
 
     private AccurateRecorder(int methodTagId) {
-        int mostTimeThreshold = 10000;  // todo mostTimeThreshold弄成动态配置属性
+        int mostTimeThreshold = ProfilingConf.getInstance().getMostTimeThreshold();
         this.methodTagId = methodTagId;
         this.timingArr = new AtomicIntegerArray(mostTimeThreshold + 1);
         this.timingMap = new ConcurrentHashMap<>();

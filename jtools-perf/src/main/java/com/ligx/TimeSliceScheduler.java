@@ -1,6 +1,7 @@
 package com.ligx;
 
 import com.ligx.recorder.RecorderMaintainer;
+import com.ligx.util.ProfilingConf;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -15,7 +16,8 @@ public class TimeSliceScheduler {
     private static final ScheduledThreadPoolExecutor scheduledExecutor = new ScheduledThreadPoolExecutor(2,
             new ThreadPoolExecutor.DiscardOldestPolicy());
 
-    public static void initScheduleTask(long millTimeSlice) {
+    public static void initScheduleTask() {
+        long millTimeSlice = ProfilingConf.getInstance().getMillTimeSlice();
         scheduledExecutor.scheduleAtFixedRate(() -> {
             long currentMill = System.currentTimeMillis();
             long timeSliceStartMillTime = currentMill - millTimeSlice;

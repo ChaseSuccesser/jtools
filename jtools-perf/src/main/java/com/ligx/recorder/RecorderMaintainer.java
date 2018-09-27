@@ -6,6 +6,7 @@ import com.ligx.metrics.PerfStatsCalculator;
 import com.ligx.processor.LoggerMethodMetricProcessor;
 import com.ligx.tag.MethodTag;
 import com.ligx.tag.MethodTagMaintainer;
+import com.ligx.util.ProfilingConf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,9 +41,9 @@ public class RecorderMaintainer {
 
 
     ///////////////////////////// 初始化 ////////////////////////////////
-    public boolean init(LoggerMethodMetricProcessor methodMetricProcessor, int backupRecordersCount) {
+    public boolean init(LoggerMethodMetricProcessor methodMetricProcessor) {
         this.methodMetricProcessor = methodMetricProcessor;
-        backupRecordersCount = getFitBackupRecordersCount(backupRecordersCount);
+        int backupRecordersCount = getFitBackupRecordersCount(ProfilingConf.getInstance().getBackupRecordersCount());
 
         if (!initRecorders(backupRecordersCount)) {
             return false;
