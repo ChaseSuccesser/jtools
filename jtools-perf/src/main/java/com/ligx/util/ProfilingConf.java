@@ -37,6 +37,11 @@ public class ProfilingConf {
     // 使用什么方式处理MethodMetrics，默认log
     private String methodMetricsProcessor = DEFAULT_METHOD_METRICS_PROCESSOR;
 
+    // InfluxDB配置
+    private String influxdbUrl;
+    private String influxdbUserName;
+    private String influxdbPassword;
+
 
     ///////////////// getter/setter ///////////////////////////
     public String getAppName() {
@@ -77,5 +82,29 @@ public class ProfilingConf {
 
     public void setMethodMetricsProcessor(String methodMetricsProcessor) {
         this.methodMetricsProcessor = methodMetricsProcessor;
+    }
+
+    public String getInfluxdbUrl() {
+        return influxdbUrl;
+    }
+
+    public void setInfluxdbUrl(String influxdbUrl) {
+        this.influxdbUrl = influxdbUrl;
+    }
+
+    public String getInfluxdbUserName() {
+        return influxdbUserName;
+    }
+
+    public void setInfluxdbUserName(String influxdbUserName) {
+        this.influxdbUserName = influxdbUserName;
+    }
+
+    public String getInfluxdbPassword() {
+        return influxdbPassword;
+    }
+
+    public void setInfluxdbPassword(String influxdbPassword) {
+        this.influxdbPassword = influxdbPassword;
     }
 }

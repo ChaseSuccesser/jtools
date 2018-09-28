@@ -63,6 +63,9 @@ public class ProfilingBootstrap {
             profilingConf.setBackupRecordersCount(ProfilingProperties.getInt(PropertiesKey.BACKUP_RECORDERS_COUNT, ProfilingConf.DEFAULT_BACKUP_RECORDERS_COUNT));
             profilingConf.setMillTimeSlice(ProfilingProperties.getLong(PropertiesKey.MILL_TIME_SLICE, ProfilingConf.DEFAULT_MILL_TIME_SLICE));
             profilingConf.setMethodMetricsProcessor(ProfilingProperties.getStr(PropertiesKey.METHOD_METRICS_PROCESSOR, ProfilingConf.DEFAULT_METHOD_METRICS_PROCESSOR));
+            profilingConf.setInfluxdbUrl(ProfilingProperties.getStr(PropertiesKey.INFLUX_DB_URL, null));
+            profilingConf.setInfluxdbUserName(ProfilingProperties.getStr(PropertiesKey.INFLUX_DB_USERNAME, null));
+            profilingConf.setInfluxdbPassword(ProfilingProperties.getStr(PropertiesKey.INFLUX_DB_PASSWORD, null));
             return true;
         } catch (Exception e) {
             LOGGER.error("ProfilingBootstrap#initProfilingConfig,", e);

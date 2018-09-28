@@ -2,9 +2,8 @@ package com.ligx.processor;
 
 import com.ligx.metrics.MethodMetrics;
 import com.ligx.tag.MethodTag;
+import com.ligx.util.DbUtil;
 import com.ligx.util.ProfilingConf;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Author: ligongxing.
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  */
 public class InfluxDBMethodMetricsProcessor implements MethodMetricsProcessor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("metrics_logger");
 
     private static final int MAX_LENGTH = 512;
 
@@ -35,7 +33,7 @@ public class InfluxDBMethodMetricsProcessor implements MethodMetricsProcessor {
     public void process(long processId, MethodMetrics metrics, long startMillTime, long endMillTime) {
         StringBuilder sb = sbThreadLocal.get();
         try {
-            LOGGER.info(createLineProtocol(metrics, startMillTime * 1000 * 1000L, sb));
+            DbUtil.write(createLineProtocol(metrics, startMillTime * 1000 * 1000L, sb));
         } finally {
             sb.setLength(0);
         }

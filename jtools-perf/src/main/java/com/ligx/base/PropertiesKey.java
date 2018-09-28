@@ -11,4 +11,7 @@ public class PropertiesKey {
     public static final String BACKUP_RECORDERS_COUNT = "backupRecordersCount";
     public static final String MILL_TIME_SLICE = "millTimeSlice";
     public static final String METHOD_METRICS_PROCESSOR = "methodMetricsProcessor";
+    public static final String INFLUX_DB_URL = "influxdbUrl";
+    public static final String INFLUX_DB_USERNAME = "influxdbUserName";
+    public static final String INFLUX_DB_PASSWORD = "influxdbPassword";
 }

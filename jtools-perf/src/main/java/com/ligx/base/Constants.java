@@ -12,4 +12,6 @@ public class Constants {
     public static final int MAX_METHOD_TAG_ID = 1024 * 128;
 
     public static final String PROPERTIES_FILE_NAME = "monitor.properties";
+
+    public static final String INFLUX_DB_NAME = "MyPerf";
 }
