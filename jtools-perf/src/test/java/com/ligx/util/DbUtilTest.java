@@ -2,8 +2,6 @@ package com.ligx.util;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Author: ligongxing.
  * Date: 2018/09/28.
