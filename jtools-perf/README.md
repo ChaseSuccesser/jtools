@@ -1,0 +1,1 @@
+App --> Telegraf --> InfluxDB --> Grafana

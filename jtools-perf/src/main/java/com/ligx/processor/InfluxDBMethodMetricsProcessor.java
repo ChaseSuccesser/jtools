@@ -49,9 +49,8 @@ public class InfluxDBMethodMetricsProcessor implements MethodMetricsProcessor {
         if (suitSize > MAX_LENGTH) {
             sb = new StringBuilder(suitSize);
         }
-        // 把'类名'和'类名.方法名'为索引(Tag)，各个性能指标为列数据(Field)
-        sb.append("method_metrics")
-                .append(",AppName=").append(ProfilingConf.getInstance().getAppName())
+        // 把'应用名'作为InfluxDB的表名，'类名'和'类名.方法名'做为表的索引(Tag)，各个性能指标为列数据(Field)
+        sb.append(ProfilingConf.getInstance().getAppName().replaceAll("-", "_"))
                 .append(",ClassName=").append(methodMetrics.getMethodTag().getClassName())
                 .append(",Method=").append(methodMetrics.getMethodTag().getSimpleDesc())
                 .append(" QPS=").append(methodMetrics.getQPS()).append("i")
