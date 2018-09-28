@@ -40,6 +40,11 @@ public class MethodTagMaintainer {
             synchronized (MethodTagMaintainer.class) {
                 if (map.get(methodTag.getSimpleDesc()) == null) {
                     int methodTagId = index.getAndIncrement();
+                    if (methodTagId > Constants.MAX_METHOD_TAG_ID) {
+                        LOGGER.error("MethodTagMaintainer#addMethodTag, methodTagId={} > MAX_METHOD_TAG_ID={}, MethodTag={}",
+                                methodTagId, Constants.MAX_METHOD_TAG_ID, methodTag);
+                        methodTagId = -1;
+                    }
                     map.putIfAbsent(methodTag.getSimpleDesc(), methodTagId);
                     methodTagArr.set(methodTagId, methodTag);
                     LOGGER.info("MethodTagMaintainer#addMethodTag, methodTag={}, methodTagId={}", methodTag, methodTagId);

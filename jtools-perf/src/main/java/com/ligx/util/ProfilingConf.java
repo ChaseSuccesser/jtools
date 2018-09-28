@@ -23,19 +23,19 @@ public class ProfilingConf {
     public static final String DEFAULT_METHOD_METRICS_PROCESSOR = PropertiesValue.LOGGER_METHOD_METRICS_PROCESSOR;
 
     // 应用名称
-    private String appName;
+    private String appName = DEFAULT_APP_NAME;
 
     // 方法执行时间最大阈值，单位ms，默认10000
-    private int mostTimeThreshold;
+    private int mostTimeThreshold = DEFAULT_MOST_TIME_THRESHOLD;
 
     // 配置备份Recorders的数量，默认为1，最小为1，最大为8
-    private int backupRecordersCount;
+    private int backupRecordersCount = DEFAULT_BACKUP_RECORDERS_COUNT;
 
     // 配置时间片，单位为ms，默认60s
-    private long millTimeSlice;
+    private long millTimeSlice = DEFAULT_MILL_TIME_SLICE;
 
     // 使用什么方式处理MethodMetrics，默认log
-    private String methodMetricsProcessor;
+    private String methodMetricsProcessor = DEFAULT_METHOD_METRICS_PROCESSOR;
 
 
     ///////////////// getter/setter ///////////////////////////

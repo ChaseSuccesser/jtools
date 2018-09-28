@@ -10,6 +10,7 @@ import com.ligx.processor.MethodMetricsProcessor;
 import com.ligx.tag.MethodTag;
 import com.ligx.tag.MethodTagMaintainer;
 import com.ligx.util.ProfilingConf;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,6 +87,11 @@ public class RecorderMaintainer {
 
 
     public void addRecorder(int methodTagId) {
+        if (CollectionUtils.isEmpty(recordersList)) {
+            LOGGER.warn("RecorderMaintainer#addRecorder, RecorderMaintainer暂未初始化完成!! methodTagId={}, MethodTag={}",
+                    methodTagId, MethodTagMaintainer.getInstance().getMethodTag(methodTagId));
+            return;
+        }
         for (int i = 0; i < recordersList.size(); i++) {
             Recorders recorders = recordersList.get(i);
             recorders.setRecorderIfAbsent(methodTagId, AccurateRecorder.getInstance(methodTagId));
@@ -93,6 +99,11 @@ public class RecorderMaintainer {
     }
 
     public AccurateRecorder getRecorder(int methodTagId) {
+        if (currRecorders == null) {
+            LOGGER.warn("RecorderMaintainer#getRecorder, RecorderMaintainer暂未初始化完成!! methodTagId={}, MethodTag={}",
+                    methodTagId, MethodTagMaintainer.getInstance().getMethodTag(methodTagId));
+            return null;
+        }
         return currRecorders.getRecorder(methodTagId);
     }
 
@@ -115,6 +126,7 @@ public class RecorderMaintainer {
                 }
                 MethodTag methodTag = MethodTagMaintainer.getInstance().getMethodTag(recorder.getMethodTagId());
                 if (methodTag == null) {
+                    LOGGER.error("RecorderMaintainer#run, MethodTag is null!! methodTagId={}", recorder.getMethodTagId());
                     continue;
                 }
                 MethodMetrics methodMetrics = PerfStatsCalculator.calPerfStats(recorder, methodTag, timeSliceStartMillTime, timeSliceStartMillTime + millTimeSlice);
