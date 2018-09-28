@@ -42,7 +42,7 @@ public class ProfilingBootstrap {
 
 
     private boolean initProfilingProperties() {
-        try (InputStream in = ProfilingBootstrap.class.getClassLoader().getResourceAsStream(Constants.PROPERTIES_FILE_NAME)) {
+        try (InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(Constants.PROPERTIES_FILE_NAME)) {
             if (in != null) {
                 Properties prop = new Properties();
                 prop.load(in);

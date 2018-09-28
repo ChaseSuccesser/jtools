@@ -6,5 +6,4 @@ package com.ligx.base;
  */
 public @interface Profiling {
 
-    String key() default "";
 }

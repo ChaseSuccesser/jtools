@@ -18,7 +18,7 @@ public class ProfilingConf {
 
     public static final String DEFAULT_APP_NAME = "default";
     public static final int DEFAULT_MOST_TIME_THRESHOLD = 1000 * 10;
-    public static final int DEFAULT_BACKUP_RECORDERS_COUNT = 1;
+    public static final int DEFAULT_BACKUP_RECORDERS_COUNT = 3;
     public static final int DEFAULT_MILL_TIME_SLICE = 1000 * 60;
     public static final String DEFAULT_METHOD_METRICS_PROCESSOR = PropertiesValue.LOGGER_METHOD_METRICS_PROCESSOR;
 
@@ -28,7 +28,7 @@ public class ProfilingConf {
     // 方法执行时间最大阈值，单位ms，默认10000
     private int mostTimeThreshold = DEFAULT_MOST_TIME_THRESHOLD;
 
-    // 配置备份Recorders的数量，默认为1，最小为1，最大为8
+    // 配置备份Recorders的数量，默认为3，最小为1，最大为8
     private int backupRecordersCount = DEFAULT_BACKUP_RECORDERS_COUNT;
 
     // 配置时间片，单位为ms，默认60s
