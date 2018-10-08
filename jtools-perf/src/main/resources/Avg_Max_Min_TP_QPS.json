@@ -46,7 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1538122611063,
+  "iteration": 1538969289692,
   "links": [],
   "panels": [
     {
@@ -564,26 +564,25 @@
   "templating": {
     "list": [
       {
-        "auto": false,
-        "auto_count": 30,
-        "auto_min": "10s",
+        "allValue": null,
         "current": {
           "text": "jtools_demo",
           "value": "jtools_demo"
         },
-        "hide": 2,
+        "hide": 0,
+        "includeAll": false,
         "label": "Table",
+        "multi": false,
         "name": "TableName",
         "options": [
           {
             "selected": true,
-            "text": "jtools_demo",
-            "value": "jtools_demo"
+            "text": "quality_worker_input",
+            "value": "quality_worker_input"
           }
         ],
-        "query": "jtools_demo",
-        "refresh": 2,
-        "type": "interval"
+        "query": "quality_worker_input",
+        "type": "custom"
       },
       {
         "allValue": null,
@@ -596,7 +595,7 @@
         "name": "ClassName",
         "options": [],
         "query": "select ClassName,Count from $TableName;",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
         "sort": 0,
         "tagValuesQuery": "",
@@ -616,7 +615,7 @@
         "name": "Method",
         "options": [],
         "query": "SELECT Method,Count FROM $TableName;",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
         "sort": 0,
         "tagValuesQuery": "",
@@ -659,5 +658,5 @@
   "timezone": "",
   "title": "Avg/Max/Min/TP/QPS",
   "uid": "vAAwB00mk",
-  "version": 31
+  "version": 35
 }
