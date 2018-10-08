@@ -23,26 +23,32 @@ public class JvmMemoryMetricsFormatter {
                 .append(TimeUtil.format(new Date(stopMillis), TimeUtil.YMDHMS_FORMAT))
                 .append("]")
                 .append(String.format("%n"));
-        sb.append(String.format(dataTitleFormat, "HeapUsed", "HeapMax", "OldGenUsed", "OldGenMax", "HeapInit", "EdenUsed", "EdenMax", "SurvivorUsed", "SurvivorMax", "MetaspaceUsed", "NonHeapUsed", "NonHeapMax"));
+        sb.append(String.format(dataTitleFormat, "HeapUsed", "HeapMax", "OldGenUsed", "OldGenMax", "EdenUsed", "EdenMax", "SurvivorUsed", "SurvivorMax", "MetaspaceUsed", "NonHeapUsed", "NonHeapMax"));
         if (metrics == null) {
             return sb.toString();
         }
 
-        String dataFormat = "%-19d%19d%19d%19d%19d%19d%19d%19d%19d%19d%19d%n";
+        String dataFormat = "%-19s%19s%19s%19s%19s%19s%19s%19s%19s%19s%19s%n";
         sb.append(String.format(dataFormat,
-                metrics.getHeapUsedMemory(),
-                metrics.getHeapMaxMemory(),
-                metrics.getOldGenUsedMemory(),
-                metrics.getOldGenMaxMemory(),
-                metrics.getEdenUsedSpace(),
-                metrics.getEdenMaxSpace(),
-                metrics.getSurvivorUsedSpace(),
-                metrics.getSurvivorMaxSpace(),
-                metrics.getMetaspaceUsedSpace(),
-                metrics.getNonHeapUsedMemory(),
-                metrics.getNonHeapMaxMemory()
+                metrics.getHeapUsedMemory() + String.format("(%sMB)", transferToMB(metrics.getHeapUsedMemory())),
+                metrics.getHeapMaxMemory() + String.format("(%sMB)", transferToMB(metrics.getHeapMaxMemory())),
+                metrics.getOldGenUsedMemory() + String.format("(%sMB)", transferToMB(metrics.getOldGenUsedMemory())),
+                metrics.getOldGenMaxMemory() + String.format("(%sMB)", transferToMB(metrics.getOldGenMaxMemory())),
+                metrics.getEdenUsedSpace() + String.format("(%sMB)", transferToMB(metrics.getEdenUsedSpace())),
+                metrics.getEdenMaxSpace() + String.format("(%sMB)", transferToMB(metrics.getEdenMaxSpace())),
+                metrics.getSurvivorUsedSpace() + String.format("(%sMB)", transferToMB(metrics.getSurvivorUsedSpace())),
+                metrics.getSurvivorMaxSpace() + String.format("(%sMB)", transferToMB(metrics.getSurvivorMaxSpace())),
+                metrics.getMetaspaceUsedSpace() + String.format("(%sMB)", transferToMB(metrics.getMetaspaceUsedSpace())),
+                metrics.getNonHeapUsedMemory() + String.format("(%sMB)", transferToMB(metrics.getNonHeapUsedMemory())),
+                metrics.getNonHeapMaxMemory() + String.format("(%sMB)", transferToMB(metrics.getNonHeapMaxMemory()))
                 ));
         return sb.toString();
     }
 
+    private int transferToMB(long space) {
+        if (space <= 0) {
+            return (int) space;
+        }
+        return (int) space / (1024 * 1024);
+    }
 }

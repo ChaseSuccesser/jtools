@@ -6,6 +6,8 @@ import com.ligx.processor.MetricsProcessor;
 import com.ligx.processor.influxdb.InfluxDBJvmMemoryProcessor;
 import com.ligx.processor.logger.LoggerJvmMemoryProcessor;
 import com.ligx.util.ProfilingConf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -16,6 +18,8 @@ import java.util.concurrent.TimeUnit;
  * Date: 2018/10/08.
  */
 public class JvmMemoryScheduler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JvmMemoryScheduler.class);
 
     private static final ScheduledThreadPoolExecutor scheduledExecutor = new ScheduledThreadPoolExecutor(2,
             new ThreadPoolExecutor.DiscardOldestPolicy());
@@ -48,7 +52,11 @@ public class JvmMemoryScheduler {
     }
 
     private static void processJvmMemoryMetrics(long timeSliceStartMillTime, long timeSliceEndMillTime) {
-        jvmMemoryMetricsProcessor.process(timeSliceStartMillTime, JvmMemoryMetrics.newInstance(),
-                timeSliceStartMillTime, timeSliceStartMillTime + timeSliceEndMillTime);
+        try {
+            jvmMemoryMetricsProcessor.process(timeSliceStartMillTime, JvmMemoryMetrics.newInstance(),
+                    timeSliceStartMillTime, timeSliceStartMillTime + timeSliceEndMillTime);
+        } catch (Exception e) {
+            LOGGER.error("JvmMemoryScheduler#processJvmMemoryMetrics,", e);
+        }
     }
 }
