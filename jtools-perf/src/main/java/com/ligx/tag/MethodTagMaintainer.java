@@ -36,22 +36,24 @@ public class MethodTagMaintainer {
 
 
     public int addMethodTag(MethodTag methodTag) {
-        if (map.get(methodTag.getSimpleDesc()) == null) {
-            synchronized (MethodTagMaintainer.class) {
-                if (map.get(methodTag.getSimpleDesc()) == null) {
-                    int methodTagId = index.getAndIncrement();
-                    if (methodTagId > Constants.MAX_METHOD_TAG_ID) {
-                        LOGGER.error("MethodTagMaintainer#addMethodTag, methodTagId={} > MAX_METHOD_TAG_ID={}, MethodTag={}",
-                                methodTagId, Constants.MAX_METHOD_TAG_ID, methodTag);
-                        methodTagId = -1;
-                    }
-                    map.putIfAbsent(methodTag.getSimpleDesc(), methodTagId);
-                    methodTagArr.set(methodTagId, methodTag);
-                    LOGGER.info("MethodTagMaintainer#addMethodTag, methodTag={}, methodTagId={}", methodTag, methodTagId);
+        map.compute(methodTag.getSimpleDesc(), (k, v) -> {
+            if (v == null) {
+                int val = index.getAndIncrement();
+                if (val > Constants.MAX_METHOD_TAG_ID) {
+                    LOGGER.error("MethodTagMaintainer#addMethodTag, methodTagId > MAX_METHOD_TAG_ID={}, MethodTag={}",
+                            Constants.MAX_METHOD_TAG_ID, methodTag);
+                    return -1;
+                } else {
+                    return val;
                 }
+            } else {
+                return v;
             }
-        }
-        return map.get(methodTag.getSimpleDesc());
+        });
+        int methodTagId = map.get(methodTag.getSimpleDesc());
+        methodTagArr.set(methodTagId, methodTag);
+        LOGGER.info("MethodTagMaintainer#addMethodTag, methodTag={}, methodTagId={}", methodTag, methodTagId);
+        return methodTagId;
     }
 
     public MethodTag getMethodTag(int methodTagId) {
