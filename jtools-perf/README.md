@@ -50,7 +50,7 @@ influxdbPassword=
 3.安装启动Grafana   
 >import [dashboard json](https://github.com/ChaseSuccesser/jtools/blob/609e3cdeafa8a5b100eefe1f7772dfd798a4a1d5/jtools-perf/src/main/resources/Avg_Max_Min_TP_QPS.json):
 
->修改Grafana Variables：$TableName为monitor.properties配置文件中的appName属性值(如果有中划线，则替换成下划线)。
+>修改标签Table的值：标签值为monitor.properties配置文件中的appName属性值(如果有中划线，则替换成下划线)。
 
 ![](https://github.com/ChaseSuccesser/jtools/blob/777bce36c0c430d5a9273b527e01b67e4a165fb6/jtools-perf/src/main/resources/pic1.png)
 ![](https://github.com/ChaseSuccesser/jtools/blob/777bce36c0c430d5a9273b527e01b67e4a165fb6/jtools-perf/src/main/resources/pic2.png)
