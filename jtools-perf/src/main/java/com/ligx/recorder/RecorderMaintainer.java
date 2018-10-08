@@ -4,8 +4,9 @@ import com.ligx.base.Constants;
 import com.ligx.base.PropertiesValue;
 import com.ligx.metrics.MethodMetrics;
 import com.ligx.metrics.PerfStatsCalculator;
+import com.ligx.processor.AsyncMethodMetricsProcessor;
 import com.ligx.processor.InfluxDBMethodMetricsProcessor;
-import com.ligx.processor.LoggerMethodMetricProcessor;
+import com.ligx.processor.LoggerMethodMetricsProcessor;
 import com.ligx.processor.MethodMetricsProcessor;
 import com.ligx.tag.MethodTag;
 import com.ligx.tag.MethodTagMaintainer;
@@ -48,13 +49,13 @@ public class RecorderMaintainer {
     public boolean init() {
         switch (ProfilingConf.getInstance().getMethodMetricsProcessor()) {
             case PropertiesValue.LOGGER_METHOD_METRICS_PROCESSOR:
-                this.methodMetricProcessor = new LoggerMethodMetricProcessor();
+                this.methodMetricProcessor = new AsyncMethodMetricsProcessor(new LoggerMethodMetricsProcessor());
                 break;
             case PropertiesValue.INFLUXDB_METHOD_METRICS_PROCESSOR:
-                this.methodMetricProcessor = new InfluxDBMethodMetricsProcessor();
+                this.methodMetricProcessor = new AsyncMethodMetricsProcessor(new InfluxDBMethodMetricsProcessor());
                 break;
             default:
-                this.methodMetricProcessor = new LoggerMethodMetricProcessor();
+                this.methodMetricProcessor = new AsyncMethodMetricsProcessor(new LoggerMethodMetricsProcessor());
         }
         int backupRecordersCount = getFitBackupRecordersCount(ProfilingConf.getInstance().getBackupRecordersCount());
 

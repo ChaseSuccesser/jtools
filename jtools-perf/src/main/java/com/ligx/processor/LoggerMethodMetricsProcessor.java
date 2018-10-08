@@ -15,9 +15,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * Author: ligongxing.
  * Date: 2018/09/20.
  */
-public class LoggerMethodMetricProcessor implements MethodMetricsProcessor {
+public class LoggerMethodMetricsProcessor implements MethodMetricsProcessor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoggerMethodMetricProcessor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggerMethodMetricsProcessor.class);
 
     private Map<Long, List<MethodMetrics>> metricsMap = new ConcurrentHashMap<>();
 

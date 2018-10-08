@@ -75,26 +75,6 @@ public class MethodMetrics {
         return (int) (totalCount / seconds);
     }
 
-    @Override
-    public String toString() {
-        return "MethodMetrics{" +
-                "methodTag=" + methodTag +
-                ", RPS=" + getQPS() +
-                ", TP50=" + getTP50() +
-                ", TP90=" + getTP90() +
-                ", TP95=" + getTP95() +
-                ", TP99=" + getTP99() +
-                ", TP999=" + getTP999() +
-                ", TP9999=" + getTP9999() +
-                ", TP99999=" + getTP99999() +
-                ", TP100=" + getTP100() +
-                ", minTime=" + minTime +
-                ", avgTime=" + avgTime +
-                ", maxTime=" + maxTime +
-                ", totalCount=" + totalCount +
-                '}';
-    }
-
     public static MethodMetrics getInstance(MethodTag methodTag) {
         return new MethodMetrics(methodTag);
     }
@@ -166,5 +146,26 @@ public class MethodMetrics {
 
     public int[] getTpArr() {
         return tpArr;
+    }
+
+
+    @Override
+    public String toString() {
+        return "MethodMetrics{" +
+                "methodTag=" + methodTag +
+                ", RPS=" + getQPS() +
+                ", TP50=" + getTP50() +
+                ", TP90=" + getTP90() +
+                ", TP95=" + getTP95() +
+                ", TP99=" + getTP99() +
+                ", TP999=" + getTP999() +
+                ", TP9999=" + getTP9999() +
+                ", TP99999=" + getTP99999() +
+                ", TP100=" + getTP100() +
+                ", minTime=" + minTime +
+                ", avgTime=" + avgTime +
+                ", maxTime=" + maxTime +
+                ", totalCount=" + totalCount +
+                '}';
     }
 }

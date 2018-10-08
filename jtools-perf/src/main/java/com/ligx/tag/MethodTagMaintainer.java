@@ -44,6 +44,7 @@ public class MethodTagMaintainer {
                             Constants.MAX_METHOD_TAG_ID, methodTag);
                     return -1;
                 } else {
+                    LOGGER.info("MethodTagMaintainer#addMethodTag, methodTag={}, methodTagId={}", methodTag, val);
                     return val;
                 }
             } else {
@@ -52,7 +53,6 @@ public class MethodTagMaintainer {
         });
         int methodTagId = map.get(methodTag.getSimpleDesc());
         methodTagArr.set(methodTagId, methodTag);
-        LOGGER.info("MethodTagMaintainer#addMethodTag, methodTag={}, methodTagId={}", methodTag, methodTagId);
         return methodTagId;
     }
 
