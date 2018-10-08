@@ -1,6 +1,7 @@
-package com.ligx.processor;
+package com.ligx.processor.influxdb;
 
-import com.ligx.metrics.MethodMetrics;
+import com.ligx.metrics.impl.MethodMetrics;
+import com.ligx.processor.MetricsProcessor;
 import com.ligx.tag.MethodTag;
 import com.ligx.util.DbUtil;
 import com.ligx.util.ProfilingConf;
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Author: ligongxing.
  * Date: 2018/09/27.
  */
-public class InfluxDBMethodMetricsProcessor implements MethodMetricsProcessor {
+public class InfluxDBMethodMetricsProcessor implements MetricsProcessor<MethodMetrics> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InfluxDBMethodMetricsProcessor.class);
 

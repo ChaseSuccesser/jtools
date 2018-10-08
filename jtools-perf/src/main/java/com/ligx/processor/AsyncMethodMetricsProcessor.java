@@ -1,6 +1,6 @@
 package com.ligx.processor;
 
-import com.ligx.metrics.MethodMetrics;
+import com.ligx.metrics.impl.MethodMetrics;
 import com.ligx.util.ProfilingConf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * Author: ligongxing.
  * Date: 2018/10/08.
  */
-public class AsyncMethodMetricsProcessor implements MethodMetricsProcessor {
+public class AsyncMethodMetricsProcessor implements MetricsProcessor<MethodMetrics> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AsyncMethodMetricsProcessor.class);
 
@@ -22,9 +22,9 @@ public class AsyncMethodMetricsProcessor implements MethodMetricsProcessor {
             TimeUnit.MILLISECONDS,
             new ArrayBlockingQueue<>(500), new ThreadPoolExecutor.DiscardPolicy());
 
-    private MethodMetricsProcessor target;
+    private MetricsProcessor<MethodMetrics> target;
 
-    public AsyncMethodMetricsProcessor(MethodMetricsProcessor target) {
+    public AsyncMethodMetricsProcessor(MetricsProcessor<MethodMetrics> target) {
         this.target = target;
     }
 

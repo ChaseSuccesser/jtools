@@ -37,7 +37,8 @@ public class ProfilingBootstrap {
             LOGGER.error("ProfilingBootstrap#init, RecorderMaintainer init FAILURE!!!");
             return;
         }
-        TimeSliceScheduler.initScheduleTask();
+        MethodMetricsScheduler.initScheduleTask();
+        JvmMemoryScheduler.initScheduleTask();
     }
 
 

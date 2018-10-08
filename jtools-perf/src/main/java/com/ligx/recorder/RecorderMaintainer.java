@@ -2,12 +2,12 @@ package com.ligx.recorder;
 
 import com.ligx.base.Constants;
 import com.ligx.base.PropertiesValue;
-import com.ligx.metrics.MethodMetrics;
 import com.ligx.metrics.PerfStatsCalculator;
+import com.ligx.metrics.impl.MethodMetrics;
 import com.ligx.processor.AsyncMethodMetricsProcessor;
-import com.ligx.processor.InfluxDBMethodMetricsProcessor;
-import com.ligx.processor.LoggerMethodMetricsProcessor;
-import com.ligx.processor.MethodMetricsProcessor;
+import com.ligx.processor.MetricsProcessor;
+import com.ligx.processor.influxdb.InfluxDBMethodMetricsProcessor;
+import com.ligx.processor.logger.LoggerMethodMetricsProcessor;
 import com.ligx.tag.MethodTag;
 import com.ligx.tag.MethodTagMaintainer;
 import com.ligx.util.ProfilingConf;
@@ -33,7 +33,7 @@ public class RecorderMaintainer {
 
     private volatile Recorders currRecorders;
 
-    private MethodMetricsProcessor methodMetricProcessor;
+    private MetricsProcessor<MethodMetrics> methodMetricProcessor;
 
 
     private static final RecorderMaintainer instance = new RecorderMaintainer();
@@ -108,7 +108,7 @@ public class RecorderMaintainer {
         return currRecorders.getRecorder(methodTagId);
     }
 
-    public void run(long timeSliceStartMillTime, long millTimeSlice) {
+    public void run(long timeSliceStartMillTime, long timeSliceEndMillTime) {
         try {
             Recorders tmpCurrRecorders = currRecorders;
 
@@ -130,10 +130,10 @@ public class RecorderMaintainer {
                     LOGGER.error("RecorderMaintainer#run, MethodTag is null!! methodTagId={}", recorder.getMethodTagId());
                     continue;
                 }
-                MethodMetrics methodMetrics = PerfStatsCalculator.calPerfStats(recorder, methodTag, timeSliceStartMillTime, timeSliceStartMillTime + millTimeSlice);
-                methodMetricProcessor.process(timeSliceStartMillTime, methodMetrics, timeSliceStartMillTime, timeSliceStartMillTime + millTimeSlice);
+                MethodMetrics methodMetrics = PerfStatsCalculator.calPerfStats(recorder, methodTag, timeSliceStartMillTime, timeSliceEndMillTime);
+                methodMetricProcessor.process(timeSliceStartMillTime, methodMetrics, timeSliceStartMillTime, timeSliceEndMillTime);
             }
-            methodMetricProcessor.afterProcess(timeSliceStartMillTime, timeSliceStartMillTime, timeSliceStartMillTime + millTimeSlice);
+            methodMetricProcessor.afterProcess(timeSliceStartMillTime, timeSliceStartMillTime, timeSliceEndMillTime);
         } catch (Exception e) {
             LOGGER.error("RecorderMaintainer#run, timeSliceStartMillTime={}, currIndex={}", timeSliceStartMillTime, currIndex, e);
         }

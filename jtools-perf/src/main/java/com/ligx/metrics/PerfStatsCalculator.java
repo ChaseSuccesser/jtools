@@ -1,5 +1,6 @@
 package com.ligx.metrics;
 
+import com.ligx.metrics.impl.MethodMetrics;
 import com.ligx.recorder.AccurateRecorder;
 import com.ligx.tag.MethodTag;
 import com.ligx.util.ChunkPool;
@@ -40,13 +41,13 @@ public class PerfStatsCalculator {
         } finally {
             ChunkPool.getInstance().returnChunk(sortedCostTimes);
         }
-        return MethodMetrics.getInstance(methodTag, startMillTime, endMillTime);
+        return MethodMetrics.newInstance(methodTag, startMillTime, endMillTime);
     }
 
 
     private static MethodMetrics calPerfStats(int[] sortedCostTimes, int effectiveCount, MethodTag methodTag, long startMillTime, long endMillTime) {
         if (sortedCostTimes == null || sortedCostTimes.length == 0) {
-            return MethodMetrics.getInstance(methodTag, startMillTime, endMillTime);
+            return MethodMetrics.newInstance(methodTag, startMillTime, endMillTime);
         }
         long[] pair = getTotalCostTimeAndTotalCount(sortedCostTimes);
         long totalCostTime = pair[0];
@@ -55,7 +56,7 @@ public class PerfStatsCalculator {
         int minCostTime = sortedCostTimes[0];
         int maxCostTime = sortedCostTimes[effectiveCount * 2 - 2];
 
-        MethodMetrics methodMetrics = MethodMetrics.getInstance(methodTag, startMillTime, endMillTime);
+        MethodMetrics methodMetrics = MethodMetrics.newInstance(methodTag, startMillTime, endMillTime);
         methodMetrics.setTotalCount(totalCount); // 总调用次数
         methodMetrics.setAvgTime(avgCostTime);   // 平均耗时
         methodMetrics.setMaxTime(maxCostTime);   // 最大耗时

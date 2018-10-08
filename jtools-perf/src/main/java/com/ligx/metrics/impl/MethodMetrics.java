@@ -1,12 +1,15 @@
-package com.ligx.metrics;
+package com.ligx.metrics.impl;
 
+import com.ligx.metrics.Metrics;
 import com.ligx.tag.MethodTag;
 
 /**
  * Author: ligongxing.
  * Date: 2018/09/19.
  */
-public class MethodMetrics {
+public class MethodMetrics extends Metrics {
+
+    private static final long serialVersionUID = -2308772138574732120L;
 
     private MethodTag methodTag;
 
@@ -75,11 +78,11 @@ public class MethodMetrics {
         return (int) (totalCount / seconds);
     }
 
-    public static MethodMetrics getInstance(MethodTag methodTag) {
+    public static MethodMetrics newInstance(MethodTag methodTag) {
         return new MethodMetrics(methodTag);
     }
 
-    public static MethodMetrics getInstance(MethodTag methodTag, long startMillTime, long stopMillTime) {
+    public static MethodMetrics newInstance(MethodTag methodTag, long startMillTime, long stopMillTime) {
         MethodMetrics result = new MethodMetrics(methodTag);
         result.setStartMillTime(startMillTime);
         result.setStopMillTime(stopMillTime);

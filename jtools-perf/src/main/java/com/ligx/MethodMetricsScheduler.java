@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Author: ligongxing.
- * Date: 2018/09/26.
+ * Date: 2018/10/08.
  */
-public class TimeSliceScheduler {
+public class MethodMetricsScheduler {
 
     private static final ScheduledThreadPoolExecutor scheduledExecutor = new ScheduledThreadPoolExecutor(2,
             new ThreadPoolExecutor.DiscardOldestPolicy());
@@ -22,8 +22,7 @@ public class TimeSliceScheduler {
             long currentMill = System.currentTimeMillis();
             long timeSliceStartMillTime = currentMill - millTimeSlice;
 
-            RecorderMaintainer.getInstance().run(timeSliceStartMillTime, millTimeSlice);
+            RecorderMaintainer.getInstance().run(timeSliceStartMillTime, currentMill);
         }, millTimeSlice, millTimeSlice, TimeUnit.MILLISECONDS);
     }
-
 }

@@ -1,7 +1,8 @@
-package com.ligx.processor;
+package com.ligx.processor.logger;
 
 import com.ligx.formatter.MethodMetricsFormatter;
-import com.ligx.metrics.MethodMetrics;
+import com.ligx.metrics.impl.MethodMetrics;
+import com.ligx.processor.MetricsProcessor;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Author: ligongxing.
  * Date: 2018/09/20.
  */
-public class LoggerMethodMetricsProcessor implements MethodMetricsProcessor {
+public class LoggerMethodMetricsProcessor implements MetricsProcessor<MethodMetrics> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggerMethodMetricsProcessor.class);
 
@@ -29,9 +30,9 @@ public class LoggerMethodMetricsProcessor implements MethodMetricsProcessor {
     }
 
     @Override
-    public void process(long processId, MethodMetrics methodMetrics, long startMillTime, long endMillTime) {
+    public void process(long processId, MethodMetrics metrics, long startMillTime, long endMillTime) {
         List<MethodMetrics> methodMetricsList = metricsMap.get(processId);
-        methodMetricsList.add(methodMetrics);
+        methodMetricsList.add(metrics);
     }
 
     @Override
