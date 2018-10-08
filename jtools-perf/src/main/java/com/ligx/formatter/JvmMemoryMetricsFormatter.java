@@ -2,37 +2,46 @@ package com.ligx.formatter;
 
 
 import com.ligx.metrics.impl.JvmMemoryMetrics;
-import org.apache.commons.lang3.time.DateFormatUtils;
+import com.ligx.util.TimeUtil;
 
-import java.util.List;
+import java.util.Date;
 
 /**
- * Created by LinShunkang on 1919/8/21
+ * Author: ligongxing.
+ * Date: 2018年10月08日.
  */
 public class JvmMemoryMetricsFormatter {
 
-    public String format(List<JvmMemoryMetrics> metricsList, long startMillis, long stopMillis) {
-        String dataTitleFormat = "%-19s%19s%19s%19s%19s%19s%19s%19s%n";
-        StringBuilder sb = new StringBuilder((metricsList.size() + 2) * (9 * 19 + 64));
-        sb.append("MyPerf4J JVM Memory Metrics [").append(DateFormatUtils.format(startMillis)).append(", ").append(DateFormatUtils.format(stopMillis)).append("]").append(String.format("%n"));
-        sb.append(String.format(dataTitleFormat, "NonHeapInit", "NonHeapUsed", "NonHeapCommitted", "NonHeapMax", "HeapInit", "HeapUsed", "HeapCommitted", "HeapMax"));
-        if (metricsList.isEmpty()) {
+    public String format(JvmMemoryMetrics metrics, long startMillis, long stopMillis) {
+        StringBuilder sb = new StringBuilder(500);
+
+        String dataTitleFormat = "%-19s%19s%19s%19s%19s%19s%19s%19s%19s%19s%19s%n";
+
+        sb.append("JVM Memory Metrics [")
+                .append(TimeUtil.format(new Date(startMillis), TimeUtil.YMDHMS_FORMAT))
+                .append(", ")
+                .append(TimeUtil.format(new Date(stopMillis), TimeUtil.YMDHMS_FORMAT))
+                .append("]")
+                .append(String.format("%n"));
+        sb.append(String.format(dataTitleFormat, "HeapUsed", "HeapMax", "OldGenUsed", "OldGenMax", "HeapInit", "EdenUsed", "EdenMax", "SurvivorUsed", "SurvivorMax", "MetaspaceUsed", "NonHeapUsed", "NonHeapMax"));
+        if (metrics == null) {
             return sb.toString();
         }
 
-        String dataFormat = "%-19d%19d%19d%19d%19d%19d%19d%19d%n";
-        for (int i = 0; i < metricsList.size(); ++i) {
-            JvmMemoryMetrics metrics = metricsList.get(i);
-            sb.append(String.format(dataFormat,
-                    metrics.getNonHeapInit(),
-                    metrics.getNonHeapUsed(),
-                    metrics.getNonHeapCommitted(),
-                    metrics.getNonHeapMax(),
-                    metrics.getHeapInit(),
-                    metrics.getHeapUsed(),
-                    metrics.getHeapCommitted(),
-                    metrics.getHeapMax()));
-        }
+        String dataFormat = "%-19d%19d%19d%19d%19d%19d%19d%19d%19d%19d%19d%n";
+        sb.append(String.format(dataFormat,
+                metrics.getHeapUsedMemory(),
+                metrics.getHeapMaxMemory(),
+                metrics.getOldGenUsedMemory(),
+                metrics.getOldGenMaxMemory(),
+                metrics.getEdenUsedSpace(),
+                metrics.getEdenMaxSpace(),
+                metrics.getSurvivorUsedSpace(),
+                metrics.getSurvivorMaxSpace(),
+                metrics.getMetaspaceUsedSpace(),
+                metrics.getNonHeapUsedMemory(),
+                metrics.getNonHeapMaxMemory()
+                ));
         return sb.toString();
     }
 
