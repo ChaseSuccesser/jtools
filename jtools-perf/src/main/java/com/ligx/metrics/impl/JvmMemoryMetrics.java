@@ -33,6 +33,8 @@ public class JvmMemoryMetrics extends Metrics {
 
     private long metaspaceUsedSpace;
 
+    private long metaspaceMaxSpace;
+
     private long nonHeapUsedMemory;
 
     private long nonHeapMaxMemory;
@@ -77,6 +79,7 @@ public class JvmMemoryMetrics extends Metrics {
         MemoryPoolMXBean metaspaceMemoryPool = getMetaspaceMemoryPool();
         if (metaspaceMemoryPool != null) {
             this.metaspaceUsedSpace = metaspaceMemoryPool.getUsage().getUsed();
+            this.metaspaceMaxSpace = metaspaceMemoryPool.getUsage().getMax();
         } else {
             this.metaspaceUsedSpace = 0L;
         }
@@ -195,6 +198,14 @@ public class JvmMemoryMetrics extends Metrics {
 
     public void setMetaspaceUsedSpace(long metaspaceUsedSpace) {
         this.metaspaceUsedSpace = metaspaceUsedSpace;
+    }
+
+    public long getMetaspaceMaxSpace() {
+        return metaspaceMaxSpace;
+    }
+
+    public void setMetaspaceMaxSpace(long metaspaceMaxSpace) {
+        this.metaspaceMaxSpace = metaspaceMaxSpace;
     }
 
     public long getNonHeapUsedMemory() {

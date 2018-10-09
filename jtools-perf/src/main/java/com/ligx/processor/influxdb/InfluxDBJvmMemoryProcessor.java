@@ -58,6 +58,7 @@ public class InfluxDBJvmMemoryProcessor implements MetricsProcessor<JvmMemoryMet
                 .append(",survivorUsedSpace=").append(metrics.getSurvivorUsedSpace())
                 .append(",survivorMaxSpace=").append(metrics.getSurvivorMaxSpace())
                 .append(",metaspaceUsedSpace=").append(metrics.getMetaspaceUsedSpace())
+                .append(",metaspaceMaxSpace=").append(metrics.getMetaspaceMaxSpace())
                 .append(",nonHeapUsedMemory=").append(metrics.getNonHeapUsedMemory())
                 .append(",nonHeapMaxMemory=").append(metrics.getNonHeapMaxMemory())
                 .append(" ").append(startNanos);
