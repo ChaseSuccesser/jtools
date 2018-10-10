@@ -38,7 +38,7 @@ public class ProfilingBootstrap {
             return;
         }
         MethodMetricsScheduler.initScheduleTask();
-        JvmMemoryScheduler.initScheduleTask();
+        JvmMetricsScheduler.initScheduleTask();
     }
 
 

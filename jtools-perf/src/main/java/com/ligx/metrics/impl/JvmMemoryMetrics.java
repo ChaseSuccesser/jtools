@@ -39,6 +39,8 @@ public class JvmMemoryMetrics extends Metrics {
 
     private long nonHeapMaxMemory;
 
+    private JvmMemoryMetrics(){}
+
     public static JvmMemoryMetrics newInstance() {
         JvmMemoryMetrics jvmMemoryMetrics = new JvmMemoryMetrics();
         jvmMemoryMetrics.calJvmMemory();
