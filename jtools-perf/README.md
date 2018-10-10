@@ -61,5 +61,10 @@ influxdbPassword=
 ![](https://github.com/ChaseSuccesser/jtools/blob/cdfe41389abfca46a2f55da3b8be77d05f9ef817/jtools-perf/src/main/resources/pic3.png)
 ![](https://github.com/ChaseSuccesser/jtools/blob/cdfe41389abfca46a2f55da3b8be77d05f9ef817/jtools-perf/src/main/resources/pic4.png)
 ![](https://github.com/ChaseSuccesser/jtools/blob/cdfe41389abfca46a2f55da3b8be77d05f9ef817/jtools-perf/src/main/resources/pic5.png)
+
+## Jvm GC监控
+
+>import [jvm gc dashboard json](https://github.com/ChaseSuccesser/jtools/blob/609e3cdeafa8a5b100eefe1f7772dfd798a4a1d5/jtools-perf/src/main/resources/jvm_gc_metrics.json)
+
 ## 参考
 https://github.com/ThinkpadNC5/MyPerf4J
