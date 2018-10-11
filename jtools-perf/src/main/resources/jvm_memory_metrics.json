@@ -46,7 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1539074540401,
+  "iteration": 1539263479860,
   "links": [],
   "panels": [
     {
@@ -89,7 +89,7 @@
           "groupBy": [],
           "measurement": "jvm_memory_metrics",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -199,7 +199,7 @@
           "groupBy": [],
           "measurement": "jvm_memory_metrics",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -309,7 +309,7 @@
           "groupBy": [],
           "measurement": "jvm_memory_metrics",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -419,7 +419,7 @@
           "groupBy": [],
           "measurement": "jvm_memory_metrics",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -529,7 +529,7 @@
           "groupBy": [],
           "measurement": "jvm_memory_metrics",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -639,7 +639,7 @@
           "groupBy": [],
           "measurement": "jvm_memory_metrics",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -718,7 +718,6 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
           "text": "jtools_demo",
           "value": "jtools_demo"
         },
@@ -771,5 +770,5 @@
   "timezone": "",
   "title": "jvm_memory_metrics",
   "uid": "IRdrWhJmk",
-  "version": 17
+  "version": 23
 }

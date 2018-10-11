@@ -46,7 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1538984871448,
+  "iteration": 1539263553245,
   "links": [],
   "panels": [
     {
@@ -89,7 +89,7 @@
           "groupBy": [],
           "measurement": "/^$TableName$/",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -197,7 +197,7 @@
           "groupBy": [],
           "measurement": "/^$TableName$/",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -323,7 +323,7 @@
           "groupBy": [],
           "measurement": "/^$TableName$/",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -488,7 +488,7 @@
           "groupBy": [],
           "measurement": "/^$TableName$/",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -566,8 +566,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "jtools_demo",
-          "value": "jtools_demo"
+          "text": "quality_worker_input",
+          "value": "quality_worker_input"
         },
         "hide": 0,
         "includeAll": false,
@@ -658,5 +658,5 @@
   "timezone": "",
   "title": "Avg/Max/Min/TP/QPS",
   "uid": "vAAwB00mk",
-  "version": 39
+  "version": 43
 }

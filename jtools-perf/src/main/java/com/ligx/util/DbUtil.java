@@ -48,7 +48,7 @@ public class DbUtil {
                 LOGGER.error("DbUtil#write, influxdb client is null!!!");
                 return;
             }
-            getInfluxDBClient().setDatabase(Constants.INFLUX_DB_NAME).write(lineProtocol);
+            getInfluxDBClient().setDatabase(Constants.INFLUX_DB_NAME).setRetentionPolicy(Constants.RP_NAME).write(lineProtocol);
         } catch (Exception e) {
             LOGGER.error("DbUtil#write, lineProtocol={}", lineProtocol, e);
         }

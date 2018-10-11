@@ -38,6 +38,10 @@
                     <groupId>com.squareup.okio</groupId>
                     <artifactId>okio</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.mongodb</groupId>
+                    <artifactId>mongo-java-driver</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>

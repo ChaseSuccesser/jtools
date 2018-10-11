@@ -46,7 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1539167432663,
+  "iteration": 1539262964855,
   "links": [],
   "panels": [
     {
@@ -89,7 +89,7 @@
           "groupBy": [],
           "measurement": "jvm_gc_metrics",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -191,7 +191,7 @@
           "groupBy": [],
           "measurement": "jvm_gc_metrics",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -293,7 +293,7 @@
           "groupBy": [],
           "measurement": "jvm_gc_metrics",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -395,7 +395,7 @@
           "groupBy": [],
           "measurement": "jvm_gc_metrics",
           "orderByTime": "ASC",
-          "policy": "default",
+          "policy": "15days",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -518,5 +518,5 @@
   "timezone": "",
   "title": "jvm_gc_metrics",
   "uid": "IdwXj01iz",
-  "version": 8
+  "version": 12
 }
