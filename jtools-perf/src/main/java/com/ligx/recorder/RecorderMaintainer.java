@@ -47,7 +47,7 @@ public class RecorderMaintainer {
 
     ///////////////////////////// 初始化 ////////////////////////////////
     public boolean init() {
-        switch (ProfilingConf.getInstance().getMethodMetricsProcessor()) {
+        switch (ProfilingConf.getInstance().getMetricsProcessor()) {
             case PropertiesValue.LOGGER_METHOD_METRICS_PROCESSOR:
                 this.methodMetricProcessor = new AsyncMethodMetricsProcessor(new LoggerMethodMetricsProcessor());
                 break;

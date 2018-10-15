@@ -7,10 +7,10 @@ package com.ligx.base;
 public class PropertiesKey {
 
     public static final String APP_NAME = "appName";
-    public static final String MOST_TIME_THRESHOLD = "mostTimeThreshold";
+    public static final String MAX_EXECUTION_TIME_THRESHOLD = "maxExecutionTimeThreshold";
     public static final String BACKUP_RECORDERS_COUNT = "backupRecordersCount";
     public static final String MILL_TIME_SLICE = "millTimeSlice";
-    public static final String METHOD_METRICS_PROCESSOR = "methodMetricsProcessor";
+    public static final String METRICS_PROCESSOR = "metricsProcessor";
     public static final String INFLUX_DB_URL = "influxdbUrl";
     public static final String INFLUX_DB_USERNAME = "influxdbUserName";
     public static final String INFLUX_DB_PASSWORD = "influxdbPassword";

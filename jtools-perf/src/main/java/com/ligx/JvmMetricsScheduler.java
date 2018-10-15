@@ -31,7 +31,7 @@ public class JvmMetricsScheduler {
     private static MetricsProcessor<JvmGCMetrics> jvmGCMetricsMetricsProcessor;
 
     private static void init() {
-        switch (ProfilingConf.getInstance().getMethodMetricsProcessor()) {
+        switch (ProfilingConf.getInstance().getMetricsProcessor()) {
             case PropertiesValue.LOGGER_METHOD_METRICS_PROCESSOR:
                 jvmMemoryMetricsProcessor = new LoggerJvmMemoryProcessor();
                 jvmGCMetricsMetricsProcessor = new LoggerJvmGCProcessor();

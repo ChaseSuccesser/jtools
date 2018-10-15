@@ -17,16 +17,16 @@ public class ProfilingConf {
     }
 
     public static final String DEFAULT_APP_NAME = "default";
-    public static final int DEFAULT_MOST_TIME_THRESHOLD = 1000 * 10;
+    public static final int DEFAULT_MAX_EXECUTION_TIME_THRESHOLD = 1000 * 10;
     public static final int DEFAULT_BACKUP_RECORDERS_COUNT = 3;
     public static final int DEFAULT_MILL_TIME_SLICE = 1000 * 60;
-    public static final String DEFAULT_METHOD_METRICS_PROCESSOR = PropertiesValue.LOGGER_METHOD_METRICS_PROCESSOR;
+    public static final String DEFAULT_METRICS_PROCESSOR = PropertiesValue.LOGGER_METHOD_METRICS_PROCESSOR;
 
     // 应用名称
     private String appName = DEFAULT_APP_NAME;
 
     // 方法执行时间最大阈值，单位ms，默认10000
-    private int mostTimeThreshold = DEFAULT_MOST_TIME_THRESHOLD;
+    private int maxExecutionTimeThreshold = DEFAULT_MAX_EXECUTION_TIME_THRESHOLD;
 
     // 配置备份Recorders的数量，默认为3，最小为1，最大为8
     private int backupRecordersCount = DEFAULT_BACKUP_RECORDERS_COUNT;
@@ -35,7 +35,7 @@ public class ProfilingConf {
     private long millTimeSlice = DEFAULT_MILL_TIME_SLICE;
 
     // 使用什么方式处理MethodMetrics，默认log
-    private String methodMetricsProcessor = DEFAULT_METHOD_METRICS_PROCESSOR;
+    private String metricsProcessor = DEFAULT_METRICS_PROCESSOR;
 
     // InfluxDB配置
     private String influxdbUrl;
@@ -52,12 +52,12 @@ public class ProfilingConf {
         this.appName = appName;
     }
 
-    public int getMostTimeThreshold() {
-        return mostTimeThreshold;
+    public int getMaxExecutionTimeThreshold() {
+        return maxExecutionTimeThreshold;
     }
 
-    public void setMostTimeThreshold(int mostTimeThreshold) {
-        this.mostTimeThreshold = mostTimeThreshold;
+    public void setMaxExecutionTimeThreshold(int maxExecutionTimeThreshold) {
+        this.maxExecutionTimeThreshold = maxExecutionTimeThreshold;
     }
 
     public int getBackupRecordersCount() {
@@ -76,12 +76,12 @@ public class ProfilingConf {
         this.millTimeSlice = millTimeSlice;
     }
 
-    public String getMethodMetricsProcessor() {
-        return methodMetricsProcessor;
+    public String getMetricsProcessor() {
+        return metricsProcessor;
     }
 
-    public void setMethodMetricsProcessor(String methodMetricsProcessor) {
-        this.methodMetricsProcessor = methodMetricsProcessor;
+    public void setMetricsProcessor(String metricsProcessor) {
+        this.metricsProcessor = metricsProcessor;
     }
 
     public String getInfluxdbUrl() {

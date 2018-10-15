@@ -13,13 +13,13 @@
 # 应用名称(必填)
 appName=jtools-demo
 # 方法执行时间最大阈值，单位ms，默认10000 (可选)
-mostTimeThreshold=10000
+maxExecutionTimeThreshold=10000
 # 配置备份Recorders的数量，默认为3，最小为1，最大为8 (可选)
 backupRecordersCount=5
 # 配置时间片，单位为ms，默认60s (可选)
 millTimeSlice=5000
 # 使用什么方式处理MethodMetrics，默认log (可选)
-methodMetricsProcessor=log
+metricsProcessor=log
 ```
 
 3.在想要监控的方法上添加`@Profiling`注解。
@@ -38,7 +38,7 @@ ProfilingTestService.profilingTestV2        0      886      886      886        
 ## 如果`methodMetricsProcessor`属性指定为`influxdb`，则需要额外增加配置：
 1.monitor.properties
 ```$xslt
-methodMetricsProcessor=influxdb
+metricsProcessor=influxdb
 influxdbUrl=http://127.0.0.1:8086
 influxdbUserName=
 influxdbPassword=
