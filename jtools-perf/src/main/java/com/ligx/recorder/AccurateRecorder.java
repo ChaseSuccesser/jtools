@@ -25,9 +25,9 @@ public class AccurateRecorder {
     private ConcurrentHashMap<Integer, Integer> timingMap;
 
     private AccurateRecorder(int methodTagId) {
-        int mostTimeThreshold = ProfilingConf.getInstance().getMaxExecutionTimeThreshold();
+        int maxExecutionTimeThreshold = ProfilingConf.getInstance().getMaxExecutionTimeThreshold();
         this.methodTagId = methodTagId;
-        this.timingArr = new AtomicIntegerArray(mostTimeThreshold + 1);
+        this.timingArr = new AtomicIntegerArray(maxExecutionTimeThreshold + 1);
         this.timingMap = new ConcurrentHashMap<>();
     }
 
