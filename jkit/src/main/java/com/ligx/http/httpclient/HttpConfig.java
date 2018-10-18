@@ -58,6 +58,8 @@ public class HttpConfig {
      */
     private int proxyPort = 0;
 
+
+    ///////////////////////////// getter/setter ////////////////////////////
     public int getTimeout() {
         return timeout;
     }

@@ -48,6 +48,10 @@ public class HttpAgent {
         this.connManager = connManager;
     }
 
+    public PoolingHttpClientConnectionManager getConnManager() {
+        return connManager;
+    }
+
     public static HttpAgent create() {
         HttpConfig config = new HttpConfig();
         HttpAgent agent = new HttpAgent();
@@ -141,13 +145,9 @@ public class HttpAgent {
     }
 
 
-    /////////////////////////////// post //////////////////////////////
+    /////////////////////////////// post json //////////////////////////////
     /**
-     * 提交post请求
-     *
-     * @param urlPath
-     * @param content
-     * @return
+     * 提交Json形式的Post请求
      */
     public String doPost(String urlPath, String content) throws IOException {
         HttpClient client = buildClient();
@@ -155,12 +155,7 @@ public class HttpAgent {
     }
 
     /**
-     * 提交post请求，自己指定编码
-     *
-     * @param urlPath
-     * @param content
-     * @param encoding
-     * @return
+     * 提交Json形式的Post请求，自己指定编码
      */
     public String doPost(String urlPath, String content, String encoding) throws IOException {
         HttpClient client = buildClient();
@@ -168,12 +163,7 @@ public class HttpAgent {
     }
 
     /**
-     * 提交post请求，包含自定义请求头
-     *
-     * @param urlPath
-     * @param content
-     * @param headers
-     * @return
+     * 提交Json形式的Post请求，包含请求头
      */
     public String doPost(String urlPath, String content, Map<String, String> headers) throws IOException {
         HttpClient client = buildClient();
@@ -181,29 +171,13 @@ public class HttpAgent {
     }
 
     /**
-     * 提交post请求，自己指定编码，包含自定义请求头
-     *
-     * @param urlPath
-     * @param content
-     * @param encoding
-     * @param headers
-     * @return
+     * 提交Json形式的Post请求，自己指定编码，包含请求头
      */
     public String doPost(String urlPath, String content, String encoding, Map<String, String> headers) throws IOException {
         HttpClient client = buildClient();
         return doPost(client, urlPath, content, encoding, headers);
     }
 
-    /**
-     * 提交post请求，直接把内容写在body里
-     *
-     * @param client
-     * @param url
-     * @param content
-     * @param encoding
-     * @param headers
-     * @return
-     */
     private String doPost(HttpClient client, String url, String content, String encoding, Map<String, String> headers) throws IOException {
         HttpPost post = new HttpPost(url);
         if (headers != null) {
@@ -216,13 +190,9 @@ public class HttpAgent {
         return response;
     }
 
+    /////////////////////////////// post byte array //////////////////////////////
     /**
      * 提交post请求，内容为字节数组
-     *
-     * @param urlPath
-     * @param contentBytes
-     * @param headers
-     * @return
      */
     public byte[] doPost(String urlPath, byte[] contentBytes, Map<String, String> headers) throws IOException {
         HttpClient client = buildClient();
@@ -237,39 +207,23 @@ public class HttpAgent {
         return response;
     }
 
+    /////////////////////////////// post form //////////////////////////////
     /**
-     * 提交post请求，默认UTF-8编码
-     *
-     * @param urlPath
-     * @param params
-     * @return
+     * 提交Form表单形式的Post请求，默认UTF-8编码
      */
     public String doPost(String urlPath, Map<String, String> params) throws Exception {
         return doPost(urlPath, params, "UTF-8");
     }
 
     /**
-     * 提交post请求，自己指定编码
-     *
-     * @param urlPath
-     * @param params
-     * @param encoding
-     * @return
+     * 提交Form表单形式的Post请求，自己指定编码
      */
     public String doPost(String urlPath, Map<String, String> params, String encoding) throws Exception {
         HttpClient client = buildClient();
         return doPost(client, urlPath, params, encoding);
     }
 
-    /**
-     * 提交post请求，参数为key/value的Map
-     *
-     * @param client
-     * @param urlPath
-     * @param params
-     * @return
-     */
-    public String doPost(HttpClient client, String urlPath, Map<String, String> params, String encoding) throws Exception {
+    private String doPost(HttpClient client, String urlPath, Map<String, String> params, String encoding) throws Exception {
         List<NameValuePair> parameters = new ArrayList<>(params.size());
         for (Map.Entry<String, String> param : params.entrySet()) {
             parameters.add(new BasicNameValuePair(param.getKey(), param.getValue()));
@@ -285,7 +239,7 @@ public class HttpAgent {
     }
 
 
-
+    //////////////////////////////////////////////////////////////////
     /**
      * Http客户端构造
      *
