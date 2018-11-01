@@ -24,6 +24,8 @@ metricsProcessor=log
 
 3.在想要监控的方法上添加`@Profiling`注解。
 
+4.添加`@ComponentScan(basePackages = {"com.ligx"})`
+
 ---
 
 ## 如果`methodMetricsProcessor`属性指定为`log`，则直接在日志打印出如下信息：
