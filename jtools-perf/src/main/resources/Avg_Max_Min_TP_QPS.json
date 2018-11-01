@@ -46,7 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1539263553245,
+  "iteration": 1541064030045,
   "links": [],
   "panels": [
     {
@@ -594,7 +594,7 @@
         "multi": false,
         "name": "ClassName",
         "options": [],
-        "query": "select ClassName,Count from $TableName;",
+        "query": "select ClassName,Count from \"15days\".$TableName;",
         "refresh": 2,
         "regex": "",
         "sort": 0,
@@ -614,7 +614,7 @@
         "multi": false,
         "name": "Method",
         "options": [],
-        "query": "SELECT Method,Count FROM $TableName;",
+        "query": "SELECT Method,Count FROM \"15days\".$TableName;",
         "refresh": 2,
         "regex": "",
         "sort": 0,
@@ -658,5 +658,5 @@
   "timezone": "",
   "title": "Avg/Max/Min/TP/QPS",
   "uid": "vAAwB00mk",
-  "version": 43
+  "version": 45
 }
