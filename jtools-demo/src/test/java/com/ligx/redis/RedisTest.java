@@ -21,6 +21,7 @@ public class RedisTest extends AbstractSpringJUnit4 {
 
     @Test
     public void get() {
-        redisTemplate.opsForValue().get("test");
+        int result = (int) redisTemplate.opsForValue().get("test");
+        System.out.println("result: " + result);
     }
 }
