@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Author: ligongxing.
  * Date: 2018年08月19日.
+ * Note: can use in production
  */
 public class IdGenerator {
 
