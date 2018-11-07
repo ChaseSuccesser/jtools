@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Author: ligongxing.
  * Date: 2018/11/06.
@@ -17,7 +19,12 @@ public class RateLimiterTestController {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
-    private RedisRateLimiter redisRateLimiter = new RedisRateLimiter("rateLimiterTest", 5, 5, redisTemplate);
+    private RedisRateLimiter redisRateLimiter = null;
+
+    @PostConstruct
+    public void init(){
+        redisRateLimiter = new RedisRateLimiter("rateLimiterTest", 5, 5, redisTemplate);
+    }
 
     @RequestMapping(value = "/rateLimiterTest", method = RequestMethod.GET)
     public String rateLimiterTest() {

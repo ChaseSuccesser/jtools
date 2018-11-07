@@ -13,6 +13,7 @@
         <module>jkit</module>
         <module>jtools-demo</module>
         <module>jtools-perf</module>
+        <module>jtools-redis-springboot-starter</module>
     </modules>
 
     <parent>
