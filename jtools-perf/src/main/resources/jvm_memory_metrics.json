@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "5.2.4"
+      "version": "5.3.2"
     },
     {
       "type": "panel",
@@ -46,7 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1539263479860,
+  "iteration": 1543221192516,
   "links": [],
   "panels": [
     {
@@ -114,7 +114,7 @@
             {
               "key": "AppName",
               "operator": "=~",
-              "value": "/^$App$/"
+              "value": "/^$AppName$/"
             }
           ]
         }
@@ -224,7 +224,7 @@
             {
               "key": "AppName",
               "operator": "=~",
-              "value": "/^$App$/"
+              "value": "/^$AppName$/"
             }
           ]
         }
@@ -334,7 +334,7 @@
             {
               "key": "AppName",
               "operator": "=~",
-              "value": "/^$App$/"
+              "value": "/^$AppName$/"
             }
           ]
         }
@@ -444,7 +444,7 @@
             {
               "key": "AppName",
               "operator": "=~",
-              "value": "/^$App$/"
+              "value": "/^$AppName$/"
             }
           ]
         }
@@ -554,7 +554,7 @@
             {
               "key": "AppName",
               "operator": "=~",
-              "value": "/^$App$/"
+              "value": "/^$AppName$/"
             }
           ]
         }
@@ -664,7 +664,7 @@
             {
               "key": "AppName",
               "operator": "=~",
-              "value": "/^$App$/"
+              "value": "/^$AppName$/"
             }
           ]
         }
@@ -718,22 +718,28 @@
       {
         "allValue": null,
         "current": {
-          "text": "jtools_demo",
-          "value": "jtools_demo"
+          "text": "quality_api_server",
+          "value": "quality_api_server"
         },
         "hide": 0,
         "includeAll": false,
         "label": null,
         "multi": false,
-        "name": "App",
+        "name": "AppName",
         "options": [
           {
             "selected": true,
-            "text": "jtools_demo",
-            "value": "jtools_demo"
+            "text": "quality_api_server",
+            "value": "quality_api_server"
+          },
+          {
+            "selected": false,
+            "text": "quality_worker_input",
+            "value": "quality_worker_input"
           }
         ],
-        "query": "jtools_demo",
+        "query": "quality_api_server,quality_worker_input",
+        "skipUrlSync": false,
         "type": "custom"
       }
     ]
@@ -770,5 +776,5 @@
   "timezone": "",
   "title": "jvm_memory_metrics",
   "uid": "IRdrWhJmk",
-  "version": 23
+  "version": 13
 }

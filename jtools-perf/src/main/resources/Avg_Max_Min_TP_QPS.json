@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "5.2.4"
+      "version": "5.3.2"
     },
     {
       "type": "panel",
@@ -46,7 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1541064030045,
+  "iteration": 1543221114878,
   "links": [],
   "panels": [
     {
@@ -87,7 +87,7 @@
       "targets": [
         {
           "groupBy": [],
-          "measurement": "/^$TableName$/",
+          "measurement": "/^$AppName$/",
           "orderByTime": "ASC",
           "policy": "15days",
           "refId": "A",
@@ -195,7 +195,7 @@
       "targets": [
         {
           "groupBy": [],
-          "measurement": "/^$TableName$/",
+          "measurement": "/^$AppName$/",
           "orderByTime": "ASC",
           "policy": "15days",
           "refId": "A",
@@ -321,7 +321,7 @@
       "targets": [
         {
           "groupBy": [],
-          "measurement": "/^$TableName$/",
+          "measurement": "/^$AppName$/",
           "orderByTime": "ASC",
           "policy": "15days",
           "refId": "A",
@@ -486,7 +486,7 @@
       "targets": [
         {
           "groupBy": [],
-          "measurement": "/^$TableName$/",
+          "measurement": "/^$AppName$/",
           "orderByTime": "ASC",
           "policy": "15days",
           "refId": "A",
@@ -566,22 +566,29 @@
       {
         "allValue": null,
         "current": {
+          "tags": [],
           "text": "quality_worker_input",
           "value": "quality_worker_input"
         },
         "hide": 0,
         "includeAll": false,
-        "label": "Table",
+        "label": null,
         "multi": false,
-        "name": "TableName",
+        "name": "AppName",
         "options": [
           {
             "selected": false,
+            "text": "quality_api_server",
+            "value": "quality_api_server"
+          },
+          {
+            "selected": true,
             "text": "quality_worker_input",
             "value": "quality_worker_input"
           }
         ],
-        "query": "quality_worker_input",
+        "query": "quality_api_server,quality_worker_input",
+        "skipUrlSync": false,
         "type": "custom"
       },
       {
@@ -594,9 +601,10 @@
         "multi": false,
         "name": "ClassName",
         "options": [],
-        "query": "select ClassName,Count from \"15days\".$TableName;",
+        "query": "select ClassName,Count from \"15days\".$AppName;",
         "refresh": 2,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
         "tags": [],
@@ -614,9 +622,10 @@
         "multi": false,
         "name": "Method",
         "options": [],
-        "query": "SELECT Method,Count FROM \"15days\".$TableName;",
+        "query": "SELECT Method,Count FROM \"15days\".$AppName;",
         "refresh": 2,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
         "tags": [],
@@ -658,5 +667,5 @@
   "timezone": "",
   "title": "Avg/Max/Min/TP/QPS",
   "uid": "vAAwB00mk",
-  "version": 45
+  "version": 11
 }
