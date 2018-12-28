@@ -1,7 +1,5 @@
 package com.ligx.utils;
 
-import com.ligx.utils.ExpirationListener;
-
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
@@ -34,12 +32,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *    // Anytime you can cancel count down timer for element e like this
  *    TIMING_WHEEL.remove(e);
  * </pre>
- *
- * After expiration occurs, the {@link ExpirationListener} interface will be invoked and the expired object will be 
+ * <p>
+ * After expiration occurs, the {@link ExpirationListener} interface will be invoked and the expired object will be
  * the argument for callback method {@link ExpirationListener#expired(Object)}
  * <p>
  * {@link TimingWheel} is based on <a href="http://cseweb.ucsd.edu/users/varghese/">George Varghese</a> and Tony Lauck's paper,
- * <a href="http://cseweb.ucsd.edu/users/varghese/PAPERS/twheel.ps.Z">'Hashed and Hierarchical Timing Wheels: data structures 
+ * <a href="http://cseweb.ucsd.edu/users/varghese/PAPERS/twheel.ps.Z">'Hashed and Hierarchical Timing Wheels: data structures
  * to efficiently implement a timer facility'</a>.  More comprehensive slides are located <a href="http://www.cse.wustl.edu/~cdgill/courses/cs6874/TimingWheels.ppt">here</a>.
  *
  * @author mindwind
@@ -64,8 +62,7 @@ public class TimingWheel<E> {
     /**
      * Construct a timing wheel.
      *
-     * @param tickDuration
-     *            tick duration with specified time unit.
+     * @param tickDuration  tick duration with specified time unit.
      * @param ticksPerWheel
      * @param timeUnit
      */
@@ -140,7 +137,7 @@ public class TimingWheel<E> {
      * @return remain time to be expired in millisecond.
      */
     public long add(E e) {
-        synchronized(e) {
+        synchronized (e) {
             checkAdd(e);
 
             int previousTickIndex = getPreviousTickIndex();
@@ -178,7 +175,7 @@ public class TimingWheel<E> {
      *
      * @param e
      * @return <tt>true</tt> if this timing wheel contained the specified
-     *         element
+     * element
      */
     public boolean remove(E e) {
         synchronized (e) {
@@ -237,7 +234,7 @@ public class TimingWheel<E> {
         }
 
         private void waitForNextTick() {
-            for (;;) {
+            for (; ; ) {
                 long currentTime = System.currentTimeMillis();
                 long sleepTime = tickDuration * tick - (currentTime - startTime);
 
