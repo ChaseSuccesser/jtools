@@ -49,9 +49,9 @@ public class TimingWheel<E> {
     private final int ticksPerWheel;
     private volatile int currentTickIndex = 0;
 
-    private final CopyOnWriteArrayList<ExpirationListener<E>> expirationListeners = new CopyOnWriteArrayList<ExpirationListener<E>>();
+    private final CopyOnWriteArrayList<ExpirationListener<E>> expirationListeners = new CopyOnWriteArrayList<>();
     private final ArrayList<Slot<E>> wheel;
-    private final Map<E, Slot<E>> indicator = new ConcurrentHashMap<E, Slot<E>>();
+    private final Map<E, Slot<E>> indicator = new ConcurrentHashMap<>();
 
     private final AtomicBoolean shutdown = new AtomicBoolean(false);
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
@@ -62,9 +62,9 @@ public class TimingWheel<E> {
     /**
      * Construct a timing wheel.
      *
-     * @param tickDuration  tick duration with specified time unit.
-     * @param ticksPerWheel
-     * @param timeUnit
+     * @param tickDuration  一个tick的持续时间
+     * @param ticksPerWheel 一轮的tick数
+     * @param timeUnit      时间单位
      */
     public TimingWheel(int tickDuration, int ticksPerWheel, TimeUnit timeUnit) {
         if (timeUnit == null) {
@@ -77,12 +77,12 @@ public class TimingWheel<E> {
             throw new IllegalArgumentException("ticksPerWheel must be greater than 0: " + ticksPerWheel);
         }
 
-        this.wheel = new ArrayList<Slot<E>>();
+        this.wheel = new ArrayList<>();
         this.tickDuration = TimeUnit.MILLISECONDS.convert(tickDuration, timeUnit);
         this.ticksPerWheel = ticksPerWheel + 1;
 
         for (int i = 0; i < this.ticksPerWheel; i++) {
-            wheel.add(new Slot<E>(i));
+            wheel.add(new Slot<>(i));
         }
         wheel.trimToSize();
 
@@ -133,6 +133,12 @@ public class TimingWheel<E> {
     /**
      * Add a element to {@link TimingWheel} and start to count down its life-time.
      *
+     * 首先检查同样的元素是否已添加到 TimingWheel 中，若已存在则删除旧的引用，重新安置元素在wheel中位置，
+     * 获取当前 tick 指针位置的前一个 slot 槽位，放置新加入的元素，
+     * 在内部记录下该位置
+     * 返回新加入元素的 timeout 时间，以毫秒计算
+     * 显然，时间复杂度为O(1)
+     *
      * @param e
      * @return remain time to be expired in millisecond.
      */
@@ -173,6 +179,10 @@ public class TimingWheel<E> {
     /**
      * Removes the specified element from timing wheel.
      *
+     * 获取元素在TimingWheel中对应slot位置
+     * 从slot中删除
+     * 显然，时间复杂度也为O(1)
+     *
      * @param e
      * @return <tt>true</tt> if this timing wheel contained the specified
      * element
@@ -189,6 +199,11 @@ public class TimingWheel<E> {
         }
     }
 
+    /**
+     * 实现对每个timeout元素的Expiry_Action处理
+     *
+     * @param idx
+     */
     private void notifyExpired(int idx) {
         Slot<E> slot = wheel.get(idx);
         Set<E> elements = slot.elements();
@@ -213,6 +228,11 @@ public class TimingWheel<E> {
         private long startTime;
         private long tick;
 
+        /**
+         * 获取当前tick指针的 slot
+         * 对当前slot的所有元素进行timeout处理(notifyExpired())
+         * tick指针调到下一个位置
+         */
         @Override
         public void run() {
             startTime = System.currentTimeMillis();
@@ -236,6 +256,7 @@ public class TimingWheel<E> {
         private void waitForNextTick() {
             for (; ; ) {
                 long currentTime = System.currentTimeMillis();
+                // 用理论值减程序运行消耗的实际值，得到实际需要休眠的时间
                 long sleepTime = tickDuration * tick - (currentTime - startTime);
 
                 if (sleepTime <= 0) {
@@ -248,7 +269,6 @@ public class TimingWheel<E> {
                     return;
                 }
             }
-
             tick++;
         }
     }
@@ -256,7 +276,7 @@ public class TimingWheel<E> {
     private static class Slot<E> {
 
         private int id;
-        private Map<E, E> elements = new ConcurrentHashMap<E, E>();
+        private Map<E, E> elements = new ConcurrentHashMap<>();
 
         public Slot(int id) {
             this.id = id;
