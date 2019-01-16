@@ -154,6 +154,10 @@ public class CollectionUtil {
         if (list == null || list.size() == 0) {
             return null;
         }
+        if (splitCount == 0) {
+            return new ArrayList<>();
+        }
+
         int perListCount = list.size() / splitCount;
 
         List<List<T>> result = new ArrayList<>(splitCount);
