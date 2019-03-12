@@ -12,7 +12,7 @@
     <artifactId>jtools-redis-springboot-starter</artifactId>
 
     <properties>
-        <jackson.version>2.9.7</jackson.version>
+        <jackson.version>2.9.8</jackson.version>
     </properties>
 
     <dependencies>
