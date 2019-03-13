@@ -1,15 +1,14 @@
 package com.ligx.aop;
 
-import com.ligx.GenericCommand;
 import com.ligx.MetaHolder;
 import com.ligx.MetaHolderBuilder;
+import com.ligx.hystrix.GenericCommand;
 import com.ligx.utils.AopUtil;
 import com.netflix.hystrix.HystrixExecutable;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

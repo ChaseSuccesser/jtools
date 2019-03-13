@@ -1,5 +1,7 @@
-package com.ligx;
+package com.ligx.hystrix;
 
+import com.ligx.MetaHolder;
+import com.ligx.MethodExecutionAction;
 import com.ligx.conf.HystrixPropertiesManager;
 import com.netflix.hystrix.HystrixCommand;
 
