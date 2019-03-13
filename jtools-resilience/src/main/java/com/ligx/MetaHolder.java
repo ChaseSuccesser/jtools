@@ -26,7 +26,9 @@ public class MetaHolder {
     private Object obj;
     private Method method;
     private Object[] args;
+
     private Method fallbackMethod;
+    private boolean extendFallback;
 
     private MethodExecutionAction commandAction;
     private MethodExecutionAction fallbackAction;

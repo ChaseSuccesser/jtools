@@ -29,9 +29,4 @@ public class AopUtil {
         return Optional.empty();
     }
 
-    public static Class[] getParameterTypes(JoinPoint joinPoint) {
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        Method method = methodSignature.getMethod();
-        return method.getParameterTypes();
-    }
 }

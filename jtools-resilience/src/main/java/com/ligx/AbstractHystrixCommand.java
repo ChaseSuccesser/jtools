@@ -18,6 +18,15 @@ public abstract class AbstractHystrixCommand<T> extends HystrixCommand<T> {
         this.fallbackAction = metaHolder.getFallbackAction();
     }
 
+    public MethodExecutionAction getCommandAction() {
+        return commandAction;
+    }
+
+    public MethodExecutionAction getFallbackAction() {
+        return fallbackAction;
+    }
+
+
     @Override
     protected abstract T run() throws Exception;
 
@@ -25,4 +34,6 @@ public abstract class AbstractHystrixCommand<T> extends HystrixCommand<T> {
     protected T getFallback() {
         throw new RuntimeException("No fallback available.", getExecutionException());
     }
+
+
 }

@@ -1,5 +1,7 @@
 package com.ligx;
 
+import com.ligx.utils.MethodProvider;
+
 /**
  * Author: ligongxing.
  * Date: 2019/03/13.
@@ -12,11 +14,18 @@ public class GenericCommand extends AbstractHystrixCommand<Object> {
 
     @Override
     protected Object run() throws Exception {
-        // todo
+        return getCommandAction().execute();
     }
 
     @Override
     protected Object getFallback() {
-        // todo
+        MethodExecutionAction fallbackAction = getFallbackAction();
+        if (fallbackAction != null) {
+            Object[] args = MethodProvider.createArgsForFallback(fallbackAction, getExecutionException());
+            return fallbackAction.executeWithArgs(args);
+        } else {
+            return super.getFallback();
+        }
     }
+
 }

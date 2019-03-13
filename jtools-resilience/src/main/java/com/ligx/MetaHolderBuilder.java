@@ -27,8 +27,10 @@ public class MetaHolderBuilder {
                 .method(method)
                 .args(args)
                 .build();
-        Method fallbackMethod = MethodProvider.getFallbackMethod(joinPoint);
-        metaHolder.setFallbackMethod(fallbackMethod);
+
+        FallbackMethod fallbackMethod = MethodProvider.getFallbackMethod(joinPoint);
+        metaHolder.setFallbackMethod(fallbackMethod.getFallbackMethod());
+        metaHolder.setExtendFallback(fallbackMethod.isExtend());
 
         Resilience resilience = method.getAnnotation(Resilience.class);
         metaHolder.setResilience(resilience);
@@ -47,11 +49,11 @@ public class MetaHolderBuilder {
     }
 
     private static MethodExecutionAction createCommandAction(MetaHolder metaHolder) {
-        return new MethodExecutionAction(metaHolder.getObj(), metaHolder.getMethod(), metaHolder.getArgs());
+        return new MethodExecutionAction(metaHolder.getObj(), metaHolder.getMethod(), metaHolder.getArgs(), false);
     }
 
     private static MethodExecutionAction createFallbackAction(MetaHolder metaHolder) {
-        return new MethodExecutionAction(metaHolder.getObj(), metaHolder.getFallbackMethod(), metaHolder.getArgs());
+        return new MethodExecutionAction(metaHolder.getObj(), metaHolder.getFallbackMethod(), metaHolder.getArgs(), metaHolder.isExtendFallback());
     }
 
 }
