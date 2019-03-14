@@ -20,23 +20,24 @@ public class HystrixPropertiesManager {
      * Command properties
      */
     // 采样周期
-    public static final String METRICS_HEALTH_SNAPSHOT_INTERVAL_IN_MILLISECONDS = "metricsHealthSnapshotIntervalInMilliseconds";  // todo 统一改成带点的名字
-    public static final String METRICS_ROLLING_STATISTICAL_WINDOW_IN_MILLISECONDS = "metricsRollingStatisticalWindowInMilliseconds";
+    public static final String METRICS_HEALTH_SNAPSHOT_INTERVAL_IN_MILLISECONDS = "metrics.healthSnapshot.intervalInMilliseconds";
+    public static final String METRICS_ROLLING_STATISTICAL_WINDOW_IN_MILLISECONDS = "metrics.rollingStatistical.windowInMilliseconds";
     // 熔断器配置
-    public static final String CIRCUIT_BREAKER_ENABLED = "circuitBreakerEnabled";
-    public static final String CIRCUIT_BREAKER_REQUEST_VOLUME_THRESHOLD = "circuitBreakerRequestVolumeThreshold";
-    public static final String CIRCUIT_BREAKER_ERROR_THRESHOLD_PERCENTAGE = "circuitBreakerErrorThresholdPercentage";
-    public static final String CIRCUIT_BREAKER_SLEEP_WINDOW_IN_MILLISECONDS = "circuitBreakerSleepWindowInMilliseconds";
-    public static final String CIRCUIT_BREAKER_FORCE_OPEN = "circuitBreakerSleepWindowInMilliseconds";
-    public static final String CIRCUIT_BREAKER_FORCE_CLOSED = "circuitBreakerSleepWindowInMilliseconds";
+    public static final String CIRCUIT_BREAKER_ENABLED = "circuitBreaker.enabled";
+    public static final String CIRCUIT_BREAKER_REQUEST_VOLUME_THRESHOLD = "circuitBreaker.requestVolumeThreshold";
+    public static final String CIRCUIT_BREAKER_ERROR_THRESHOLD_PERCENTAGE = "circuitBreaker.errorThresholdPercentage";
+    public static final String CIRCUIT_BREAKER_SLEEP_WINDOW_IN_MILLISECONDS = "circuitBreaker.sleepWindowInMilliseconds";
+    public static final String CIRCUIT_BREAKER_FORCE_OPEN = "circuitBreaker.forceOpen";
+    public static final String CIRCUIT_BREAKER_FORCE_CLOSED = "circuitBreaker.forceClosed";
     // 降级配置
-    public static final String FALLBACK_ISOLATION_SEMAPHORE_MAX_CONCURRENT_REQUESTS = "fallbackIsolationSemaphoreMaxConcurrentRequests";
+    public static final String FALLBACK_ISOLATION_SEMAPHORE_MAX_CONCURRENT_REQUESTS = "fallback.isolation.semaphore.maxConcurrentRequests";
+    public static final String FALLBACK_ENABLED = "fallback.enabled";
     // 隔离配置
-    public static final String EXECUTION_ISOLATION_STRATEGY = "executionIsolationStrategy";
-    public static final String EXECUTION_ISOLATION_THREAD_INTERRUPT_ON_TIMEOUT = "executionIsolationThreadInterruptOnTimeout";
-    public static final String EXECUTION_ISOLATION_THREAD_INTERRUPT_ON_FUTURE_CANCEL = "executionIsolationThreadInterruptOnFutureCancel";
-    public static final String EXECUTION_TIMEOUT_IN_MILLISECONDS = "executionTimeoutInMilliseconds";
-
+    public static final String EXECUTION_ISOLATION_STRATEGY = "execution.isolation.strategy";
+    public static final String EXECUTION_ISOLATION_THREAD_INTERRUPT_ON_TIMEOUT = "execution.isolation.thread.interruptOnTimeout";
+    public static final String EXECUTION_ISOLATION_THREAD_INTERRUPT_ON_FUTURE_CANCEL = "execution.isolation.thread.interruptOnCancel";
+    public static final String EXECUTION_TIMEOUT_IN_MILLISECONDS = "execution.timeoutInMilliseconds";
+    public static final String EXECUTION_ISOLATION_SEMAPHORE_MAX_CONCURRENT_REQUESTS = "execution.isolation.semaphore.maxConcurrentRequests";
 
     /**
      * Thread pool properties.
@@ -100,7 +101,12 @@ public class HystrixPropertiesManager {
                 setter.withCircuitBreakerForceClosed(toBoolean(value));
             }
         });
-
+        put(FALLBACK_ENABLED, new PropSetter<HystrixCommandProperties.Setter, String>() {
+            @Override
+            public void set(HystrixCommandProperties.Setter setter, String value) throws IllegalArgumentException {
+                setter.withFallbackEnabled(toBoolean(value));
+            }
+        });
         put(FALLBACK_ISOLATION_SEMAPHORE_MAX_CONCURRENT_REQUESTS, new PropSetter<HystrixCommandProperties.Setter, String>() {
             @Override
             public void set(HystrixCommandProperties.Setter setter, String value) throws IllegalArgumentException {
@@ -130,6 +136,12 @@ public class HystrixPropertiesManager {
             @Override
             public void set(HystrixCommandProperties.Setter setter, String value) throws IllegalArgumentException {
                 setter.withExecutionTimeoutInMilliseconds(toInt(EXECUTION_TIMEOUT_IN_MILLISECONDS, value));
+            }
+        });
+        put(EXECUTION_ISOLATION_SEMAPHORE_MAX_CONCURRENT_REQUESTS, new PropSetter<HystrixCommandProperties.Setter, String>() {
+            @Override
+            public void set(HystrixCommandProperties.Setter setter, String value) throws IllegalArgumentException {
+                setter.withExecutionIsolationSemaphoreMaxConcurrentRequests(toInt(EXECUTION_ISOLATION_SEMAPHORE_MAX_CONCURRENT_REQUESTS, value));
             }
         });
     }};
