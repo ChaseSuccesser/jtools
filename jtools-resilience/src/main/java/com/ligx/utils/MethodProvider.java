@@ -25,8 +25,8 @@ public class MethodProvider {
         Class<?>[] extendFallbackParameterTypes = Arrays.copyOf(fallbackParameterTypes, fallbackParameterTypes.length + 1);
         extendFallbackParameterTypes[fallbackParameterTypes.length] = Throwable.class;
 
-        Optional<Method> fallbackMethod = AopUtil.getMethod(declaringClass, fallbackName, fallbackParameterTypes);
-        Optional<Method> exFallbackMethod = AopUtil.getMethod(declaringClass, fallbackName, extendFallbackParameterTypes);
+        Optional<Method> fallbackMethod = ReflectUtil.getMethod(declaringClass, fallbackName, fallbackParameterTypes);
+        Optional<Method> exFallbackMethod = ReflectUtil.getMethod(declaringClass, fallbackName, extendFallbackParameterTypes);
         Method method = fallbackMethod.orElse(exFallbackMethod.orElse(null));
         if (method == null) {
             throw new RuntimeException("fallback method wasn't found: " + fallbackName + "(" + Arrays.toString(fallbackParameterTypes) + ")");

@@ -33,6 +33,7 @@ public class MetaHolderBuilder {
         metaHolder.setExtendFallback(fallbackMethod.isExtend());
 
         Resilience resilience = method.getAnnotation(Resilience.class);
+        // todo 动态修改Resilience的属性
         metaHolder.setResilience(resilience);
 
         String groupKey = StringUtils.isNotBlank(resilience.groupKey()) ? resilience.groupKey() : declaringClass.getSimpleName();

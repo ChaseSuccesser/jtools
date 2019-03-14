@@ -4,8 +4,6 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * Author: ligongxing.
@@ -17,16 +15,6 @@ public class AopUtil {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
         return method;
-    }
-
-    public static Optional<Method> getMethod(Class<?> type, String methodName, Class<?>... parameterTypes) {
-        Method[] methods = type.getDeclaredMethods();
-        for (Method method : methods) {
-            if (method.getName().equals(methodName) && Arrays.equals(method.getParameterTypes(), parameterTypes)) {
-                return Optional.of(method);
-            }
-        }
-        return Optional.empty();
     }
 
 }

@@ -3,6 +3,8 @@ package com.ligx.redis;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +23,7 @@ public class RedisConfig {
 
 
     @Bean
+    @ConditionalOnProperty(value = "redis.url")
     public JedisPoolConfig jedisPoolConfig() {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(redisProperties.getPool().getMaxIdle());
@@ -31,6 +34,7 @@ public class RedisConfig {
     }
 
     @Bean
+    @ConditionalOnProperty(value = "redis.url")
     public JedisConnectionFactory jedisConnectionFactory() {
         JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
         jedisConnectionFactory.setClientName("jedisConnectionFactory");
@@ -44,6 +48,7 @@ public class RedisConfig {
     }
 
     @Bean
+    @ConditionalOnProperty(value = "redis.url")
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 
