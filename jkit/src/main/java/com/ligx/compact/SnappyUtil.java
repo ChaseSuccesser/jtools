@@ -7,6 +7,7 @@ import java.io.IOException;
 /**
  * Author: ligongxing.
  * Date: 2017年03月06日.
+ * Description: 这是Google开发的一个非常流行的压缩算法，它旨在提供速度与压缩比都相对较优的压缩算法。
  */
 public class SnappyUtil {
 

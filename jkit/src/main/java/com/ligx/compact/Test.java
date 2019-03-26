@@ -4,6 +4,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
+import java.math.BigDecimal;
 
 /**
  * Author: ligongxing.
@@ -41,17 +42,24 @@ public class Test {
         }
     }
 
+    private static String compressRatio(long startSize, long compressedSize) {
+        BigDecimal b1 = new BigDecimal(String.valueOf(startSize));
+        BigDecimal b2 = new BigDecimal(String.valueOf(compressedSize));
+        BigDecimal b3 = b1.divide(b2, 1, BigDecimal.ROUND_HALF_UP);
+        return b3.toString();
+    }
+
     private static void profileTest(boolean isWriteFile) {
         byte[] srcBytes = getSrcBytes();
 
-//        String[] compressCategories = {"bzip2", "deflate", "gzip", "snappy", "lz4", "lzo"};
-        String[] compressCategories = {"deflate", "gzip", "snappy"};
+        String[] compressCategories = {"bzip2", "deflate", "gzip", "snappy", "lz4", "lzo"};
+        //String[] compressCategories = {"deflate", "gzip", "snappy"};
 
         for (String compressName : compressCategories) {
             System.out.println(compressName);
             long startSize = srcBytes.length;
-            long startCompressTime = System.currentTimeMillis();
             byte[] compressedBytes = new byte[0];
+            long startCompressTime = System.currentTimeMillis();
             switch (compressName) {
                 case "gzip":
                     compressedBytes = GZipUtil.compress(srcBytes);
@@ -77,7 +85,7 @@ public class Test {
             System.out.println("压缩前文件大小: " + startSize);
             System.out.println("压缩后文件大小: " + endCompressSize);
             System.out.println("压缩时间: " + (endCompressTime - startCompressTime) + " ms");
-            System.out.println("压缩率:" + startSize / endCompressSize + "倍");
+            System.out.println("压缩率:" + compressRatio(startSize, endCompressSize) + "倍");
 
 
             String encodeValue = Base64.encodeBase64String(compressedBytes);

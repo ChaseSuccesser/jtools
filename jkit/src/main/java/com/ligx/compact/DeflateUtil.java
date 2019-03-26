@@ -9,6 +9,12 @@ import java.util.zip.Inflater;
 /**
  * Author: ligongxing.
  * Date: 2017年03月06日.
+ *
+ * Description:
+ * JDK deflate ——这是JDK中的又一个算法（zip文件用的就是这一算法）
+ * 它与gzip的不同之处在于，你可以指定算法的压缩级别，这样你可以在压缩时间和输出文件大小上进行平衡
+ * 可选的级别有0（不压缩），以及1(快速压缩)到9（慢速压缩）
+ * 它的实现是java.util.zip.DeflaterOutputStream / InflaterInputStream
  */
 public class DeflateUtil {
 
@@ -18,7 +24,7 @@ public class DeflateUtil {
         }
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        Deflater compressor = new Deflater(6);
+        Deflater compressor = new Deflater(1);
         try {
             compressor.setInput(input);
             compressor.finish();
