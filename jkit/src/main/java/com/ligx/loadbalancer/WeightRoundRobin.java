@@ -31,11 +31,11 @@ public class WeightRoundRobin {
                 return o2.getCurrentWeight() - o1.getCurrentWeight();
             }
         });
-
         Server selected = serverList.get(0);
+
         selected.setCurrentWeight(selected.getCurrentWeight() - totalWeight);
 
-        return serverList.get(0);
+        return selected;
     }
 
 }
