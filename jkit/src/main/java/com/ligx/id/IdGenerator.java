@@ -49,7 +49,7 @@ public class IdGenerator {
         try {
             id = IdGenerator.instance.nextId();
         } catch (Exception e) {
-            LOGGER.error("IdGenerator->get:error", e);
+            LOGGER.error("IdGenerator#get:error!", e);
             System.err.println(e.getMessage());
         }
         if (id == 0L) {
@@ -57,7 +57,7 @@ public class IdGenerator {
                 Thread.sleep(3L);
                 id = IdGenerator.instance.nextId();
             } catch (Exception e) {
-                LOGGER.error("IdGenerator#get:error", e);
+                LOGGER.error("IdGenerator#get:error!", e);
                 System.err.println(e.getMessage());
             }
         }
