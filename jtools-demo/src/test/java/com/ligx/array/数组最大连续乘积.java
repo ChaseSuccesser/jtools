@@ -21,27 +21,46 @@ public class 数组最大连续乘积 {
     }
 
 
-    public int arrayMaxContinusProduct() {
-        int[] a = {-3, 4, 0, 3, 2, 8, -1};
+    //public int arrayMaxContinueProduct() {
+    //    int[] a = {-3, 4, 0, 3, 2, 8, -1};
+    //
+    //    int[] maxArray = new int[a.length];
+    //    int[] minArray = new int[a.length];
+    //    maxArray[0] = a[0];
+    //    minArray[0] = a[0];
+    //    int maxProduct = a[0];
+    //    for (int i = 1; i < a.length; i++) {
+    //        maxArray[i] = max(a[i], a[i] * maxArray[i - 1], a[i] * minArray[i - 1]);
+    //        minArray[i] = min(a[i], a[i] * maxArray[i - 1], a[i] * minArray[i - 1]);
+    //        if (maxArray[i] > maxProduct) {
+    //            maxProduct = maxArray[i];
+    //        }
+    //    }
+    //    return maxProduct;
+    //}
 
+    public int arrayMaxContinueProduct(int[] a) {
         int[] maxArray = new int[a.length];
         int[] minArray = new int[a.length];
         maxArray[0] = a[0];
         minArray[0] = a[0];
-        int maxProduct = a[0];
+        int max = a[0];
+
         for (int i = 1; i < a.length; i++) {
             maxArray[i] = max(a[i], a[i] * maxArray[i - 1], a[i] * minArray[i - 1]);
             minArray[i] = min(a[i], a[i] * maxArray[i - 1], a[i] * minArray[i - 1]);
-            if (maxArray[i] > maxProduct) {
-                maxProduct = maxArray[i];
+            if (maxArray[i] > max) {
+                max = maxArray[i];
             }
         }
-        return maxProduct;
+
+        return max;
     }
 
 
     @Test
     public void test() {
-        System.out.println(arrayMaxContinusProduct());
+        int[] a = {-3, 4, 0, 3, 2, 8, -1};
+        System.out.println(arrayMaxContinueProduct(a));
     }
 }
