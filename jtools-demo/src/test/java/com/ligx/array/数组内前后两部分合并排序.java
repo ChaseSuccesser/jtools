@@ -1,4 +1,4 @@
-package com.ligx;
+package com.ligx.array;
 
 /**
  * Author: ligongxing.

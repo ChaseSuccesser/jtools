@@ -1,4 +1,4 @@
-package com.ligx;
+package com.ligx.string;
 
 import org.junit.Test;
 

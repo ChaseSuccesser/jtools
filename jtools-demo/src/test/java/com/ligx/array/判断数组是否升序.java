@@ -1,4 +1,4 @@
-package com.ligx;
+package com.ligx.array;
 
 import org.junit.Assert;
 import org.junit.Test;
