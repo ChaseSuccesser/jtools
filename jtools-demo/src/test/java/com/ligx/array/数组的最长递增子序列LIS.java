@@ -1,18 +1,16 @@
 package com.ligx.array;
 
-import org.junit.Test;
-
 import java.util.Arrays;
 
 /**
  * Author: ligongxing.
- * Date: 2019/06/14.
+ * Date: 2019/06/28.
  */
-public class 最长递增子序列的长度 {
+public class 数组的最长递增子序列LIS {
 
-    public int LIS(int[] a) {
+    // 最长递增子序列的长度
+    public static int lis(int[] a) {
         int[] LIS = new int[a.length];
-
         for (int i = 0; i < a.length; i++) {
             LIS[i] = 1;
             for (int j = 0; j < i; j++) {
@@ -23,13 +21,11 @@ public class 最长递增子序列的长度 {
         }
 
         Arrays.sort(LIS);
-        return LIS[LIS.length - 1];
+        return LIS[a.length - 1];
     }
 
-
-    @Test
-    public void test() {
+    public static void main(String[] args) {
         int[] a = {2, 1, 3, 4, 5, 0};
-        System.out.println(LIS(a));
+        System.out.println(lis(a));
     }
 }
