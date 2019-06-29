@@ -40,6 +40,9 @@ public class 整数拆分和找零钱问题 {
         dfs1(6, vector, 0, 1);
     }
 
+
+
+    // 找零钱
     public static void dfs2(int sum, Vector<Integer> vector, int[] money, int currnum, int id) {
         if (currnum == sum) {
             System.out.print("方案" + (count++) + ":");
@@ -59,6 +62,7 @@ public class 整数拆分和找零钱问题 {
         }
     }
 
+    // 找零钱的测试
     @Test
     public void dfs2Test() {
         Vector<Integer> vec = new Vector<>();

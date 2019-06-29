@@ -15,6 +15,7 @@ public class 和为定值的两个数所有组合 {
 
         int head = 0;
         int tail = a.length - 1;
+
         while (head < tail) {
             if (a[head] + a[tail] == m) {
                 System.out.println(a[head] + "+" + a[tail]);
