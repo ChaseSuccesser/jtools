@@ -13,21 +13,17 @@ public class 整数拆分和找零钱问题 {
     private static int count = 0;
 
     // 整数拆分
-    public static void dfs1(int sum, Vector<Integer> vector, int currnum, int id) {
+    public static void dfs1(int sum, StringBuilder sb, int currnum, int id) {
         if (currnum == sum) {
-            System.out.print("方案" + (count++) + ":");
-            for (int i = 0; i < vector.size(); i++) {
-                System.out.print(vector.get(i) + " ");
-            }
-            System.out.println();
+            System.out.println(String.format("方案%s:%s", count++, sb));
             return;
         }
 
         for (int i = id; i <= sum; i++) {
             if (currnum + i <= sum) {
-                vector.add(i);
-                dfs1(sum, vector, currnum + i, i);
-                vector.remove(vector.size() - 1);
+                sb.append(i);
+                dfs1(sum, sb, currnum + i, i);
+                sb.deleteCharAt(sb.length() - 1);
             }
         }
     }
@@ -35,9 +31,9 @@ public class 整数拆分和找零钱问题 {
     // 整数拆分的测试
     @Test
     public void dfs1Test() {
-        Vector<Integer> vector = new Vector<>();
+        StringBuilder sb = new StringBuilder();
 
-        dfs1(6, vector, 0, 1);
+        dfs1(6, sb, 0, 1);
     }
 
 
