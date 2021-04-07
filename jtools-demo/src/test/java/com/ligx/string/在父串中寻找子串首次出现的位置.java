@@ -17,6 +17,7 @@ public class 在父串中寻找子串首次出现的位置 {
                 j++;
             } else {
                 i++;
+                j = 0;
             }
             if (j == chars2.length) {
                 break;

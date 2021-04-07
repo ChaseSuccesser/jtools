@@ -1,5 +1,7 @@
 package com.ligx.string;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Author: ligongxing.
  * Date: 2019年06月30日.
@@ -7,6 +9,9 @@ package com.ligx.string;
 public class 字符串中找到第一个只出现一次的字符 {
 
     public static char findOne(String str) {
+        if (StringUtils.isBlank(str)) {
+            return '0';
+        }
         int[] num = new int[52];
 
         for (int i = 0; i < str.length(); i++) {

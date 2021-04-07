@@ -1,17 +1,21 @@
 package com.ligx.string;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Author: ligongxing.
  * Date: 2019年06月30日.
  */
 public class 回文判断 {
 
-    public static boolean isPalindrome(String str) {
-        char[] chars = str.toCharArray();
+    private static boolean isPalindrome(String str) {
+        if (StringUtils.isBlank(str)) {
+            return false;
+        }
         int head = 0;
-        int tail = chars.length - 1;
+        int tail = str.length() - 1;
         while (head < tail) {
-            if (chars[head] != chars[tail]) {
+            if (str.charAt(head) != str.charAt(tail)) {
                 return false;
             }
             head++;
