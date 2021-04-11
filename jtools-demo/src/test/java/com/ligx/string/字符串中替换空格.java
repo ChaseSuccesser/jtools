@@ -6,8 +6,10 @@ package com.ligx.string;
  */
 public class 字符串中替换空格 {
 
-    public static String replace(String str) {
-        // 统计空格的个数
+    private static String replace(String str) {
+        if (str == null || str.length() == 0) {
+            return "";
+        }
         int blankCount = 0;
         for (int i = 0; i < str.length(); i++) {
             if (str.charAt(i) == ' ') {
@@ -15,21 +17,21 @@ public class 字符串中替换空格 {
             }
         }
 
-        // 用扩容后的长度创建新数组
-        int newLen = str.length() + blankCount*2;
-        char[] newChars = new char[newLen];
+        int newLength = str.length() + blankCount * 2;
+        char[] newChars = new char[newLength];
 
-        int oldIndex = str.length() - 1;
-        int newIndex = newLen - 1;
-        while (oldIndex >= 0) {
-            if (str.charAt(oldIndex) == ' ') {
-                newChars[newIndex--] = '%';
-                newChars[newIndex--] = '0';
-                newChars[newIndex--] = '2';
-            } else {
-                newChars[newIndex--] = str.charAt(oldIndex);
+        int oldP = str.length() - 1;
+        int newP = newLength - 1;
+
+        while (oldP >= 0) {
+            if (str.charAt(oldP) == ' ') {
+                newChars[newP--] = '0';
+                newChars[newP--] = '2';
+                newChars[newP--] = '%';
+            }else {
+                newChars[newP--] = str.charAt(oldP);
             }
-            oldIndex--;
+            oldP--;
         }
 
         return new String(newChars);

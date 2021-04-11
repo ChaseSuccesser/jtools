@@ -1,5 +1,7 @@
 package com.ligx.string;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Author: ligongxing.
  * Date: 2019/07/01.
@@ -7,16 +9,15 @@ package com.ligx.string;
 public class 最长公共子串 {
 
     public static String longestCommonSub(String str1, String str2) {
-        int s1Len = str1.length();
-        int s2Len = str2.length();
-
-        int[][] matrix = new int[s1Len + 1][s2Len + 1];
-
-        int max = -Integer.MAX_VALUE;
+        if (StringUtils.isBlank(str1) || StringUtils.isBlank(str2)) {
+            return "";
+        }
+        int[][] matrix = new int[str1.length() + 1][str2.length() + 1];
+        int max = 0;
         int x = 0;
         int y = 0;
-        for (int i = 1; i <= s1Len; i++) {
-            for (int j = 1; j <= s2Len; j++) {
+        for (int i = 1; i <= str1.length(); i++) {
+            for (int j = 1; j <= str2.length(); j++) {
                 if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
                     matrix[i][j] = matrix[i - 1][j - 1] + 1;
                 } else {
@@ -30,20 +31,22 @@ public class 最长公共子串 {
             }
         }
 
-        char[] longestCommonStr = new char[max];
-        x = x - 1;
-        y = y - 1;
-        while (x >= 0 && y >= 0) {
-            if (str1.charAt(x) == str2.charAt(y)) {
-                longestCommonStr[--max] = str1.charAt(x);
-                x--;
-                y--;
-            } else {
-                break;
+        if (max > 0) {
+            char[] longestCommonStr = new char[max];
+            x = x - 1;
+            y = y - 1;
+            while (x >= 0 && y >= 0) {
+                if (str1.charAt(x) == str2.charAt(y)) {
+                    longestCommonStr[--max] = str1.charAt(x);
+                    x--;
+                    y--;
+                } else {
+                    break;
+                }
             }
+            return new String(longestCommonStr);
         }
-
-        return new String(longestCommonStr);
+        return "";
     }
 
     public static void main(String[] args) {
