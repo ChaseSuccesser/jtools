@@ -4,23 +4,23 @@ package com.ligx.tree;
  * @author: ligongxing.
  * @date: 2021年04月16日.
  */
-public class HeapSort {
+public class SmallHeapSort {
 
     /**
-     * 堆排序
+     * 最大堆排序
      */
     public static void heapSort(int[] arr) {
         if (arr == null || arr.length == 0) {
             return;
         }
-        Heap heap = new Heap(arr.length);
+        SmallHeap smallHeap = new SmallHeap(arr.length);
 
         for (int i = 0; i < arr.length; i++) {
-            heap.insert(arr[i]);
+            smallHeap.insert(arr[i]);
         }
 
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = heap.remove();
+            arr[i] = smallHeap.remove();
         }
 
         for (int i = 0; i < arr.length; i++) {

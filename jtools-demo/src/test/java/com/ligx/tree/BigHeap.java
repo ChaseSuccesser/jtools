@@ -4,13 +4,13 @@ package com.ligx.tree;
  * @author: ligongxing.
  * @date: 2021年04月15日.
  */
-public class Heap {
+public class BigHeap {
 
     private int maxSize;
     private int currentSize;
     private int[] heapArray;
 
-    public Heap(int maxSize) {
+    public BigHeap(int maxSize) {
         this.maxSize = maxSize;
         this.currentSize = 0;
         this.heapArray = new int[maxSize];
@@ -62,4 +62,8 @@ public class Heap {
         heapArray[index] = top;
     }
 
+
+    public int peekRoot() {
+        return heapArray[0];
+    }
 }
