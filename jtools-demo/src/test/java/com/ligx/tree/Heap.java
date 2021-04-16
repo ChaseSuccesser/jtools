@@ -38,7 +38,7 @@ public class Heap {
     public int remove() {
         int root = heapArray[0];
         heapArray[0] = heapArray[--currentSize];
-        trickleUp(0);
+        trickleDown(0);
         return root;
     }
 
@@ -53,7 +53,7 @@ public class Heap {
             } else {
                 largeChild = leftChild;
             }
-            if (top > heapArray[largeChild]) {
+            if (top >= heapArray[largeChild]) {
                 break;
             }
             heapArray[index] = heapArray[largeChild];
