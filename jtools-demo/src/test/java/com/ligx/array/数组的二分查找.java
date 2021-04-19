@@ -6,14 +6,14 @@ package com.ligx.array;
  */
 public class 数组的二分查找 {
 
-    public static int binarySearch(int[] a, int key) {
+    public static int binarySearch(int[] arr, int key) {
         int min = 0;
-        int max = a.length - 1;
+        int max = arr.length - 1;
         while (min <= max) {
             int mid = (min + max) / 2;
-            if (a[mid] == key) {
+            if (arr[mid] == key) {
                 return mid;
-            } else if (a[mid] > key) {
+            } else if (arr[mid] > key) {
                 max = mid - 1;
             } else {
                 min = mid + 1;

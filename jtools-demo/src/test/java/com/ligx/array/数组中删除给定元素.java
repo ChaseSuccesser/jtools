@@ -6,22 +6,32 @@ package com.ligx.array;
  */
 public class 数组中删除给定元素 {
 
-    public static void removeDuplicate(char[] a, char target) {
-        int head = 0;
-        int tail = 0;
-        for (; tail < a.length; tail++) {
-            if (a[tail] != target) {
-                a[head++] = a[tail];
+    public static int removeDuplicate(char[] arr, char target) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        if (arr.length == 1) {
+            if (arr[0] == target) {
+                return 0;
+            } else {
+                return 1;
             }
         }
-
-        for (int i = 0; i < head; i++) {
-            System.out.print(a[i]);
+        int head = 0;
+        int tail = 0;
+        for (; tail < arr.length; tail++) {
+            if (arr[tail] != target) {
+                arr[head++] = arr[tail];
+            }
         }
+        return head;
     }
 
     public static void main(String[] args) {
         char[] a = {'a', 'b', 'b', 'c'};
-        removeDuplicate(a, 'b');
+        int end = removeDuplicate(a, 'b');
+        for (int i = 0; i < end; i++) {
+            System.out.println(a[i]);
+        }
     }
 }

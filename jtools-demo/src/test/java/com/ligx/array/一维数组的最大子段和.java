@@ -6,14 +6,14 @@ package com.ligx.array;
  */
 public class 一维数组的最大子段和 {
 
-    public static int maxSubArray(int[] a) {
+    public static int maxSubArray(int[] arr) {
         int sum = 0;
-        int max = -Integer.MAX_VALUE;
-        for (int i = 0; i < a.length; i++) {
+        int max = 0;
+        for (int i = 0; i < arr.length; i++) {
             if (sum > 0) {
-                sum += a[i];
+                sum += arr[i];
             } else {
-                sum = a[i];
+                sum = arr[i];
             }
             if (sum > max) {
                 max = sum;

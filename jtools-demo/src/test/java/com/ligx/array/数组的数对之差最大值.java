@@ -6,20 +6,17 @@ package com.ligx.array;
  */
 public class 数组的数对之差最大值 {
 
-    public static int maxDiff(int[] a) {
-        int max = a[0];
-        int maxDiff = max - a[1];
-
-        for (int i = 2; i < a.length; i++) {
-            if (a[i - 1] > max) {
-                max = a[i - 1];
-            }
-            int currentDiff = max - a[i];
-            if (currentDiff > maxDiff) {
-                maxDiff = currentDiff;
-            }
+    public static int maxDiff(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return -1;
         }
-
+        int max = arr[0];
+        int maxDiff = max - arr[1];
+        for (int i = 2; i < arr.length; i++) {
+            max = Math.max(max, arr[i - 1]);
+            int currentDiff = max - arr[i];
+            maxDiff = Math.max(maxDiff, currentDiff);
+        }
         return maxDiff;
     }
 

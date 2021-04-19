@@ -7,10 +7,12 @@ package com.ligx.array;
 public class 有序数组删除重复元素不保留一个 {
 
     public static void removeDuplicate(char[] a) {
+        if (a == null || a.length == 0) {
+            return;
+        }
         int head = 0;
         int tail = 0;
         int count = 0;
-
         while (tail < a.length) {
             count = 0;
             a[head] = a[tail];
@@ -22,9 +24,8 @@ public class 有序数组删除重复元素不保留一个 {
                 head++;
             }
         }
-
         for (int i = 0; i < head; i++) {
-                System.out.print(a[i]);
+            System.out.print(a[i] + ",");
         }
     }
 

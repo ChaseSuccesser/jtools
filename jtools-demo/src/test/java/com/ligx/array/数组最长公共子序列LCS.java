@@ -6,7 +6,7 @@ package com.ligx.array;
  */
 public class 数组最长公共子序列LCS {
 
-    public static void comSubString(char[] a, char[] b) {
+    private static void comSubString(char[] a, char[] b) {
         int aLen = a.length;
         int bLen = b.length;
         int[][] matrix = new int[aLen + 1][bLen + 1];
@@ -16,19 +16,19 @@ public class 数组最长公共子序列LCS {
                 if (a[i - 1] == b[j - 1]) {
                     matrix[i][j] = matrix[i - 1][j - 1] + 1;
                 } else {
-                    matrix[i][j] = matrix[i - 1][j] > matrix[i][j - 1] ? matrix[i - 1][j] : matrix[i][j - 1];
+                    matrix[i][j] = Math.max(matrix[i - 1][j], matrix[i][j - 1]);
                 }
             }
         }
 
-        int comSubStringLen = matrix[aLen][bLen];
-        char[] c = new char[comSubStringLen];
+        int maxCommonSubStrLen = matrix[aLen][bLen];
+        char[] chars = new char[maxCommonSubStrLen];
         int i = aLen;
         int j = bLen;
-        while (comSubStringLen > 0) {
+        while (maxCommonSubStrLen > 0) {
             if (matrix[i][j] != matrix[i - 1][j - 1]) {
                 if (matrix[i - 1][j] == matrix[i][j - 1]) {
-                    c[--comSubStringLen] = a[i - 1];
+                    chars[--maxCommonSubStrLen] = a[i - 1];
                     i--;
                     j--;
                 } else if (matrix[i - 1][j] > matrix[i][j - 1]) {
@@ -41,9 +41,8 @@ public class 数组最长公共子序列LCS {
                 j--;
             }
         }
-
         System.out.print("最长公共子序列是：");
-        System.out.print(c);
+        System.out.print(chars);
     }
 
     public static void main(String[] args) {

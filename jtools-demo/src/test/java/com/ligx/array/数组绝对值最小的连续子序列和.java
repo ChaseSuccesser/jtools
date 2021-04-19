@@ -6,18 +6,16 @@ package com.ligx.array;
  */
 public class 数组绝对值最小的连续子序列和 {
 
-    public static int getMinAbsoluteSubsequence(int[] a) {
+    public static int getMinAbsoluteSubsequence(int[] arr) {
         int sum = 0;
         int min = Integer.MAX_VALUE;
-        for (int i = 0; i < a.length; i++) {
-            if (sum * a[i] > 0) {
-                sum = a[i];
+        for (int i = 0; i < arr.length; i++) {
+            if (sum * arr[i] > 0) {
+                sum = arr[i];
             } else {
-                sum += a[i];
+                sum += arr[i];
             }
-            if (Math.abs(sum) < Math.abs(min)) {
-                min = sum;
-            }
+            min = Math.min(Math.abs(sum), Math.abs(min));
         }
         return Math.abs(min);
     }

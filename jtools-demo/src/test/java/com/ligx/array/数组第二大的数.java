@@ -8,26 +8,27 @@ import org.junit.Test;
  */
 public class 数组第二大的数 {
 
-    public int findSecond(int[] a) {
-        int max = a[0];
-        int secMax = -Integer.MAX_VALUE;
-        for (int i = 1; i <a.length; i++) {
-            if (a[i] > max) {
-                secMax = max;
-                max = a[i];
+    public int findSecondMax(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return -1;
+        }
+        int max = arr[0];
+        int second = Integer.MIN_VALUE;
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > max) {
+                second = max;
+                max = arr[i];
             } else {
-                if (a[i] > secMax) {
-                    secMax = a[i];
-                }
+                second = Math.max(second, arr[i]);
             }
         }
-        return secMax;
+        return second;
     }
 
 
     @Test
     public void test() {
         int[] a = {1, 2, 3, 5};
-        System.out.println(findSecond(a));
+        System.out.println(findSecondMax(a));
     }
 }

@@ -6,18 +6,21 @@ package com.ligx.array;
  */
 public class 字符串数组中查找最长相同前缀字符串 {
 
-    public static String longestCommonPrefix(String[] strs) {
-        int minStrLen = strs[0].length();
+    private static String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+        int minLen = strs[0].length();
         String minStr = strs[0];
         for (int i = 0; i < strs.length; i++) {
-            if (strs[i].length() < minStrLen) {
-                minStrLen = strs[i].length();
+            if (strs[i].length() < minLen) {
+                minLen = strs[i].length();
                 minStr = strs[i];
             }
         }
-        char[] chars = minStr.toCharArray();
-        for (int i = 0; i < chars.length; i++) {
-            char c = chars[i];
+
+        for (int i = 0; i < minStr.length(); i++) {
+            char c = minStr.charAt(i);
             for (int j = 0; j < strs.length; j++) {
                 if (strs[j].charAt(i) != c) {
                     return minStr.substring(0, i);
@@ -28,7 +31,7 @@ public class 字符串数组中查找最长相同前缀字符串 {
     }
 
     public static void main(String[] args) {
-        String[] strs = {"ab", "abc", "abcd"};
+        String[] strs = {"abcf", "abcee", "abcd"};
         System.out.println(longestCommonPrefix(strs));
     }
 }

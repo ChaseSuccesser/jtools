@@ -9,19 +9,21 @@ import java.util.Arrays;
 public class 数组的最长递增子序列LIS {
 
     // 最长递增子序列的长度
-    public static int lis(int[] a) {
-        int[] LIS = new int[a.length];
-        for (int i = 0; i < a.length; i++) {
-            LIS[i] = 1;
+    private static int lis(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        int[] lis = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            lis[i] = 1;
             for (int j = 0; j < i; j++) {
-                if (a[j] < a[i] && LIS[j] + 1 > LIS[i]) {
-                    LIS[i] = LIS[j] + 1;
+                if (arr[j] < arr[i] && lis[j] + 1 > lis[i]) {
+                    lis[i] = lis[j] + 1;
                 }
             }
         }
-
-        Arrays.sort(LIS);
-        return LIS[a.length - 1];
+        Arrays.sort(lis);
+        return lis[arr.length - 1];
     }
 
     public static void main(String[] args) {
