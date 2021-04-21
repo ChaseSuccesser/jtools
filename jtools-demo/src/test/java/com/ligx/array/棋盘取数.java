@@ -7,6 +7,9 @@ package com.ligx.array;
 public class 棋盘取数 {
 
     public static int maxValue(int[][] matrix) {
+        if (matrix == null || matrix.length == 0) {
+            return 0;
+        }
         int rows = matrix.length;
         int columns = matrix[0].length;
 
@@ -25,7 +28,6 @@ public class 棋盘取数 {
                 valueMatrix[i][j] = Math.max(valueMatrix[i - 1][j], valueMatrix[i][j - 1]) + matrix[i][j];
             }
         }
-
         return valueMatrix[rows - 1][columns - 1];
     }
 

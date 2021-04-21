@@ -6,22 +6,26 @@ package com.ligx.array;
  */
 public class 数组内前后两部分合并排序 {
 
-
-    public static void mergeSort(int[] a) {
+    private static void mergeSort(int[] arr) {
+        if (arr == null || arr.length <= 1) {
+            return;
+        }
         int lBegin = 0;
-        int lEnd = a.length / 2 - 1;
+        int lEnd = arr.length / 2 - 1;
         int rBegin = lEnd + 1;
-        int rEnd = a.length - 1;
+        int rEnd = arr.length - 1;
+
         while (lBegin <= lEnd) {
-            if (a[lBegin] > a[rBegin]) {
-                int temp = a[lBegin];
-                a[lBegin] = a[rBegin];
-                int next = rBegin + 1;
-                while (next <= rEnd && temp > a[next]) {
-                    a[next - 1] = a[next];
-                    next++;
+            if (arr[lBegin] > arr[rBegin]) {
+                int temp = arr[lBegin];
+                arr[lBegin] = arr[rBegin];
+
+                int rIndex = rBegin + 1;
+                while (rIndex <= rEnd && temp > arr[rIndex]) {
+                    arr[rIndex - 1] = arr[rIndex];
+                    rIndex++;
                 }
-                a[next - 1] = temp;
+                arr[rIndex - 1] = temp;
             }
             lBegin++;
         }

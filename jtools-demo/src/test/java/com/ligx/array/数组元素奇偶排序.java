@@ -8,21 +8,24 @@ import org.junit.Test;
  */
 public class 数组元素奇偶排序 {
 
-    public void sort(int[] a) {
-        int head = 0;
-        int tail = a.length - 1;
-        while (head < tail) {
-            if (!isEven(a[head])) {
-                head++;
+    public void oddAndEvenSort(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return;
+        }
+        int start = 0;
+        int end = arr.length - 1;
+        while (start < end) {
+            if (!isEven(arr[start])) {
+                start++;
                 continue;
             }
-            if (isEven(a[tail])) {
-                tail--;
+            if (isEven(arr[end])) {
+                end--;
                 continue;
             }
-            int temp = a[head];
-            a[head] = a[tail];
-            a[tail] = temp;
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
         }
     }
 
@@ -33,9 +36,9 @@ public class 数组元素奇偶排序 {
     @Test
     public void test() {
         int[] a = {1, 2, 3, 4, 5, 6};
-        sort(a);
+        oddAndEvenSort(a);
         for (int i = 0; i < a.length; i++) {
-            System.err.print(a[i]);
+            System.out.print(a[i]);
         }
     }
 }
