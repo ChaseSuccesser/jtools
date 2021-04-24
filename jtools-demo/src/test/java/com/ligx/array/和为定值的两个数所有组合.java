@@ -1,27 +1,24 @@
 package com.ligx.array;
 
-import org.junit.Test;
-
-import java.util.Arrays;
-
 /**
  * Author: ligongxing.
  * Date: 2019/06/14.
  */
 public class 和为定值的两个数所有组合 {
 
-    public void qiuhe(int[] a, int m) {
-        Arrays.sort(a);
 
+    private static void qiuhe(int[] arr, int m) {
+        if (arr == null || arr.length == 0) {
+            return;
+        }
         int head = 0;
-        int tail = a.length - 1;
-
+        int tail = arr.length - 1;
         while (head < tail) {
-            if (a[head] + a[tail] == m) {
-                System.out.println(a[head] + "+" + a[tail]);
+            if (arr[head] + arr[tail] == m) {
+                System.out.println(arr[head] + "+" + arr[tail]);
                 head++;
                 tail--;
-            } else if (a[head] + a[tail] > m) {
+            } else if (arr[head] + arr[tail] > m) {
                 tail--;
             } else {
                 head++;
@@ -29,9 +26,7 @@ public class 和为定值的两个数所有组合 {
         }
     }
 
-
-    @Test
-    public void test() {
+    public static void main(String[] args) {
         int[] a = {1, 2, 3, 4, 6, 7, 8, 9};
         qiuhe(a, 10);
     }

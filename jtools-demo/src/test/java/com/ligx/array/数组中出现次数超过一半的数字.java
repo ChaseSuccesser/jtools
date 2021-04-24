@@ -1,22 +1,23 @@
 package com.ligx.array;
 
-import org.junit.Test;
-
 /**
  * Author: ligongxing.
  * Date: 2019/06/14.
  */
 public class 数组中出现次数超过一半的数字 {
 
-    public int find(int[] a) {
-        int item = 0;
+    private static int find(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return -1;
+        }
         int count = 0;
-        for (int i = 0; i < a.length; i++) {
+        int item = 0;
+        for (int i = 0; i < arr.length; i++) {
             if (count == 0) {
-                item = a[i];
                 count = 1;
+                item = arr[i];
             } else {
-                if (a[i] == item) {
+                if (arr[i] == item) {
                     count++;
                 } else {
                     count--;
@@ -27,8 +28,7 @@ public class 数组中出现次数超过一半的数字 {
     }
 
 
-    @Test
-    public void test() {
+    public static void main(String[] args) {
         System.out.println(find(new int[]{1, 1, 1, 2, 2, 2, 2, 3}));
     }
 }

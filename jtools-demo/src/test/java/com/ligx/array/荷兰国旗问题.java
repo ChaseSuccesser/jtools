@@ -6,17 +6,20 @@ package com.ligx.array;
  */
 public class 荷兰国旗问题 {
 
-    public static void helanguoqi(int[] a) {
+    public static void helanguoqi(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return;
+        }
         int current = 0;
         int begin = 0;
-        int end = a.length - 1;
+        int end = arr.length - 1;
         while (current <= end) {
-            if (a[current] == 0) {
-                swap(a, current++, begin++);
-            } else if (a[current] == 1) {
+            if (arr[current] == 0) {
+                swap(arr, current++, begin++);
+            } else if (arr[current] == 1) {
                 current++;
-            } else {
-                swap(a, current, end--);
+            } else if (arr[current] == 2) {
+                swap(arr, current, end--);
             }
         }
     }
