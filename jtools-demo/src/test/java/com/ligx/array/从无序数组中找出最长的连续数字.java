@@ -36,6 +36,7 @@ public class 从无序数组中找出最长的连续数字 {
         System.out.println("max:" + max);
     }
 
+
     public static void main(String[] args) {
         int[] arr = {100, 1, 50, 2, 3, 4};
         find(arr);
