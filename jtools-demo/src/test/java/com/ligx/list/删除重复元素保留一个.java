@@ -11,7 +11,7 @@ public class 删除重复元素保留一个 {
             return head;
         }
         Link pre = head;
-        Link curr = head;
+        Link curr = head.next;
         while (pre != null && curr != null) {
             if (pre.data == curr.data) {
                 pre.next = curr.next;
