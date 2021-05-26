@@ -14,8 +14,7 @@ public class 数组的数对之差最大值 {
         int maxDiff = max - arr[1];
         for (int i = 2; i < arr.length; i++) {
             max = Math.max(max, arr[i - 1]);
-            int currentDiff = max - arr[i];
-            maxDiff = Math.max(maxDiff, currentDiff);
+            maxDiff = Math.max(max - arr[i], maxDiff);
         }
         return maxDiff;
     }
