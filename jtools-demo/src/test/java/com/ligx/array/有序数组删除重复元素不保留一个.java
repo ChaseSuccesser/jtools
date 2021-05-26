@@ -12,7 +12,7 @@ public class 有序数组删除重复元素不保留一个 {
         }
         int head = 0;
         int tail = 0;
-        int count = 0;
+        int count;
         while (tail < a.length) {
             count = 0;
             a[head] = a[tail];

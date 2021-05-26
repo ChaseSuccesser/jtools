@@ -6,22 +6,20 @@ package com.ligx.array;
  */
 public class 有序数组删除重复元素只保留一个 {
 
-    public static void removeDuplicate(int[] a) {
+    private static void removeDuplicate(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return;
+        }
         int head = 0;
         int tail = 1;
-        for (;tail < a.length; tail++) {
-            if(a[head] != a[tail]){
-                a[++head] = a[tail];
+        for (; tail < arr.length; tail++) {
+            if (arr[head] != arr[tail]) {
+                arr[++head] = arr[tail];
             }
         }
 
         for (int i = 0; i < head + 1; i++) {
-            if (i == head) {
-                System.out.print(a[i]);
-            } else {
-                System.out.print(a[i] + ",");
-            }
-
+            System.out.print(arr[i] + " ");
         }
     }
 
