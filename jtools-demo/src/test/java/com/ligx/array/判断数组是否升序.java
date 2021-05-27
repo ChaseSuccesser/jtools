@@ -9,19 +9,24 @@ import org.junit.Test;
  */
 public class 判断数组是否升序 {
 
-    public boolean isASC(int[] a, int length) {
-        if (length == 1) {
+    private boolean isASC(int[] arr, int index) {
+        if (arr == null || arr.length == 0) {
+            return false;
+        }
+        if (index == 0) {
             return true;
-        } else if (a[length - 1] > a[length]) {
+        }
+        if (arr[index - 1] > arr[index]) {
             return false;
         } else {
-            return isASC(a, length - 1);
+            return isASC(arr, index - 1);
         }
     }
 
     @Test
     public void test() {
         Assert.assertEquals(true, isASC(new int[]{1, 2, 3, 4}, 3));
+        Assert.assertEquals(false, isASC(new int[]{2, 1, 3, 4}, 3));
         Assert.assertEquals(false, isASC(new int[]{1, 2, 4, 3}, 3));
     }
 }
