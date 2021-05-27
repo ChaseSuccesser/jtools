@@ -20,17 +20,20 @@ public class 从无序数组中找出最长的连续数字 {
 
         int max = 0;
         for (int i = 0; i < arr.length; i++) {
-            int next = arr[i] - 1;
             int count = 1;
+
+            int next = arr[i] - 1;
             while (set.contains(next)) {
                 next--;
                 count++;
             }
+
             next = arr[i] + 1;
             while (set.contains(next)) {
                 next++;
                 count++;
             }
+
             max = Math.max(count, max);
         }
         System.out.println("max:" + max);

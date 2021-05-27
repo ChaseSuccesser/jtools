@@ -28,6 +28,16 @@ public class 小孩分糖果 {
             }
         }
         sum += count[0];
+
+        for (int i = 0; i < count.length; i++) {
+            System.out.print(count[i]);
+        }
+        System.out.println();
         System.out.println("sum:" + sum);
+    }
+
+    public static void main(String[] args) {
+        int[] ratings = {1, 3, 2, 1, 2};
+        candy(ratings);
     }
 }
