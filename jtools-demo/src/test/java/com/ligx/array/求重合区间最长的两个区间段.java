@@ -40,37 +40,39 @@ public class 求重合区间最长的两个区间段 {
         Range[] arr = {range1, range2, range3};
         maxShareRange(arr);
     }
-}
 
-class RangeComparator implements Comparator<Range> {
-    @Override
-    public int compare(Range o1, Range o2) {
-        return o1.getStart() - o2.getStart();
+    static class RangeComparator implements Comparator<Range> {
+        @Override
+        public int compare(Range o1, Range o2) {
+            return o1.getStart() - o2.getStart();
+        }
+    }
+
+    static class Range {
+        private int start;
+        private int end;
+
+        public Range(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        public int getStart() {
+            return start;
+        }
+
+        public void setStart(int start) {
+            this.start = start;
+        }
+
+        public int getEnd() {
+            return end;
+        }
+
+        public void setEnd(int end) {
+            this.end = end;
+        }
     }
 }
 
-class Range {
-    private int start;
-    private int end;
 
-    public Range(int start, int end) {
-        this.start = start;
-        this.end = end;
-    }
-
-    public int getStart() {
-        return start;
-    }
-
-    public void setStart(int start) {
-        this.start = start;
-    }
-
-    public int getEnd() {
-        return end;
-    }
-
-    public void setEnd(int end) {
-        this.end = end;
-    }
-}
