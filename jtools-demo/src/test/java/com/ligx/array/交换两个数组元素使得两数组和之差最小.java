@@ -6,13 +6,12 @@ package com.ligx.array;
  */
 public class 交换两个数组元素使得两数组和之差最小 {
 
-    private static void balanceArray(int[] arr1, int[] arr2) {
-        int[] arr = new int[0];
-
+    private static void balanceArray2(int[] arr1, int[] arr2) {
+        int[] tempArr;
         if (sum(arr1) < sum(arr2)) {
-            arr = arr1;
+            tempArr = arr1;
             arr1 = arr2;
-            arr2 = arr;
+            arr2 = tempArr;
         }
 
         for (int i = 0; i < arr1.length; i++) {
@@ -20,9 +19,9 @@ public class 交换两个数组元素使得两数组和之差最小 {
                 int x = arr1[i] - arr2[j];
                 int A = sum(arr1) - sum(arr2);
                 if (0 < x && x < A) {
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
+                    int temp = arr1[i];
+                    arr1[i] = arr2[j];
+                    arr2[j] = temp;
                 }
             }
         }
@@ -39,7 +38,11 @@ public class 交换两个数组元素使得两数组和之差最小 {
     public static void main(String[] args) {
         int[] arr1 = {2, 3, 4, 1, 1};
         int[] arr2 = {2, 3, 4, 8, 9};
-        balanceArray(arr1, arr2);
+
+        System.out.println(String.format("arr1 sum:%s", sum(arr1)));
+        System.out.println(String.format("arr2 sum:%s", sum(arr2)));
+
+        balanceArray2(arr1, arr2);
         for (int i = 0; i < arr1.length; i++) {
             System.out.print(arr1[i] + " ");
         }
@@ -47,5 +50,8 @@ public class 交换两个数组元素使得两数组和之差最小 {
         for (int i = 0; i < arr2.length; i++) {
             System.out.print(arr2[i] + " ");
         }
+        System.out.println();
+        System.out.println(String.format("arr1 sum:%s", sum(arr1)));
+        System.out.println(String.format("arr2 sum:%s", sum(arr2)));
     }
 }
