@@ -1,30 +1,29 @@
 package com.ligx.string;
 
-import java.util.Arrays;
-
 /**
  * @author: ligongxing.
  * @date: 2021年04月07日.
  */
 public class 翻转字符串 {
 
-    private static void reverse(char[] a, int begin, int end) {
+    private static void reverse(char[] arr, int begin, int end) {
+        if (arr == null || arr.length == 0) {
+            return;
+        }
         for (int i = begin, j = end; i < j; i++, j--) {
-            char temp = a[i];
-            a[i] = a[j];
-            a[j] = temp;
+            char temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
         }
     }
 
-    private static void reverseShift(char[] a, int length) {
-        if (a == null || a.length == 0 || length <= 0) {
+    private static void reverseShift(char[] arr, int k) {
+        if (arr == null || arr.length == 0  || k <= 0 || arr.length < k) {
             return;
         }
-        int begin = 0;
-        int end = a.length - 1;
-        reverse(a, begin, length - 1);
-        reverse(a, length, end - 1);
-        reverse(a, begin, end - 1);
+        reverse(arr, 0, k - 1);
+        reverse(arr, k, arr.length - 1);
+        reverse(arr, 0, arr.length - 1);
     }
 
     public static void main(String[] args) {
