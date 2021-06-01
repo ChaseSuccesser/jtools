@@ -16,25 +16,20 @@ public class 字符串中替换空格 {
                 blankCount++;
             }
         }
+        int newLen = str.length() + blankCount * 2;
+        char[] chars = new char[newLen];
 
-        int newLength = str.length() + blankCount * 2;
-        char[] newChars = new char[newLength];
-
-        int oldP = str.length() - 1;
-        int newP = newLength - 1;
-
-        while (oldP >= 0) {
-            if (str.charAt(oldP) == ' ') {
-                newChars[newP--] = '0';
-                newChars[newP--] = '2';
-                newChars[newP--] = '%';
-            }else {
-                newChars[newP--] = str.charAt(oldP);
+        int newIndex = chars.length - 1;
+        for (int i = str.length() - 1; i >= 0; i--) {
+            if (str.charAt(i) != ' ') {
+                chars[newIndex--] = str.charAt(i);
+            } else {
+                chars[newIndex--] = '0';
+                chars[newIndex--] = '2';
+                chars[newIndex--] = '%';
             }
-            oldP--;
         }
-
-        return new String(newChars);
+        return new String(chars);
     }
 
     public static void main(String[] args) {
