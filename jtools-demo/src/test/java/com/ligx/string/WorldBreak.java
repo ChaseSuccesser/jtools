@@ -1,5 +1,8 @@
 package com.ligx.string;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,11 +12,16 @@ import java.util.Set;
  */
 public class WorldBreak {
 
-    public static boolean checkWorldBreak(String str, Set<String> dict) {
+    private static boolean checkWorldBreak(String str, Set<String> dict) {
+        if (StringUtils.isBlank(str)) {
+            return true;
+        }
+        if (CollectionUtils.isEmpty(dict)) {
+            return false;
+        }
         boolean[] check = new boolean[str.length() + 1];
         check[0] = true;
-
-        for (int i = 1; i < str.length() + 1; i++) {
+        for (int i = 1; i <= str.length(); i++) {
             for (int j = 0; j < i; j++) {
                 if (check[j] && dict.contains(str.substring(j, i))) {
                     check[i] = true;
@@ -21,8 +29,7 @@ public class WorldBreak {
                 }
             }
         }
-
-        return check[check.length - 1];
+        return check[str.length()];
     }
 
     public static void main(String[] args) {
