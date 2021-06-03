@@ -8,15 +8,19 @@ import com.ligx.list.Link;
  */
 public class 二叉树转双向链表 {
 
-    public void convertTreeToLink(Node root, Link link) {
+    private static void convertTreeToLink(Node root, Link link) {
         if (root == null) {
             return;
         }
-        convertTreeToLink(root.right, link);
+        if (root.right != null) {
+            convertTreeToLink(root.right, link);
+        }
 
         link.pre = new Link(null, link, root.data);
         link = link.pre;
 
-        convertTreeToLink(root.left, link);
+        if (root.left != null) {
+            convertTreeToLink(root.left, link);
+        }
     }
 }
