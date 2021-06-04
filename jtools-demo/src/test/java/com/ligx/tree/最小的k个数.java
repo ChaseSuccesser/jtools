@@ -21,7 +21,7 @@ public class 最小的k个数 {
         }
 
         for (int i = 0; i < k; i++) {
-            System.out.println(bigHeap.remove());
+            System.out.print(bigHeap.remove() + " ");
         }
     }
 

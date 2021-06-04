@@ -25,17 +25,20 @@ public class SmallHeap {
     }
 
     private void trickleUp(int index) {
-        int bottom = heapArray[index];
+        int temp = heapArray[index];
         int parent = (index - 1) / 2;
-        while (index > 0 && heapArray[parent] > bottom) {
+        while (index > 0 && heapArray[parent] > temp) {
             heapArray[index] = heapArray[parent];
             index = parent;
             parent = (index - 1) / 2;
         }
-        heapArray[index] = bottom;
+        heapArray[index] = temp;
     }
 
     public int remove() {
+        if (currentSize == 0) {
+            throw new IllegalStateException("堆是空的");
+        }
         int root = heapArray[0];
         heapArray[0] = heapArray[--currentSize];
         trickleDown(0);
@@ -43,23 +46,23 @@ public class SmallHeap {
     }
 
     private void trickleDown(int index) {
-        int top = heapArray[index];
-        int smallChild;
+        int temp = heapArray[index];
         while (index < currentSize / 2) {
             int leftChild = 2 * index + 1;
             int rightChild = leftChild + 1;
+            int smallChild;
             if (rightChild < currentSize && heapArray[rightChild] < heapArray[leftChild]) {
                 smallChild = rightChild;
             } else {
                 smallChild = leftChild;
             }
-            if (heapArray[index] <= heapArray[smallChild]) {
+            if (temp <= heapArray[smallChild]) {
                 break;
             }
             heapArray[index] = heapArray[smallChild];
             index = smallChild;
         }
-        heapArray[index] = top;
+        heapArray[index] = temp;
     }
 
     public int peekRoot() {

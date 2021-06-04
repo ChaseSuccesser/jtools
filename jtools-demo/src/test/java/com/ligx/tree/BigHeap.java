@@ -24,44 +24,49 @@ public class BigHeap {
         trickleUp(currentSize++);
     }
 
-    public void trickleUp(int index) {
-        int bottom = heapArray[index];
+    private void trickleUp(int index) {
+        int temp = heapArray[index];
         int parent = (index - 1) / 2;
-        while (index > 0 && heapArray[parent] < bottom) {
+        // 后面这个判断是与最小堆不同的地方
+        while (index > 0 && heapArray[parent] < temp) {
             heapArray[index] = heapArray[parent];
             index = parent;
             parent = (index - 1) / 2;
         }
-        heapArray[index] = bottom;
+        heapArray[index] = temp;
     }
 
     public int remove() {
+        if (currentSize == 0) {
+            throw new IllegalStateException("堆是空的");
+        }
         int root = heapArray[0];
         heapArray[0] = heapArray[--currentSize];
         trickleDown(0);
         return root;
     }
 
-    public void trickleDown(int index) {
-        int top = heapArray[index];
-        int largeChild;
+    private void trickleDown(int index) {
+        int temp = heapArray[index];
         while (index < currentSize / 2) {
             int leftChild = 2 * index + 1;
             int rightChild = leftChild + 1;
-            if (rightChild < currentSize && heapArray[leftChild] < heapArray[rightChild]) {
+            int largeChild;
+            // 后面这个判断是与最小堆不同的地方
+            if (rightChild < currentSize && heapArray[rightChild] > heapArray[leftChild]) {
                 largeChild = rightChild;
             } else {
                 largeChild = leftChild;
             }
-            if (top >= heapArray[largeChild]) {
+            // 这是与最小堆不同的地方
+            if (temp >= heapArray[largeChild]) {
                 break;
             }
             heapArray[index] = heapArray[largeChild];
             index = largeChild;
         }
-        heapArray[index] = top;
+        heapArray[index] = temp;
     }
-
 
     public int peekRoot() {
         return heapArray[0];

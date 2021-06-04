@@ -21,7 +21,7 @@ public class 最大的k个数 {
         }
 
         for (int i = 0; i < k; i++) {
-            System.out.println(smallHeap.remove());
+            System.out.print(smallHeap.remove() + " ");
         }
     }
 
