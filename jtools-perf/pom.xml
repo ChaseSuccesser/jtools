@@ -13,7 +13,7 @@
     <artifactId>jtools-perf</artifactId>
 
     <properties>
-        <spring-framework.verion>4.3.18.RELEASE</spring-framework.verion>
+        <spring-framework.verion>5.3.19</spring-framework.verion>
         <aspect.version>1.8.10</aspect.version>
     </properties>
 
