@@ -24,9 +24,9 @@ public class 字符串中替换空格 {
             if (str.charAt(i) != ' ') {
                 chars[newIndex--] = str.charAt(i);
             } else {
+                chars[newIndex--] = '%';
                 chars[newIndex--] = '0';
                 chars[newIndex--] = '2';
-                chars[newIndex--] = '%';
             }
         }
         return new String(chars);
