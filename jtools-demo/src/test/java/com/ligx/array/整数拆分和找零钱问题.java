@@ -43,16 +43,20 @@ public class 整数拆分和找零钱问题 {
     // ----------------------------------------------------------------------------------------------------
 
     // 输出整数拆分的所有方案
-    private static void dfs1(int sum, StringBuilder sb, int currNum, int id) {
-        if (currNum == sum) {
-            System.out.println(String.format("方案%s:%s", count++, sb));
+    private static void dfs1(int sum, Vector<Integer> vector, int currNum, int id) {
+        if (currNum == sum) {  //递归的结束条件
+            System.out.print(String.format("方案%s:", count++));
+            for (int i = 0; i < vector.size(); i++) {
+                System.out.print(vector.get(i) +" ");
+            }
+            System.out.println();
             return;
         }
-        for (int i = id; i <= sum; i++) {
+        for (int i = id; i <= sum; i++) {   //最开始是从id=1开始遍历，结束值就是sum  【重要】
             if (currNum + i <= sum) {
-                sb.append(i);
-                dfs1(sum, sb, currNum + i, i);
-                sb.deleteCharAt(sb.length() - 1);
+                vector.add(i);                   //将元素添加到向量的末尾
+                dfs1(sum, vector, currNum + i, i);   //递归处理
+                vector.remove(vector.size() - 1);    //删除最后一个数据
             }
         }
     }
@@ -60,8 +64,8 @@ public class 整数拆分和找零钱问题 {
     // 输出整数拆分的所有方案的测试
     @Test
     public void dfs1Test() {
-        StringBuilder sb = new StringBuilder();
-        dfs1(6, sb, 0, 1);
+        Vector<Integer> vector = new Vector<>();
+        dfs1(6, vector, 0, 1);
     }
 
     // ----------------------------------------------------------------------------------------------------
