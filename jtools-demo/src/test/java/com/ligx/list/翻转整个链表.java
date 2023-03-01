@@ -8,8 +8,8 @@ public class 翻转整个链表 {
 
     private static void reverse(Link head) {
         Link curr = head.next;
-        Link next = null;
-        Link nextnext = null;
+        Link next;
+        Link nextNext;
 
         if (curr == null || curr.next == null) {
             return;
@@ -17,12 +17,13 @@ public class 翻转整个链表 {
 
         while (curr.next != null) {
             next = curr.next;
-            nextnext = next.next;
+            nextNext = next.next;
             next.next = head.next;
             head.next = next;
-            curr.next = nextnext;
+            curr.next = nextNext;
         }
     }
+
 
     public static void main(String[] args) {
         Link link1 = new Link(null, 5);
