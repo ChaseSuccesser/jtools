@@ -40,10 +40,9 @@ public class 相邻节点翻转 {
 
         // test
         Link curr = head.next;
-        while (curr.next != null) {
+        while (curr != null) {
             System.out.println(curr.data);
             curr = curr.next;
         }
-        System.out.println(curr.data);
     }
 }
