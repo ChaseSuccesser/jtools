@@ -6,7 +6,7 @@ package com.ligx.list;
  */
 public class 翻转整个链表 {
 
-    public void reverse(Link head) {
+    private static void reverse(Link head) {
         Link curr = head.next;
         Link next = null;
         Link nextnext = null;
@@ -22,5 +22,25 @@ public class 翻转整个链表 {
             head.next = next;
             curr.next = nextnext;
         }
+    }
+
+    public static void main(String[] args) {
+        Link link1 = new Link(null, 5);
+        Link link2 = new Link(link1, 4);
+        Link link3 = new Link(link2, 3);
+        Link link4 = new Link(link3, 2);
+        Link link5 = new Link(link4, 1);
+
+        Link head = new Link(link5, 0);
+
+        reverse(head);
+
+        // test
+        Link curr = head.next;
+        while (curr.next != null) {
+            System.out.println(curr.data);
+            curr = curr.next;
+        }
+        System.out.println(curr.data);
     }
 }
