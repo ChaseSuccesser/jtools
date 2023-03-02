@@ -6,19 +6,21 @@ package com.ligx.tree;
  */
 public class 有序整数数组转成二叉树 {
 
-    public void insertArrayIntoTree(int[] arr, int pos, Node node) {
-        node = new Node(arr[pos], null, null);
+    public void insertArrayIntoTree(int[] arr) {
+        dfs(arr, 0, arr.length - 1);
+    }
 
-        if (pos * 2 + 1 > arr.length - 1) {
-            return;
-        } else {
-            insertArrayIntoTree(arr, pos * 2 + 1, node.left);
+    private Node dfs(int[] arr, int left, int right) {
+        if (left > right) {
+            return null;
         }
 
-        if (pos * 2 + 2 > arr.length - 1) {
-            return;
-        } else {
-            insertArrayIntoTree(arr, pos * 2 + 2, node.right);
-        }
+        int mid = (left + right) / 2;
+        Node root = new Node(arr[mid]);
+
+        root.left = dfs(arr, left, mid - 1);
+        root.right = dfs(arr, mid + 1, right);
+
+        return root;
     }
 }
