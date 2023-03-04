@@ -6,6 +6,29 @@ package com.ligx.list;
  */
 public class 合并两个有序的链表 {
 
+    private Link mergeTwoLink2(Link head1, Link head2) {
+        if (head1 == null || head2 == null) {
+            return head1 != null ? head1 : head2;
+        }
+        Link head = new Link();
+        Link tail = head;
+
+        Link a = head1;
+        Link b = head2;
+        while (a != null && b != null) {
+            if (a.data < b.data) {
+                tail.next = a;
+                a = a.next;
+            } else {
+                tail.next = b;
+                b = b.next;
+            }
+            tail = tail.next;
+        }
+        tail.next = a != null ? a : b;
+        return head.next;
+    }
+
     public Link mergeTwoLink(Link head1, Link head2) {
         if (head1 == null) {
             return head2;
