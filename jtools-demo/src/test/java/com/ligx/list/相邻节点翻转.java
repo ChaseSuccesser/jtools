@@ -6,42 +6,40 @@ package com.ligx.list;
  */
 public class 相邻节点翻转 {
 
-    private static void reverse(Link head) {
-        if (head == null) {
-            return;
-        }
-        Link trail = head;
-        Link next;
-        Link nextNext;
+    private static Link reverse(Link head) {
+        // 新建一个临时节点，挂在头结点的前面
+        Link dummy = new Link();
+        dummy.next = head;
 
+        Link trail = dummy;
+        Link next;
+        Link nextN;
+        // 因为下面的代码要把trail后面的两个节点反转，所以后面这俩节点不能为空，如果有一个为，则不需要反转了
         while (trail.next != null && trail.next.next != null) {
             next = trail.next;
-            nextNext = trail.next.next;
-
-            trail.next = nextNext;
-            next.next = nextNext.next;
-            nextNext.next = next;
-
+            nextN = trail.next.next;
+            trail.next = nextN;
+            next.next = nextN.next;
+            nextN.next = next;
             trail = next;
         }
+
+        //把临时节点后面的真实头节点返回
+        return dummy.next;
     }
 
     public static void main(String[] args) {
-        Link link6 = new Link(null, 6);
-        Link link1 = new Link(link6, 5);
-        Link link2 = new Link(link1, 4);
-        Link link3 = new Link(link2, 3);
-        Link link4 = new Link(link3, 2);
-        Link link5 = new Link(link4, 1);
+        Link link5 = new Link(null, 5);
+        Link link4 = new Link(link5, 4);
+        Link link3 = new Link(link4, 3);
+        Link link2 = new Link(link3, 2);
+        Link link1 = new Link(link2, 1);
 
-        Link head = new Link(link5, 0);
+        Link head = reverse(link1);
 
-        reverse(head);
-
-        // test
-        Link curr = head.next;
+        Link curr = head;
         while (curr != null) {
-            System.out.println(curr.data);
+            System.out.print(curr.data + " ");
             curr = curr.next;
         }
     }

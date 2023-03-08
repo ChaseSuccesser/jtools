@@ -6,40 +6,44 @@ package com.ligx.list;
  */
 public class 翻转整个链表 {
 
-    private static void reverse(Link head) {
-        Link curr = head.next;
-        Link next;
-        Link nextNext;
 
-        if (curr == null || curr.next == null) {
-            return;
+    private static Link reverse(Link head) {
+        // 如果没有节点或只有一个节点
+        if (head == null || head.next == null) {
+            return head;
         }
 
+        // 新建一个临时节点，挂在头结点的前面
+        Link dummy = new Link();
+        dummy.next = head;
+
+        Link curr = head;
+        Link next;
+        Link nextNext;
         while (curr.next != null) {
             next = curr.next;
             nextNext = next.next;
-            next.next = head.next;
-            head.next = next;
+            next.next = dummy.next;
+            dummy.next = next;
             curr.next = nextNext;
         }
+
+        //把临时节点后面的真实头节点返回
+        return dummy.next;
     }
 
-
     public static void main(String[] args) {
-        Link link1 = new Link(null, 5);
-        Link link2 = new Link(link1, 4);
-        Link link3 = new Link(link2, 3);
-        Link link4 = new Link(link3, 2);
-        Link link5 = new Link(link4, 1);
+        Link link5 = new Link(null, 5);
+        Link link4 = new Link(link5, 4);
+        Link link3 = new Link(link4, 3);
+        Link link2 = new Link(link3, 2);
+        Link link1 = new Link(link2, 1);
 
-        Link head = new Link(link5, 0);
+        Link head = reverse(link1);
 
-        reverse(head);
-
-        // test
-        Link curr = head.next;
+        Link curr = head;
         while (curr != null) {
-            System.out.println(curr.data);
+            System.out.print(curr.data + " ");
             curr = curr.next;
         }
     }

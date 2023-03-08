@@ -6,7 +6,7 @@ package com.ligx.list;
  */
 public class KGroup反转 {
 
-    private Link reverse(Link head, int k) {
+    private static Link reverseKGroup(Link head, int k) {
         Link dummy = new Link();
         dummy.next = head;
         Link pre = dummy;
@@ -15,16 +15,17 @@ public class KGroup反转 {
         while (head != null) {
             i++;
             if (i % k == 0) {
-                doReverse(pre, head.next);
+                Link next = head.next;
+                pre = doReverse(pre, next);
+                head = next;
             } else {
                 head = head.next;
             }
         }
-
         return dummy.next;
     }
 
-    private void doReverse(Link pre, Link next) {
+    private static Link doReverse(Link pre, Link next) {
         Link last = pre.next;
         Link curr = last.next;
         while (curr != next) {
@@ -32,6 +33,24 @@ public class KGroup反转 {
             curr.next = pre.next;
             pre.next = curr;
             curr = last.next;
+        }
+        return last;
+    }
+
+    public static void main(String[] args) {
+        Link link6 = new Link(null, 6);
+        Link link5 = new Link(link6, 5);
+        Link link4 = new Link(link5, 4);
+        Link link3 = new Link(link4, 3);
+        Link link2 = new Link(link3, 2);
+        Link link1 = new Link(link2, 1);
+
+        Link head = reverseKGroup(link1, 3);
+
+        Link curr = head;
+        while (curr != null) {
+            System.out.print(curr.data + " ");
+            curr = curr.next;
         }
     }
 }
