@@ -8,30 +8,27 @@ import java.util.Stack;
  */
 public class 从尾到头打印链表 {
 
-    public void rPrintLinkByStack(Link head) {
-        if (head == null) {
-            return;
+    private static void reversePrint(Link head) {
+        Stack<Link> stack = new Stack<>();
+        Link curr = head;
+        while (curr != null) {
+            stack.push(curr);
+            curr = curr.next;
         }
-        Stack<Integer> stack = new Stack<>();
-        Link node = head;
-        while (node != null) {
-            stack.push(node.data);
-            node = node.next;
-        }
-
         while (!stack.isEmpty()) {
-            Integer data = stack.peek();
-            System.out.println(data);
-            stack.pop();
+            Link temp = stack.pop();
+            System.out.print(temp.data + " ");
         }
     }
 
+    public static void main(String[] args) {
+        Link link6 = new Link(null, 6);
+        Link link5 = new Link(link6, 5);
+        Link link4 = new Link(link5, 4);
+        Link link3 = new Link(link4, 3);
+        Link link2 = new Link(link3, 2);
+        Link link1 = new Link(link2, 1);
 
-    public void rPrintLinkByRecursion(Link head) {
-        if (head == null) {
-            return;
-        }
-        rPrintLinkByRecursion(head.next);
-        System.out.println(head.data);
+        reversePrint(link1);
     }
 }
