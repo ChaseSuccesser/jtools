@@ -9,24 +9,25 @@ import org.junit.Assert;
 public class 找出倒数第4个元素 {
 
     // 1 2 3 4 5 6
-    private static Link getLast4thOne(Link head, int k) {
-        if (head == null || k == 0) {
+    private static Link lastKLink(Link head, int k) {
+        if (head == null || k <= 0) {
             return null;
         }
         Link first = head;
         Link second = head;
+
         for (int i = 0; i < k; i++) {
-            if (first.next == null) {
+            if (second == null) {
                 return null;
             }
-            first = first.next;
-        }
-        while (first != null) {
-            first = first.next;
             second = second.next;
         }
 
-        return second;
+        while (second != null) {
+            first = first.next;
+            second = second.next;
+        }
+        return first;
     }
 
 
@@ -40,7 +41,7 @@ public class 找出倒数第4个元素 {
         Link link5 = new Link(link4, 1);
 
 
-        Link link = getLast4thOne(link5, 4);
+        Link link = lastKLink(link5, 4);
         Assert.assertTrue(link.data == 4);
         System.out.println(link.data);
     }
