@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
  */
 public class 滑动窗口的最大值 {
 
-    public int[] maxSlidingWindow(int[] nums, int k) {
+    private static int[] max(int[] arr, int k) {
         PriorityQueue<int[]> queue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] o1, int[] o2) {
@@ -18,20 +18,28 @@ public class 滑动窗口的最大值 {
         });
 
         for (int i = 0; i < k; i++) {
-            queue.offer(new int[]{nums[i], i});
+            queue.offer(new int[]{arr[i], i});
         }
 
-        int[] maxNums = new int[nums.length - k + 1];
-        maxNums[0] = queue.peek()[0];
+        int[] resultArr = new int[arr.length - k + 1];
+        resultArr[0] = queue.peek()[0];
         int j = 1;
 
-        for (int i = k; i < nums.length; i++) {
-            queue.offer(new int[]{nums[i], i});
+        for (int i = k; i < arr.length; i++) {
+            queue.offer(new int[]{arr[i], i});
             while (queue.peek()[1] <= i - k) {
                 queue.poll();
             }
-            maxNums[j++] = queue.peek()[0];
+            resultArr[j++] = queue.peek()[0];
         }
-        return maxNums;
+        return resultArr;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = new int[]{1, 3, -1, -3, 5, 3, 6, 7};
+        int[] resultArr = max(arr, 3);
+        for (int i = 0; i < resultArr.length; i++) {
+            System.out.print(resultArr[i] + " ");
+        }
     }
 }
