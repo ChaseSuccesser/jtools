@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 public class 地下城游戏 {
 
-    public int calculateMinimumHP(int[][] dungeon) {
+    public static int calculateMinimumHP(int[][] dungeon) {
         int n = dungeon.length;
         int m = dungeon[0].length;
 
@@ -25,5 +25,15 @@ public class 地下城游戏 {
         }
 
         return dp[0][0];
+    }
+
+
+    public static void main(String[] args) {
+        int[][] arr = {
+                {-2, -3, 3},
+                {-5, -10, 1},
+                {10, 30, -5}
+        };
+        System.out.println(calculateMinimumHP(arr));
     }
 }
