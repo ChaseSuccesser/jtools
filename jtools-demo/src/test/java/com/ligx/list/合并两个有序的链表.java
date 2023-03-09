@@ -6,74 +6,42 @@ package com.ligx.list;
  */
 public class 合并两个有序的链表 {
 
-    private Link mergeTwoLink2(Link head1, Link head2) {
-        if (head1 == null || head2 == null) {
-            return head1 != null ? head1 : head2;
-        }
-        Link head = new Link();
-        Link tail = head;
-
-        Link a = head1;
-        Link b = head2;
-        while (a != null && b != null) {
-            if (a.data < b.data) {
-                tail.next = a;
-                a = a.next;
-            } else {
-                tail.next = b;
-                b = b.next;
-            }
-            tail = tail.next;
-        }
-        tail.next = a != null ? a : b;
-        return head.next;
-    }
-
-    public Link mergeTwoLink(Link head1, Link head2) {
-        if (head1 == null) {
-            return head2;
-        }
-        if (head2 == null) {
-            return head1;
-        }
-
-        Link head = new Link();
-        Link pre = head;
-        Link curr;
+    private static Link mergeTwoLink(Link head1, Link head2) {
+        Link dummy = new Link();
+        Link trail = dummy;
 
         Link curr1 = head1;
         Link curr2 = head2;
-
-        while (curr1.next != null && curr2.next != null) {
-            if (curr1.next.data < curr2.next.data) {
-                curr = new Link(null, curr1.next.data);
+        while (curr1 != null && curr2 != null) {
+            if (curr1.data < curr2.data) {
+                trail.next = curr1;
                 curr1 = curr1.next;
-            } else if (curr1.next.data > curr2.next.data) {
-                curr = new Link(null, curr2.next.data);
-                curr2 = curr2.next;
             } else {
-                curr = new Link(null, curr1.next.data);
-                curr1 = curr1.next;
+                trail.next = curr2;
                 curr2 = curr2.next;
             }
-            pre.next = curr;
-            pre = pre.next;
+            trail = trail.next;
         }
+        trail.next = curr1 != null ? curr1 :curr2;
 
-        while (curr1.next != null) {
-            curr = new Link(null, curr1.next.data);
-            curr1 = curr1.next;
-            pre.next = curr;
-            pre = pre.next;
+        return dummy.next;
+    }
+
+    public static void main(String[] args) {
+        Link link6 = new Link(null, 6);
+        Link link5 = new Link(link6, 4);
+        Link link4 = new Link(link5, 2);
+
+        Link link3 = new Link(null, 5);
+        Link link2 = new Link(link3, 3);
+        Link link1 = new Link(link2, 1);
+
+        Link head = mergeTwoLink(link1, link4);
+
+        Link curr = head;
+        while (curr != null) {
+            System.out.print(curr.data + " ");
+            curr = curr.next;
         }
-
-        while (curr2.next != null) {
-            curr = new Link(null, curr2.next.data);
-            curr2 = curr2.next;
-            pre.next = curr;
-            pre = pre.next;
-        }
-
-        return head;
     }
 }
