@@ -1,6 +1,7 @@
 package com.ligx.string;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 
 /**
  * Author: ligongxing.
@@ -25,8 +26,8 @@ public class 回文判断 {
     }
 
     public static void main(String[] args) {
-        System.out.println(isPalindrome("abcba"));
-        System.out.println(isPalindrome("abba"));
-        System.out.println(isPalindrome("abefba"));
+        Assert.assertTrue(isPalindrome("abcba"));
+        Assert.assertTrue(isPalindrome("abba"));
+        Assert.assertFalse(isPalindrome("abefba"));
     }
 }
