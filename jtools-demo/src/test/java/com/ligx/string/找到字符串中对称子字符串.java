@@ -1,14 +1,17 @@
 package com.ligx.string;
 
+import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
+
 /**
  * Author: ligongxing.
  * Date: 2019/07/01.
  */
 public class 找到字符串中对称子字符串 {
 
-    private static void getLongestSymmetricalLength(String str) {
+    private static String getLongestSymmetricalLength(String str) {
         if (str == null || str.length() == 0) {
-            return;
+            return "";
         }
         int maxLen = 0;
         String maxStr = "";
@@ -38,12 +41,11 @@ public class 找到字符串中对称子字符串 {
             }
         }
 
-        System.out.println("longest symmetrical length: " + maxLen);
-        System.out.println("longest symmetrical str: " + maxStr);
+        return maxStr;
     }
 
     public static void main(String[] args) {
         String str = "aaabcdedcbaff";
-        getLongestSymmetricalLength(str);
+        Assert.assertTrue(StringUtils.equals(getLongestSymmetricalLength(str), "abcdedcba"));
     }
 }
