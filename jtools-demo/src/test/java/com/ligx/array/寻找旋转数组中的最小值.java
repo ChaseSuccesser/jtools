@@ -13,7 +13,7 @@ public class 寻找旋转数组中的最小值 {
         int end = arr.length - 1;
         while (start < end) {
             int mid = (start + end) / 2;
-            if (arr[mid] < arr[end]) { //todo
+            if (arr[mid] < arr[end]) {
                 end = mid;
             } else {
                 start = mid + 1;
