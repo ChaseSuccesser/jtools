@@ -34,28 +34,30 @@ public class 数组给定区间第K小的元素 {
         int[] a = {4, 1, 6, 2, 7, 3, 8, 1};
         System.out.println(findKBetweenBeginAndEnd(a, 2, 5, 2));
     }
+
+    static class Node implements Comparable<Node> {
+        private int item;
+
+        private int index;
+
+        public Node(int item, int index) {
+            this.item = item;
+            this.index = index;
+        }
+
+        @Override
+        public int compareTo(Node o) {
+            return this.item - o.item;
+        }
+
+        public int getItem() {
+            return item;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+    }
 }
 
-class Node implements Comparable<Node> {
-    private int item;
 
-    private int index;
-
-    public Node(int item, int index) {
-        this.item = item;
-        this.index = index;
-    }
-
-    @Override
-    public int compareTo(Node o) {
-        return this.item - o.item;
-    }
-
-    public int getItem() {
-        return item;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-}
