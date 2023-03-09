@@ -1,5 +1,7 @@
 package com.ligx.string;
 
+import org.junit.Assert;
+
 import java.util.Stack;
 
 /**
@@ -8,7 +10,7 @@ import java.util.Stack;
  */
 public class 基本计算器 {
 
-    public int calculate(String s) {
+    private static int calculate(String s) {
         int sign = 1;
         Stack<Integer> ops = new Stack<>();
         ops.push(sign);
@@ -40,6 +42,12 @@ public class 基本计算器 {
             }
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        Assert.assertTrue(calculate("1+2+3-(4+1)") == 1);
+        Assert.assertTrue(calculate("1+2+3") == 6);
+        Assert.assertTrue(calculate("1+2+3+(4-1)") == 9);
     }
 
 }
