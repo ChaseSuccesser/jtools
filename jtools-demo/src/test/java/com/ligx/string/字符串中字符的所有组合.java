@@ -6,34 +6,29 @@ package com.ligx.string;
  */
 public class 字符串中字符的所有组合 {
 
+    public static void main(String[] args) {
+        String str = "abcd";
+        combination(str.toCharArray());
+    }
+
     private static void combination(char[] chars) {
-        if (chars == null || chars.length == 0) {
-            return;
-        }
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i <= chars.length; i++) {
-            combination(chars, 0, i, sb);
+            doCombination(chars, sb, 0, i);
         }
     }
 
-    private static void combination(char[] chars, int begin, int num, StringBuilder sb) {
-        if (num == 0) {
+    private static void doCombination(char[] chars, StringBuilder sb, int begin, int number) {
+        if (number == 0) {
             System.out.println(sb);
             return;
         }
         if (begin == chars.length) {
             return;
         }
-
         sb.append(chars[begin]);
-        combination(chars, begin + 1, num - 1, sb);
-
+        doCombination(chars, sb, begin + 1, number - 1);
         sb.deleteCharAt(sb.length() - 1);
-        combination(chars, begin + 1, num, sb);
-    }
-
-    public static void main(String[] args) {
-        String str = "abcd";
-        combination(str.toCharArray());
+        doCombination(chars, sb, begin + 1, number);
     }
 }

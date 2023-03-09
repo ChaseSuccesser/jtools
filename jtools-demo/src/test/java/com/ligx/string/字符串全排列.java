@@ -6,7 +6,12 @@ package com.ligx.string;
  */
 public class 字符串全排列 {
 
-    public static void allSort(char[] chars, int start, int end) {
+    public static void main(String[] args) {
+        String str = "abc";
+        allSort(str.toCharArray(), 0, str.length() - 1);
+    }
+
+    private static void allSort(char[] chars, int start, int end) {
         if (start == end) {
             System.out.println(new String(chars));
             return;
@@ -20,11 +25,5 @@ public class 字符串全排列 {
             chars[start] = chars[i];
             chars[i] = temp;
         }
-    }
-
-
-    public static void main(String[] args) {
-        String str = "abc";
-        allSort(str.toCharArray(), 0, str.length() - 1);
     }
 }
