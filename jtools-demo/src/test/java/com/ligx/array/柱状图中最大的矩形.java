@@ -7,24 +7,25 @@ package com.ligx.array;
 public class 柱状图中最大的矩形 {
 
     private static int largestRectangleArea(int[] arr) {
-        int res = 0;
+        int result = 0;
 
         for (int i = 0; i < arr.length; i++) {
-            int left = i;
             int currHeight = arr[i];
-            while (left > 0 && arr[left - 1] > currHeight) {
-                left--;
+
+            int left = i;
+            while (left >= 1 && arr[left - 1] >= currHeight) {
+                left = left - 1;
             }
 
             int right = i;
-            while (right < arr.length - 1 && arr[right + 1] > currHeight) {
-                right++;
+            while (right < arr.length - 1 && arr[right + 1] >= currHeight) {
+                right = right + 1;
             }
 
             int width = right - left + 1;
-            res = Math.max(res, width * arr[i]);
+            result = Math.max(result, width * currHeight);
         }
-        return res;
+        return result;
     }
 
     public static void main(String[] args) {
