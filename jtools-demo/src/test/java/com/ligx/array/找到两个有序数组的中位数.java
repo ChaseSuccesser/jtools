@@ -1,5 +1,7 @@
 package com.ligx.array;
 
+import org.junit.Assert;
+
 /**
  * Author: ligongxing.
  * Date: 2021年04月26日.
@@ -43,5 +45,6 @@ public class 找到两个有序数组的中位数 {
         int[] a = {1, 2, 3, 8};
         int[] b = {4, 5, 6, 7};
         System.out.println("中位数是:" + findMiddle(a, b));
+        Assert.assertTrue(findMiddle(a, b) == 4.5);
     }
 }
