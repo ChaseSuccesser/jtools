@@ -31,4 +31,5 @@ public class 生成括号 {
     public static void main(String[] args) {
         System.out.println(generateParenthesis(3));
     }
+
 }
