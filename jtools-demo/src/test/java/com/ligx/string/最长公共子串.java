@@ -49,9 +49,34 @@ public class 最长公共子串 {
         return "";
     }
 
+    public static String longestCommonSub2(String str1, String str2) {
+        int[][] matrix = new int[str1.length() + 1][str2.length() + 1];
+
+        int max = Integer.MIN_VALUE;
+        int x = 0;
+        for (int i = 1; i <= str1.length(); i++) {
+            for (int j = 1; j <= str2.length(); j++) {
+                if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                    matrix[i][j] = matrix[i - 1][j - 1] + 1;
+                } else {
+                    matrix[i][j] = 0;
+                }
+                if (matrix[i][j] > max) {
+                    max = matrix[i][j];
+                    x = i;
+                }
+            }
+        }
+
+        if (max > 0) {
+            return str1.substring(x - max, x);
+        }
+        return "";
+    }
+
     public static void main(String[] args) {
-        String str1 = "abcdefg";
-        String str2 = "ebcdehh";
-        System.out.println(longestCommonSub(str1, str2));
+        String str1 = "abcdefabcdefg";
+        String str2 = "ebcdehabcdefh";
+        System.out.println(longestCommonSub2(str1, str2));
     }
 }
