@@ -10,7 +10,7 @@ public class 丢手绢 {
 
     public static void diuShouJuan(String[] peoples) {
         int counter = peoples.length;
-        int num = 1;
+        int num = 0;
 
         int[] nums = new int[peoples.length];
         Arrays.fill(nums, 1);
@@ -18,6 +18,7 @@ public class 丢手绢 {
         loop: while (true) {
             for (int i = 0; i < nums.length; i++) {
                 if (nums[i] != 0) {
+                    num += 1;
                     if (num % 3 == 0) {
                         nums[i] = 0;
                         counter--;
@@ -26,7 +27,6 @@ public class 丢手绢 {
                             break loop;
                         }
                     }
-                    num += 1;
                 }
             }
         }
